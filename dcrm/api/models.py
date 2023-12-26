@@ -4,7 +4,7 @@ import string, random
 
 def generate_order_number():
     while True:
-        order_number = ''.join(random.choices(string.ascii_lowercase, k=6))
+        order_number = 'CRM-'.join(random.choices(string.ascii_lowercase, k=6))
         # Check if the generated order number already exists
         if Order.objects.filter(order_number=order_number).count() == 0:
             break
@@ -26,3 +26,9 @@ class Order(models.Model):
     order_number = models.CharField(unique=True, max_length=6, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_created_at = models.DateTimeField(auto_now_add=True)
+
+
+def save(self, *args, **kwargs):
+        if not self.order_number:
+            self.order_number = generate_order_number()
+        super(Order, self).save(*args, **kwargs)
