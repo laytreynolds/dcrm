@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "api.apps.ApiConfig",
-    "rest_framework"
-
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -78,12 +77,10 @@ WSGI_APPLICATION = "dcrm.wsgi.application"
 
 DATABASES = {
     "default": {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dcrm',
-        'USER': 'root',
-        'PASSWORD': 'Ronnie2K16',
-        'HOST':'localhost',
-        'PORT':'3306',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "dcrm",
+        "USER": "laytreynolds",
+        "PASSWORD": "Xok87187",
     }
 }
 
