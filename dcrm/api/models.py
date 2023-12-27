@@ -23,6 +23,12 @@ class Company(models.Model):
     company_Number_of_orders = models.IntegerField(default=1)
     company_Monthly_spend = models.FloatField(default=1)
 
+    class Meta:
+        verbose_name_plural = 'Companies'
+
+    def __str__(self):
+        return self.company_Name
+
 
 class Order(models.Model):
 
@@ -45,6 +51,7 @@ class Order(models.Model):
     company = models.ForeignKey(Company, 
                                 on_delete=models.CASCADE,
                                 related_name='orders')
+    order_Name = models.CharField(max_length=255,default='')
     order_Created = models.DateTimeField(auto_now=True)
     order_Updated = models.DateTimeField(auto_now=True)
     order_Title = models.CharField(max_length=100,default='')
@@ -68,12 +75,14 @@ class Order(models.Model):
                             default=Status.new)
 
 
-
     class Meta:
         ordering = ['-order_Created']
         indexes = [
             models.Index(fields=['order_Created'])
         ]
+
+    def __str__(self):
+        return self.order_Name
 
 def save(self, *args, **kwargs):
     if not self.order_Number:
@@ -81,5 +90,4 @@ def save(self, *args, **kwargs):
     super(Order, self).save(*args, **kwargs)
 
 
-def __str__(self):
-    return self.title
+
