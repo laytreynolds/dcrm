@@ -11,7 +11,7 @@ def generate_order_number():
     return order_number
 
 # Create your models here.
-class Customer(models.Model):
+class Company(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
@@ -24,7 +24,7 @@ class Customer(models.Model):
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     order_number = models.CharField(unique=True, max_length=6, editable=False)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     order_created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -32,3 +32,6 @@ def save(self, *args, **kwargs):
         if not self.order_number:
             self.order_number = generate_order_number()
         super(Order, self).save(*args, **kwargs)
+
+def __str__(self):
+           return self.title
