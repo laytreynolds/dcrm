@@ -9,3 +9,5 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Company)
 class OrderAdmin(admin.ModelAdmin):
        list_display = ['company_Type','company_Name', 'company_Employees']
+
+

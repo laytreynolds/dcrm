@@ -39,7 +39,15 @@ class Company(models.Model):
 # ORDER
 
 
+# Get all connected orders
+class ConnectedManager:
+    def get_queryset(self):
+        return super().get_queryset().filter(status=Order.status.connected)
+
+
 class Order(models.Model):
+    connected = ConnectedManager()
+
     def save(self, *args, **kwargs):
         if not self.order_Number:
             self.order_Number = generate_order_number()
