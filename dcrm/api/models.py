@@ -38,32 +38,12 @@ class Company(models.Model):
 
 # ORDER
 
-
-# Get all connected orders
-class ConnectedManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(status=Order.Status.connected)
-
-
-class OpenManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(open=True)
-
-
 class Order(models.Model):
-    connected = ConnectedManager()
-    open = OpenManager()
-    objects = models.Manager()
 
     def save(self, *args, **kwargs):
-        if self.status != "connected":
-            self.open = True
-        else:
-            self.open = False
-
         if not self.order_Number:
             self.order_Number = generate_order_number()
-            super(Order, self).save(*args, **kwargs)
+        super(Order, self).save(*args, **kwargs)
 
     class Status(models.TextChoices):
         new = "NW", "New"
@@ -104,11 +84,12 @@ class Order(models.Model):
     order_Delivery_County = models.CharField(max_length=255, default="")
     order_Delivery_Postcode = models.CharField(max_length=255, default="")
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.new)
-    order_Open = models.BooleanField(default=True)
+    order_Open = models.BooleanField()
 
     class Meta:
         ordering = ["-order_Created"]
         indexes = [models.Index(fields=["order_Created"])]
+        default_manager_name = "objects"
 
     def __str__(self):
         return self.order_Number
