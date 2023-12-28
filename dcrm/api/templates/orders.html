@@ -1,0 +1,11 @@
+{% extends "./base.html" %} 
+{% block heading  %}All Orders{% endblock %} 
+{% block content1 %} 
+{% for order in orders %}
+<h3>
+  <a href="{% url 'api:order_Detail' order.order_Id %}">
+    {{ order.order_Number }}
+  </a>
+</h3>
+<p class="detail">Created {{ order.order_Created }} by {{ order.owner }}</p>
+{% endfor %} {% endblock %}
