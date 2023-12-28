@@ -38,8 +38,8 @@ class Company(models.Model):
 
 # ORDER
 
-class Order(models.Model):
 
+class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.order_Number:
             self.order_Number = generate_order_number()
