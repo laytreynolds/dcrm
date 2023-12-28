@@ -1,0 +1,6 @@
+{% extends "base.html" %} {% block title %}{{ order.title }}{% endblock %} 
+{% block content1 %}
+<h1>{{ order.order_Number }}</h1>
+<br />
+<p class="date">Created at {{ order.order_Created }} by {{ order.owner }}</p>
+{% endblock %}

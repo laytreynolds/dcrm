@@ -1,6 +1,7 @@
 from django.db import models
 import string, random
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Generate randomm unique CRM-xxxxxx Number
 
@@ -93,3 +94,6 @@ class Order(models.Model):
 
     def __str__(self):
         return self.order_Number
+
+    def get_absolute_url(self):
+        return reverse("crm:OrderDetail", args=[self.order_Id])

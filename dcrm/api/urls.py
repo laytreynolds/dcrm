@@ -1,12 +1,12 @@
 from django.urls import path
 from . import views
 
-app_name = 'api'
+app_name = 'crm'
 
 urlpatterns = [
-    path("", views.Main, name='home'),
+    path("", views.Home, name='home'),
     path('orders/', views.Orders, name='orders'),
-    path('order/<int:order_Id>', views.OrderDetail, name='order_Detail'),
+    path('order/<int:order_Id>', views.OrderDetail, name='OrderDetail'),
 
 
 ]
