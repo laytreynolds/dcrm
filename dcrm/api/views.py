@@ -13,10 +13,13 @@ def Home(request):
     return render(request, "base.html")
 
 def TodayOrders(request):
-    current_date = now().date()
-    orders = Order.objects.filter(order_Created__date=current_date)
+    #current_date = now().date()
+    orders = Order.today.all()
     return render(request, "order/today.html", {'orders': orders})
 
+def ThisMonthOrders(request):
+    orders = Order.month.all()
+    return render(request, "order/month.html", {'orders': orders})
 
 
 def Orders(request):

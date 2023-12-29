@@ -10,7 +10,7 @@ urlpatterns = [
     path("new/order", views.NewOrder, name='NewOrder'),
     path("new/company", views.NewCompany, name='NewCompany'),
     path("orders/today", views.TodayOrders, name='TodayOrders'),
-
+    path("orders/month", views.ThisMonthOrders, name='ThisMonthOrders'),
 
 
 
