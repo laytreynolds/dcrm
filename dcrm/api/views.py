@@ -1,16 +1,22 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from .models import Company, User, Order
+from django.utils.timezone import now
+from datetime import date
 
 
-# Create your views here.
+
+
+# ORDER
+
 def Home(request):
     return render(request, "base.html")
 
+def TodayOrders(request):
+    current_date = now().date()
+    orders = Order.objects.filter(order_Created__date=current_date)
+    return render(request, "order/today.html", {'orders': orders})
 
-def Connected(request):
-    connected = Order.objects.filter(status=Order.Status.connected)
-    return render(request, "order/connected.html", {"connected": connected})
 
 
 def Orders(request):
@@ -24,3 +30,12 @@ def OrderDetail(request, order_Id):
     except Order.DoesNotExist:
         raise Http404("No Post found.")
     return render(request, "order/detail.html", {"order": order})
+
+def NewOrder(request):
+    return render(request, "order/new.html")
+
+
+# COMPANY
+
+def NewCompany(request):
+    return render(request, "company/new.html")

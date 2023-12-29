@@ -1,0 +1,10 @@
+{% extends "base.html" %} 
+{% block heading %}Orders Today{% endblock %}
+{% block content1 %} 
+{% for order in orders %}
+<h3>
+  <a href="{{ order.get_absolute_url }}">
+    {{ order.order_Number }}
+  </a>
+</h3>
+{% endfor %} {% endblock %}
