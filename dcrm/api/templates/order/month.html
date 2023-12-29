@@ -5,5 +5,5 @@
   <a href="{{ order.get_absolute_url }}"> {{ order.order_Number }} </a>
 </h3>
 {% endfor %}
-{% include "order/pagination.html" with page=orders %}
+{% include "pagination.html" with page=orders %}
 {% endblock %}
