@@ -7,4 +7,6 @@
     {{ order.order_Number }}
   </a>
 </h3>
-{% endfor %} {% endblock %}
+{% endfor %}
+{% include "order/pagination.html" with page=orders %}
+{% endblock %}
