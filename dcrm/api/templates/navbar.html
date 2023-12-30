@@ -47,7 +47,9 @@
           </a>
           <ul class="dropdown-menu">
             <li>
-              <a class="dropdown-item" href="{% url 'crm:OrdersListView' %}">All</a>
+              <a class="dropdown-item" href="{% url 'crm:OrdersListView' %}"
+                >All</a
+              >
             </li>
             <li>
               <a class="dropdown-item" href="{% url 'crm:OrdersToday' %}"
@@ -62,14 +64,14 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search">
+      <form class="d-flex" role="search" action="{% url 'crm:OrderSearch' %}" method="GET">
         <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-      </form>
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="search"
+            name="query"/>
+    </form>
       <div>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item dropdown">

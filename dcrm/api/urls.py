@@ -13,6 +13,7 @@ urlpatterns = [
     path("orders/month", views.OrdersThisMonthView.as_view(), name='OrderThisMonth'),
     path('login/', views.LoginUser, name='LoginUser'),
     path('logout/', views.LogoutUser, name='LogoutUser'),
+    path('search/', views.OrderSearch, name='OrderSearch'),
 
 
 

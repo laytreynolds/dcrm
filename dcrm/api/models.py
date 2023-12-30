@@ -3,6 +3,8 @@ import string, random
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.timezone import now
+from django.contrib.postgres.search import SearchVectorField
+
 
 
 # Generate randomm unique CRM-xxxxxx Number
@@ -98,6 +100,9 @@ class Order(models.Model):
     order_Delivery_County = models.CharField(max_length=255, default="")
     order_Delivery_Postcode = models.CharField(max_length=255, default="")
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.new)
+    search_vector = SearchVectorField(null=True)  # Add SearchVectorField
+
+
     order_Open = models.BooleanField()
 
     objects = models.Manager()
@@ -107,7 +112,7 @@ class Order(models.Model):
 
     class Meta:
         ordering = ["-order_Created"]
-        indexes = [models.Index(fields=["order_Created"])]
+        indexes = [models.Index(fields=["order_Mobile"])]
         default_manager_name = "objects"
 
     def __str__(self):

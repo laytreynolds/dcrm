@@ -12,7 +12,7 @@
   </thead>
   <tbody>
     {% for order in OrdersThisMonth %}
-    <tr>
+    <tr onclick="window.location.href='{{ order.get_absolute_url }}';">
       <td>
         <a href="{{ order.get_absolute_url }}">{{ order.order_Number }}</a>
       </td>
