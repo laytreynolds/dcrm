@@ -2,41 +2,48 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from .models import Company, User, Order
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth import login, logout, authenticate
+from django.views.generic import ListView
 
-
-
-
-# ORDER
+# HOME 
 
 def Home(request):
     return render(request, "base.html")
 
-def TodayOrders(request):
-    order_list = Order.today.all()
-    paginator = Paginator(order_list, 2) 
-    page_number = request.GET.get('page', 1)
-    try:
-        orders = paginator.page(page_number)
-    except EmptyPage:
-        orders = paginator.page(paginator.num_pages)
-    return render(request, "order/today.html", {'orders': orders})
+# AUTHENTICATION
+
+def LoginUser(request):
+    pass
+
+def LogoutUser(request):
+    pass
+
+
+# ORDER
+
+class OrdersListView(ListView):
+    queryset = Order.objects.all()
+    context_object_name = 'Orders'
+    paginate_by = 10
+    template_name = "order/orders_list.html"
+
+
+class OrdersTodayListView(ListView):
+    queryset = Order.today.all()
+    context_object_name = 'OrdersToday'
+    paginate_by = 10
+    template_name = "order/today.html"
 
 
 def ThisMonthOrders(request):
     order_list = Order.month.all()
-    paginator = Paginator(order_list, 2) 
+    paginator = Paginator(order_list, 10) 
     page_number = request.GET.get('page', 1)
     try:
         orders = paginator.page(page_number)
     except EmptyPage:
         orders = paginator.page(paginator.num_pages)
     return render(request, "order/month.html", {'orders': orders})
-
-
-def Orders(request):
-    orders = Order.objects.all()
-    return render(request, "order/orders_list.html", {"orders": orders})
-
 
 def OrderDetail(request, order_Number):
     try:

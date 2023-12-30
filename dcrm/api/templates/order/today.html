@@ -1,7 +1,7 @@
 {% extends "base.html" %} 
 {% block heading %}Orders Today{% endblock %}
 {% block content1 %} 
-{% for order in orders %}
+{% for order in OrdersToday %}
 <h3>
   <a href="{{ order.get_absolute_url }}">
     {{ order.order_Number }}
