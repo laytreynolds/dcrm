@@ -20,14 +20,17 @@
 
     <div class="container-fluid">
       <div class="container">
-        <h1>
-          {% block heading %} {% endblock %}
-          <br />
+          {% block heading %}
+
+
+          {% endblock %}
           <hr />
-        </h1>
         <br />
 
-        <div id="content">{% block content1 %} {% endblock %}</div>
+        <div id="content">
+          {% block content1 %}
+          {% endblock %}
+        </div>
       </div>
     </div>
 

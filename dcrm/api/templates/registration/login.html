@@ -1,4 +1,14 @@
-login.html 
+{% extends 'base.html' %} 
+{% block heading %}
+        <h1>Login</h1>
+ {% endblock %} 
+{% load crispy_forms_tags %} 
 
 
-
+{%block content1 %}
+<div class='col-md-6 offset-md-3'>
+<form method="post">
+    {% csrf_token %} {{ form|crispy}}
+</form>
+{% endblock%}
+</div>
