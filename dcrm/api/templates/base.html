@@ -19,28 +19,19 @@
     <br />
 
     <div class="container">
-      <h1>
-        {% block heading %}
+      <div class="container-fluid">
+        <h1>
+          {% block heading %} {% endblock %}
+          <br />
+          <hr />
+        </h1>
+        <br />
 
-        {% endblock %}
-        <br>
-        <hr>
-      </h1>
-      <br />
-
-      <div id="content">
-        {% block content1 %} 
-        
-        {% endblock %}
+        <div id="content">
+          {% block content1 %} {% endblock %}
+        </div>
       </div>
     </div>
-
-
-
-
-
-
-
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
