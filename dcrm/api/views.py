@@ -35,15 +35,12 @@ class OrdersTodayListView(ListView):
     template_name = "order/today.html"
 
 
-def ThisMonthOrders(request):
-    order_list = Order.month.all()
-    paginator = Paginator(order_list, 10) 
-    page_number = request.GET.get('page', 1)
-    try:
-        orders = paginator.page(page_number)
-    except EmptyPage:
-        orders = paginator.page(paginator.num_pages)
-    return render(request, "order/month.html", {'orders': orders})
+class OrdersThisMonthView(ListView):
+    queryset = Order.month.all()
+    template_name = 'order/month.html'
+    context_object_name = 'OrdersThisMonth'
+    paginate_by = 10
+
 
 def OrderDetail(request, order_Number):
     try:

@@ -1,9 +1,9 @@
 {% extends "base.html" %} 
 {% block heading %}Orders This Month{% endblock %} 
-{%block content1 %} {% for order in orders %}
+{%block content1 %} {% for order in OrdersThisMonth %}
 <h3>
   <a href="{{ order.get_absolute_url }}"> {{ order.order_Number }} </a>
 </h3>
 {% endfor %}
-{% include "pagination.html" with page=orders %}
+{% include "pagination.html" with page=page_obj %}
 {% endblock %}
