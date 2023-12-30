@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from .models import Company, User, Order
 from django.core.paginator import Paginator, EmptyPage
-from django.contrib.auth import login, logout, authenticate
 from django.views.generic import ListView, DetailView
 from .forms import SearchForm
 from django.contrib.postgres.search import SearchVector
@@ -14,18 +13,6 @@ from django.db.models import Q
 
 def Home(request):
     return render(request, "base.html")
-
-
-# AUTHENTICATION
-
-
-def LoginUser(request):
-    pass
-
-
-def LogoutUser(request):
-    pass
-
 
 # ORDER
 

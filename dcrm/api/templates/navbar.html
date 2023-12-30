@@ -86,7 +86,10 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" href="#">Logout</a>
+                  {% csrf_token %}
+                  <a class="dropdown-item" href="{% url 'login' %}">Logout</a>
+
+              </form>
               </li>
             </ul>
           </li>
