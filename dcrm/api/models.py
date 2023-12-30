@@ -114,4 +114,4 @@ class Order(models.Model):
         return self.order_Number
 
     def get_absolute_url(self):
-        return reverse("crm:OrderDetail", args=[self.order_Number])
+        return reverse("crm:OrderDetailView", args=[self.order_Number])

@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 from .models import Company, User, Order
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth import login, logout, authenticate
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 # HOME 
 
@@ -37,17 +37,17 @@ class OrdersTodayListView(ListView):
 
 class OrdersThisMonthView(ListView):
     queryset = Order.month.all()
-    template_name = 'order/month.html'
     context_object_name = 'OrdersThisMonth'
     paginate_by = 10
+    template_name = 'order/month.html'
 
 
-def OrderDetail(request, order_Number):
-    try:
-        order = Order.objects.get(order_Number=order_Number)
-    except Order.DoesNotExist:
-        raise Http404("No Post found.")
-    return render(request, "order/detail.html", {"order": order})
+class OrderDetailView(DetailView):
+    model = Order
+    template_name = 'order/detail.html'
+    context_object_name = 'OrderDetail'
+    slug_field = 'order_Number'
+    slug_url_kwarg = 'order_Number'
 
 def NewOrder(request):
     return render(request, "order/new.html")

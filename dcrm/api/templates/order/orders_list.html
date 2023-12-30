@@ -1,11 +1,26 @@
-{% extends "base.html" %} 
-{% block heading  %}All Orders{% endblock %} 
-{% block content1 %} 
-{% for order in Orders %}
-<h3>
-  <a href="{{ order.get_absolute_url }}">
-    {{ order.order_Number }}
-  </a>
-</h3>
-{% endfor %} 
-{% endblock %}
+{% extends "base.html" %} {% block heading %}All Orders{% endblock %} 
+{% block content1 %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Order Number</th>
+      <th scope="col">Company</th>
+      <th scope="col">Name </th>
+      <th scope="col">Mobile</th>
+      <th scope="col">Created Date</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in Orders %} 
+    <tr>
+      <td>
+        <a href="{{ order.get_absolute_url }}">{{ order.order_Number }}</a></td>
+      <td>{{ order.company }}</td>
+      <td>{{ order.order_First_Name }} {{ order.order_Last_Name }}</td>
+      <td>{{ order.order_Mobile }}</td>
+      <td>{{ order.order_Created }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  {% endblock %}

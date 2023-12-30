@@ -1,13 +1,13 @@
-{% extends "base.html" %} {% block title %}{{ order.title }}{% endblock %} 
+{% extends "base.html" %}
 {% block content1 %}
-<h1>{{ order.order_Number }}</h1>
+<h1>{{ OrderDetail.order_Number }}</h1>
 <br />
 <div class="detail">
   <h4 class="headings">Details</h4>
   <ul>
-    <li>{{ order.order_First_Name }} {{ order.order_Last_Name }}</li>
-    <li>{{ order.Mobile }}</li>
+    <li>{{ OrderDetail.order_First_Name }} {{ OrderDetail.order_Last_Name }}</li>
+    <li>{{ OrderDetail.order_Mobile }}</li>
   </ul>
 </div>
-<p class="date">Created at {{ order.order_Created }} by {{ order.owner }}</p>
+<p class="date">Created at {{ OrderDetail.order_Created }} by {{ OrderDetail.owner }}</p>
 {% endblock %}
