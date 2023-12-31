@@ -85,10 +85,13 @@ WSGI_APPLICATION = "dcrm.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dcrm",
-        "USER": "laytreynolds",
-        "PASSWORD": "Xok87187",
+        "NAME": "d26vtbkdld8h37",
+        "USER": "gxbudwwictwmkw",
+        "PASSWORD": "5360db64ef296c0803a6d97b80a2cbf07d37cfa9c734180a77f9cf104e6a1140",
+        "HOST": "ec2-54-73-22-169.eu-west-1.compute.amazonaws.com",
+        "PORT": "5432",    
     }
+
 }
 
 
