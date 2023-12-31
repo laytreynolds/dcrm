@@ -15,9 +15,12 @@
   </head>
 
   <body>
-    <nav>{% include 'navbar.html' %}</nav>
-    <br />
-
+    {% if user.is_authenticated %}
+      <nav>{% include 'navbar.html' %}</nav>
+      {% else %}
+      <nav>{% include 'logged_out_nav.html' %}</nav>
+      {% endif %}
+      <br />
     <div class="container-fluid">
       <div class="container">
           {% block heading %}
