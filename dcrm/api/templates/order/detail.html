@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+<div class="container">
+  {% block heading %}<h1>{{ OrderDetail.order_Number }}</h1> {% endblock %} 
+  {% block content1 %}
+  <br />
+  <h4 class="headings">Details</h4>
+  <ul>
+    <li>
+      {{ OrderDetail.order_First_Name }} {{ OrderDetail.order_Last_Name }}
+    </li>
+    <li>{{ OrderDetail.order_Mobile }}</li>
+  </ul>
+  <p class="date">
+    Created at {{ OrderDetail.order_Created }} by {{ OrderDetail.owner }}
+  </p>
+  {% endblock %}
+</div>

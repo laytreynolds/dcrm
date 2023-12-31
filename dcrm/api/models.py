@@ -1,6 +1,11 @@
 from django.db import models
 import string, random
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.utils.timezone import now
+from django.contrib.postgres.search import SearchVectorField
+
+
 
 # Generate randomm unique CRM-xxxxxx Number
 
@@ -37,6 +42,17 @@ class Company(models.Model):
 
 
 # ORDER
+
+# MANAGER
+
+
+class TodayManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(order_Created__date=now().date())
+
+class MonthManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(order_Created__month=now().month)
 
 
 class Order(models.Model):
@@ -84,12 +100,21 @@ class Order(models.Model):
     order_Delivery_County = models.CharField(max_length=255, default="")
     order_Delivery_Postcode = models.CharField(max_length=255, default="")
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.new)
+
     order_Open = models.BooleanField()
+
+    objects = models.Manager()
+    today = TodayManager() 
+    month = MonthManager()
+
 
     class Meta:
         ordering = ["-order_Created"]
-        indexes = [models.Index(fields=["order_Created"])]
+        indexes = [models.Index(fields=["order_Mobile"])]
         default_manager_name = "objects"
 
     def __str__(self):
         return self.order_Number
+
+    def get_absolute_url(self):
+        return reverse("crm:OrderDetailView", args=[self.order_Number])
