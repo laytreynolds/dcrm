@@ -16,24 +16,23 @@
 
   <body>
     {% if user.is_authenticated %}
-      <nav>{% include 'navbar.html' %}</nav>
-      {% else %}
-      <nav>{% include 'logged_out_nav.html' %}</nav>
-      {% endif %}
-      <br />
-    <div class="container-fluid">
+    <nav>{% include 'navbar.html' %}</nav>
+    {% else %}
+    <nav>{% include 'logged_out_nav.html' %}</nav>
+    {% endif %}
+    <br />
+
       <div class="container">
-          {% block heading %}
-
-
-          {% endblock %}
-          <hr />
+        <br />
+        {% block heading %} {% endblock %}
+        <hr />
         <br />
 
-        <div id="content">
-          {% block content1 %}
-          {% endblock %}
-        </div>
+        {% block content1 %}
+        
+        
+        
+        {% endblock %}
       </div>
     </div>
 

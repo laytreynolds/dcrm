@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required
 def Home(request):
-    return render(request, "base.html")
+    return render(request, "home.html")
 
 # ORDER
 
