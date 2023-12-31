@@ -21,9 +21,8 @@
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
+            >New</a
           >
-            New
-          </a>
           <ul class="dropdown-menu">
             <li>
               <a class="dropdown-item" href="{% url 'crm:NewOrder' %}">Order</a>
@@ -42,9 +41,8 @@
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
+            >Orders</a
           >
-            Orders
-          </a>
           <ul class="dropdown-menu">
             <li>
               <a class="dropdown-item" href="{% url 'crm:OrdersListView' %}"
@@ -64,38 +62,76 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search" action="{% url 'crm:OrderSearch' %}" method="GET">
+      <form
+        class="d-flex"
+        role="search"
+        action="{% url 'crm:OrderSearch' %}"
+        method="GET"
+      >
         <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="search"
-            name="query"/>
-    </form>
-      <div>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          name="query"
+        />
+      </form>
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            >{{ user.username }}</a
+          >
+          <ul
+            class="dropdown-menu"
+          >
+            <li
+              style="
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: start;
+              "
             >
-              {{ user.username}}
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <form id="logout-form" method="post" action="/logout/">
-                  {% csrf_token %}
-                  <button type="submit">Log out</button>
+              <form
+                class="dropdown-item"
+                id="logout-form"
+                method="post"
+                action="/logout/"
+                style="
+                  display: inline-flex;
+                  width: 100%;
+                  height: 100%;
+                  align-items: center;
+                  justify-content: start;
+                "
+              >
+                {% csrf_token %}
+                <button
+                  type="submit"
+                  class="btn btn-tertiery"
+                  style="
+                    text-align: left;
+                    width: 100%;
+                    height: 100%;
+                    padding: 0;
+                    margin: 0;
+                    font: inherit;
+                    cursor: pointer;
+                  "
+                >
+                  Log out
+                </button>
               </form>
-              </form>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
