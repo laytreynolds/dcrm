@@ -16,7 +16,6 @@ def Home(request):
 
 # ORDER
 
-
 class OrderSearch(ListView):
     def get(self, request):
         form = SearchForm()

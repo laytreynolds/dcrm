@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 
 app_name = 'crm'
 
@@ -12,5 +13,4 @@ urlpatterns = [
     path("orders/today", views.OrdersTodayListView.as_view(), name='OrdersToday'),
     path("orders/month", views.OrdersThisMonthView.as_view(), name='OrderThisMonth'),
     path('search/', views.OrderSearch.as_view(), name='OrderSearch'),
-
 ]
