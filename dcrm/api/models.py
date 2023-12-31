@@ -100,8 +100,6 @@ class Order(models.Model):
     order_Delivery_County = models.CharField(max_length=255, default="")
     order_Delivery_Postcode = models.CharField(max_length=255, default="")
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.new)
-    search_vector = SearchVectorField(null=True)  # Add SearchVectorField
-
 
     order_Open = models.BooleanField()
 
