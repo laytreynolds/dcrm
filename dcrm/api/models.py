@@ -6,7 +6,6 @@ from django.utils.timezone import now
 from django.contrib.postgres.search import SearchVectorField
 
 
-
 # Generate randomm unique CRM-xxxxxx Number
 
 
@@ -49,6 +48,7 @@ class Company(models.Model):
 class TodayManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(order_Created__date=now().date())
+
 
 class MonthManager(models.Manager):
     def get_queryset(self):
@@ -100,13 +100,37 @@ class Order(models.Model):
     order_Delivery_County = models.CharField(max_length=255, default="")
     order_Delivery_Postcode = models.CharField(max_length=255, default="")
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.new)
+    order_Network = models.CharField(max_length=100, default=""),
+    order_name = models.CharField(max_length=255, default="")
+    order_box_value = models.CharField(max_length=255, default="")
+    order_deal_source = models.CharField(max_length=255, default="")
+    order_connected_date = models.DateField(default="1970-01-01")
+    order_loss_reason = models.CharField(max_length=255, default="")
+    order_mobile_number = models.CharField(max_length=255, default="")
+    order_contact_title = models.CharField(max_length=255, default="")
+    order_contact_name = models.CharField(max_length=255, default="")
+    order_date_of_birth = models.DateField(default="1970-01-01")
+    order_account_holder_mobile_number = models.CharField(max_length=255, default="")
+    order_email_address = models.EmailField(max_length=255, default="")
+    order_account_address = models.TextField(default="")
+    order_campaign = models.CharField(max_length=255, default="")
+    order_network = models.CharField(max_length=255, default="")
+    order_connection_type = models.CharField(max_length=255, default="")
+    order_eligibility_date = models.DateField(default="1970-01-01")
+    order_handset = models.CharField(max_length=255, default="")
+    order_tariff = models.CharField(max_length=255, default="")
+    order_sim_required = models.BooleanField(default=False)
+    order_tariff_code = models.CharField(max_length=255, default="")
+    order_spend_cap = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    order_network_account_number = models.CharField(max_length=255, default="")
+    order_additional_details = models.TextField(default="")
+    order_commission_details = models.TextField(default="")
 
     order_Open = models.BooleanField()
 
     objects = models.Manager()
-    today = TodayManager() 
+    today = TodayManager()
     month = MonthManager()
-
 
     class Meta:
         ordering = ["-order_Created"]
