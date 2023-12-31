@@ -1,21 +1,21 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
 from .models import Company, User, Order
-from django.core.paginator import Paginator, EmptyPage
 from django.views.generic import ListView, DetailView
 from .forms import SearchForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 # HOME
 
-
+@login_required
 def Home(request):
     return render(request, "base.html")
 
 # ORDER
-
 
 class OrderSearch(ListView):
     def get(self, request):
@@ -45,28 +45,28 @@ class OrderSearch(ListView):
         )
 
 
-class OrdersListView(ListView):
+class OrdersListView(LoginRequiredMixin, ListView):
     queryset = Order.objects.all()
     context_object_name = "Orders"
-    paginate_by = 3
+    paginate_by = 1
     template_name = "order/orders_list.html"
 
 
-class OrdersTodayListView(ListView):
+class OrdersTodayListView(LoginRequiredMixin, ListView):
     queryset = Order.today.all()
     context_object_name = "OrdersToday"
-    paginate_by = 3
+    paginate_by = 1
     template_name = "order/today.html"
 
 
-class OrdersThisMonthView(ListView):
+class OrdersThisMonthView(LoginRequiredMixin, ListView):
     queryset = Order.month.all()
     context_object_name = "OrdersThisMonth"
-    paginate_by = 3
+    paginate_by = 1
     template_name = "order/month.html"
 
 
-class OrderDetailView(DetailView):
+class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = "order/detail.html"
     context_object_name = "OrderDetail"

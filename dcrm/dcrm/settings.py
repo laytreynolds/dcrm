@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "api.apps.ApiConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "api.apps.ApiConfig",
     "rest_framework",
     'django.contrib.postgres',
     'crispy_forms',
@@ -85,10 +85,13 @@ WSGI_APPLICATION = "dcrm.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dcrm",
-        "USER": "laytreynolds",
-        "PASSWORD": "Xok87187",
+        "NAME": "d26vtbkdld8h37",
+        "USER": "gxbudwwictwmkw",
+        "PASSWORD": "5360db64ef296c0803a6d97b80a2cbf07d37cfa9c734180a77f9cf104e6a1140",
+        "HOST": "ec2-54-73-22-169.eu-west-1.compute.amazonaws.com",
+        "PORT": "5432",    
     }
+
 }
 
 
@@ -134,3 +137,5 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = '/crm'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
