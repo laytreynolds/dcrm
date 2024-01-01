@@ -10,6 +10,9 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth import get_user
 
 
+# Globals
+
+pagination = 3
 
 # HOME
 
@@ -53,24 +56,30 @@ class OrderSearch(ListView):
 class OrdersListView(LoginRequiredMixin, ListView):
     queryset = Order.objects.all()
     context_object_name = "Orders"
-    paginate_by = 1
+    paginate_by = pagination
     template_name = "order/orders_list.html"
 
 
 class OrdersTodayListView(LoginRequiredMixin, ListView):
     queryset = Order.today.all()
     context_object_name = "OrdersToday"
-    paginate_by = 1
+    paginate_by = pagination
     template_name = "order/today.html"
 
 
 class OrdersThisMonthView(LoginRequiredMixin, ListView):
     queryset = Order.month.all()
     context_object_name = "OrdersThisMonth"
-    paginate_by = 1
+    paginate_by = pagination
     template_name = "order/month.html"
 
+class OrdersThisweekView(LoginRequiredMixin, ListView):
+    queryset = Order.week.all()
+    context_object_name = "OrdersThisWeek"
+    paginate_by = pagination
+    template_name = "order/week.html"
 
+    
 class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = "order/detail.html"
@@ -79,13 +88,15 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     slug_url_kwarg = "order_Number"
 
 
-class NewOrder(View):
+class NewOrder(LoginRequiredMixin, View):
     model = Order
+    method = ['get', 'post']
 
     def get(self, request):
         form = OrderForm()
         return render(request, "order/new.html", {"form": form})
 
+    require_POST
     def post(self, request):
         current_user = get_user(request)
         form = OrderForm(request.POST)

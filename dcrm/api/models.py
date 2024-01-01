@@ -42,8 +42,7 @@ class Company(models.Model):
 
 # ORDER
 
-# MANAGER
-
+# MANAGERS
 
 class TodayManager(models.Manager):
     def get_queryset(self):
@@ -53,7 +52,13 @@ class TodayManager(models.Manager):
 class MonthManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(order_Created__month=now().month)
+    
+class Weekmanager(models.Manager):
+    def get_queryset(self):
+        current_week = now().isocalendar()[1]
+        return super().get_queryset().filter(order_Created__week=current_week)
 
+# CLASS
 
 class Order(models.Model):
     def save(self, *args, **kwargs):
@@ -141,6 +146,7 @@ class Order(models.Model):
     objects = models.Manager()
     today = TodayManager()
     month = MonthManager()
+    week = Weekmanager()
 
     class Meta:
         ordering = ["-order_Created"]

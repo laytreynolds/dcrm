@@ -13,4 +13,5 @@ urlpatterns = [
     path("orders/today", views.OrdersTodayListView.as_view(), name='OrdersToday'),
     path("orders/month", views.OrdersThisMonthView.as_view(), name='OrderThisMonth'),
     path('search/', views.OrderSearch.as_view(), name='OrderSearch'),
+    path('orders/week', views.OrdersThisweekView.as_view(), name='OrdersThisWeek'),
 ]
