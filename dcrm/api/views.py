@@ -7,6 +7,8 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.http import require_POST
+from django.contrib.auth import get_user
+
 
 
 # HOME
@@ -85,9 +87,12 @@ class NewOrder(View):
         return render(request, "order/new.html", {"form": form})
 
     def post(self, request):
+        current_user = get_user(request)
         form = OrderForm(request.POST)
         if form.is_valid():
-            order = form.save()
+            order = form.save(commit=False)
+            order.owner = current_user
+            order.save()
             return redirect("crm:OrderDetailView", order_Number=order.order_Number)
         return render(request, "order/new.html", {"form": form})
 

@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.timezone import now
 from django.contrib.postgres.search import SearchVectorField
-from django.contrib.auth import get_user
 
 
 # Generate randomm unique CRM-xxxxxx Number
@@ -82,7 +81,7 @@ class Order(models.Model):
 
     order_Id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(
-        User, related_name="sales", on_delete=models.PROTECT, null=True, editable=False)
+        User, related_name="sales", on_delete=models.PROTECT, null=True)
 
     order_Number = models.CharField(
         unique=True, max_length=255, default="", editable=False
