@@ -96,7 +96,6 @@ class NewOrder(LoginRequiredMixin, View):
         form = OrderForm()
         return render(request, "order/new.html", {"form": form})
 
-    require_POST
 
     def post(self, request):
         current_user = get_user(request)
