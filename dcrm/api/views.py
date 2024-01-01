@@ -40,8 +40,7 @@ class OrderSearch(ListView):
                     "order_Mobile",
                     "order_First_Name",
                     "order_Last_Name",
-                    "order_Created",
-                )  # Specify the fields to search
+                )
                 results = Order.objects.annotate(search=vector).filter(
                     Q(search__icontains=query)
                 )
@@ -73,13 +72,14 @@ class OrdersThisMonthView(LoginRequiredMixin, ListView):
     paginate_by = pagination
     template_name = "order/month.html"
 
+
 class OrdersThisweekView(LoginRequiredMixin, ListView):
     queryset = Order.week.all()
     context_object_name = "OrdersThisWeek"
     paginate_by = pagination
     template_name = "order/week.html"
 
-    
+
 class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = "order/detail.html"
@@ -90,13 +90,14 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 
 class NewOrder(LoginRequiredMixin, View):
     model = Order
-    method = ['get', 'post']
+    method = ["get", "post"]
 
     def get(self, request):
         form = OrderForm()
         return render(request, "order/new.html", {"form": form})
 
     require_POST
+
     def post(self, request):
         current_user = get_user(request)
         form = OrderForm(request.POST)

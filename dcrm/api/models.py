@@ -44,6 +44,7 @@ class Company(models.Model):
 
 # MANAGERS
 
+
 class TodayManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(order_Created__date=now().date())
@@ -52,13 +53,16 @@ class TodayManager(models.Manager):
 class MonthManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(order_Created__month=now().month)
-    
+
+
 class Weekmanager(models.Manager):
     def get_queryset(self):
         current_week = now().isocalendar()[1]
         return super().get_queryset().filter(order_Created__week=current_week)
 
+
 # CLASS
+
 
 class Order(models.Model):
     def save(self, *args, **kwargs):
@@ -84,9 +88,21 @@ class Order(models.Model):
         limited_liability_parntership = "LLP", "Limited liability Partnership"
         charity = "CHA", "Charity"
 
+    class Title(models.TextChoices):
+        Mr = "mr", "Mr"
+        Mrs = "mrs", "Mrs"
+        Ms = "ms", "Ms"
+        Miss = "miss", "Miss"
+        Dr = "dr", "Dr"
+        Prof = "prof", "Professor"
+        Sir = "sir", "Sir"
+        Madam = "madam", "Madam"
+        Rev = "rev", "Reverend"
+
     order_Id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(
-        User, related_name="sales", on_delete=models.PROTECT, null=True)
+        User, related_name="sales", on_delete=models.PROTECT, null=True
+    )
 
     order_Number = models.CharField(
         unique=True, max_length=255, default="", editable=False
@@ -96,51 +112,95 @@ class Order(models.Model):
     )
     order_Created = models.DateTimeField(auto_now=True)
     order_Updated = models.DateTimeField(auto_now=True)
-    order_Title = models.CharField(max_length=100, default="", null=True, blank=True)
-    order_First_Name = models.CharField(max_length=100, default="", null=True, blank=True)
-    order_Last_Name = models.CharField(max_length=100, default="", null=True, blank=True)
+    order_Title = order_company_type = models.CharField(
+        max_length=20, choices=Title.choices, default="", null=True, blank=True
+    )
+    order_First_Name = models.CharField(
+        max_length=100, default="", null=True, blank=True
+    )
+    order_Last_Name = models.CharField(
+        max_length=100, default="", null=True, blank=True
+    )
     order_Mobile = models.CharField(max_length=11, default="", null=True, blank=True)
     order_Landline = models.CharField(max_length=11, default="", null=True, blank=True)
     order_Email = models.EmailField(default="", null=True, blank=True)
-    order_House_Number = models.CharField(max_length=100, default="", null=True, blank=True)
+    order_House_Number = models.CharField(
+        max_length=100, default="", null=True, blank=True
+    )
     order_Street = models.CharField(max_length=255, default="", null=True, blank=True)
     order_City = models.CharField(max_length=255, default="", null=True, blank=True)
     order_County = models.CharField(max_length=255, default="", null=True, blank=True)
     order_Postcode = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_Delivery_House_Number = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_Delivery_Street = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_Delivery_City = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_Delivery_County = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_Delivery_Postcode = models.CharField(max_length=255, default="", null=True, blank=True)
+    order_Delivery_House_Number = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_Delivery_Street = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_Delivery_City = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_Delivery_County = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_Delivery_Postcode = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.new)
     order_network = models.CharField(max_length=100, default="", null=True, blank=True)
     order_name = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_box_value = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_deal_source = models.CharField(max_length=255, default="", null=True, blank=True)
+    order_box_value = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_deal_source = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
     order_connected_date = models.DateField(default="1970-01-01", null=True, blank=True)
-    order_loss_reason = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_mobile_number = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_contact_title = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_contact_name = models.CharField(max_length=255, default="", null=True, blank=True)
+    order_loss_reason = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_mobile_number = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_contact_title = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_contact_name = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
     order_date_of_birth = models.DateField(default="1970-01-01", null=True, blank=True)
-    order_account_holder_mobile_number = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_email_address = models.EmailField(max_length=255, default="", null=True, blank=True)
+    order_account_holder_mobile_number = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_email_address = models.EmailField(
+        max_length=255, default="", null=True, blank=True
+    )
     order_account_address = models.TextField(default="", null=True, blank=True)
     order_campaign = models.CharField(max_length=255, default="", null=True, blank=True)
     order_network = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_connection_type = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_eligibility_date = models.DateField(default="1970-01-01", null=True, blank=True)
+    order_connection_type = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_eligibility_date = models.DateField(
+        default="1970-01-01", null=True, blank=True
+    )
     order_handset = models.CharField(max_length=255, default="", null=True, blank=True)
     order_tariff = models.CharField(max_length=255, default="", null=True, blank=True)
     order_sim_required = models.BooleanField(default=False)
-    order_tariff_code = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_spend_cap = models.DecimalField(max_digits=10, decimal_places=2, default=0.0, null=True, blank=True)
-    order_network_account_number = models.CharField(max_length=255, default="", null=True, blank=True)
+    order_tariff_code = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
+    order_spend_cap = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.0, null=True, blank=True
+    )
+    order_network_account_number = models.CharField(
+        max_length=255, default="", null=True, blank=True
+    )
     order_additional_details = models.TextField(default="", null=True, blank=True)
     order_commission_details = models.TextField(default="", null=True, blank=True)
     order_Open = models.BooleanField(default=True)
     order_company_type = models.CharField(
-    max_length=3, choices=CompanyType.choices, default="", null=True, blank=True
+        max_length=20, choices=CompanyType.choices, default="", null=True, blank=True
     )
 
     objects = models.Manager()
