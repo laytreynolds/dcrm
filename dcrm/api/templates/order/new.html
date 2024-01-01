@@ -1,2 +1,11 @@
 {% extends "base.html" %} 
 {% block heading %}<h1>New Order</h1>{% endblock %}
+
+{% load crispy_forms_tags %} 
+{%block content1%}
+<form action="{% url "crm:NewOrder" %}" method="post">
+  {{ form.as_p }}
+  {% csrf_token %}
+  <p><input type="submit" value="Create Order"></p>
+</form>
+{% endblock %}

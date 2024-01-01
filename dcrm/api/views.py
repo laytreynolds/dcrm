@@ -1,21 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Company, User, Order
-from django.views.generic import ListView, DetailView
-from .forms import SearchForm
+from django.views.generic import ListView, DetailView, View
+from .forms import SearchForm, OrderForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.views.decorators.http import require_POST
 
 
 # HOME
+
 
 @login_required
 def Home(request):
     return render(request, "home.html")
 
+
 # ORDER
+
 
 class OrderSearch(ListView):
     def get(self, request):
@@ -74,8 +77,19 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     slug_url_kwarg = "order_Number"
 
 
-def NewOrder(request):
-    return render(request, "order/new.html")
+class NewOrder(View):
+    model = Order
+
+    def get(self, request):
+        form = OrderForm()
+        return render(request, "order/new.html", {"form": form})
+
+    def post(self, request):
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save()
+            return redirect("crm:OrderDetailView", order_Number=order.order_Number)
+        return render(request, "order/new.html", {"form": form})
 
 
 # COMPANY
