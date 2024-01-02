@@ -1,18 +1,26 @@
-{% extends "base.html" %}
- {% block heading %}
+{% extends "base.html" %} {% block heading %}
+<div class="container" id="small">
+
 <h1>New Order</h1>
-{% endblock %}
+{% endblock %} {%block content1 %}
 
-{% load crispy_forms_tags %} 
-{%block content1 %}
-
-
-<div class="col-md-6 offset-md-3">
-  <form method="post">
-    {% csrf_token %}
-     {{ form|crispy}}
-    <input type="hidden" name="next" value="{{ next }}" />
-    <button class="btn btn-success" type="submit">Create Order</button>
-  </form>
-  {% endblock%}
+<form method="post">
+  {% load crispy_forms_tags %} {% csrf_token %} {% crispy form form.helper %}
+</form>
 </div>
+
+
+
+
+
+<style>
+  .address-inline {
+    width: 50%;
+  }
+  legend {
+    font-weight: 700;
+  }
+  
+</style>
+
+{% endblock%}

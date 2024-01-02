@@ -112,7 +112,7 @@ class Order(models.Model):
     )
     order_Created = models.DateTimeField(auto_now=True)
     order_Updated = models.DateTimeField(auto_now=True)
-    order_Title = order_company_type = models.CharField(
+    order_Title = models.CharField(
         max_length=20, choices=Title.choices, default="", null=True, blank=True
     )
     order_First_Name = models.CharField(
@@ -162,12 +162,6 @@ class Order(models.Model):
     order_mobile_number = models.CharField(
         max_length=255, default="", null=True, blank=True
     )
-    order_contact_title = models.CharField(
-        max_length=255, default="", null=True, blank=True
-    )
-    order_contact_name = models.CharField(
-        max_length=255, default="", null=True, blank=True
-    )
     order_date_of_birth = models.DateField(default="1970-01-01", null=True, blank=True)
     order_account_holder_mobile_number = models.CharField(
         max_length=255, default="", null=True, blank=True
@@ -190,9 +184,7 @@ class Order(models.Model):
     order_tariff_code = models.CharField(
         max_length=255, default="", null=True, blank=True
     )
-    order_spend_cap = models.DecimalField(
-        max_digits=10, decimal_places=2, default=0.0, null=True, blank=True
-    )
+    order_spend_cap = models.IntegerField(default=0, null=True, blank=True)
     order_network_account_number = models.CharField(
         max_length=255, default="", null=True, blank=True
     )

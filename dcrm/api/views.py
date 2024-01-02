@@ -103,6 +103,7 @@ class NewOrder(LoginRequiredMixin, View):
         if form.is_valid():
             order = form.save(commit=False)
             order.owner = current_user
+            order.status = ''
             order.save()
             return redirect("crm:OrderDetailView", order_Number=order.order_Number)
         return render(request, "order/new.html", {"form": form})

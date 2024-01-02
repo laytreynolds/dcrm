@@ -22,18 +22,12 @@
     {% endif %}
     <br />
 
-      <div class="container">
-        <br />
-        {% block heading %} {% endblock %}
-        <hr />
-        <br />
+    <div class="container-fluid">
+      <br />
+      {% block heading %} {% endblock %}
+      <hr />
 
-        {% block content1 %}
-        
-        
-        
-        {% endblock %}
-      </div>
+      {% block content1 %} {% endblock %}
     </div>
 
     <script
@@ -61,5 +55,10 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <style>
+      #small {
+        width: 70%;
+      }
+    </style>
   </body>
 </html>
