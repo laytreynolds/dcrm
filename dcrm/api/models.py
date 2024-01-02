@@ -99,6 +99,10 @@ class Order(models.Model):
         Madam = "madam", "Madam"
         Rev = "rev", "Reverend"
 
+    class SIM(models.TextChoices):
+        Yes = "Y", "Yes"
+        No = "N", "No"
+
     order_Id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(
         User, related_name="sales", on_delete=models.PROTECT, null=True
@@ -118,6 +122,7 @@ class Order(models.Model):
     order_First_Name = models.CharField(
         max_length=100, default="", null=True, blank=True
     )
+
     order_Last_Name = models.CharField(
         max_length=100, default="", null=True, blank=True
     )
@@ -148,7 +153,6 @@ class Order(models.Model):
     )
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.new)
     order_network = models.CharField(max_length=100, default="", null=True, blank=True)
-    order_name = models.CharField(max_length=255, default="", null=True, blank=True)
     order_box_value = models.CharField(
         max_length=255, default="", null=True, blank=True
     )
@@ -159,13 +163,7 @@ class Order(models.Model):
     order_loss_reason = models.CharField(
         max_length=255, default="", null=True, blank=True
     )
-    order_mobile_number = models.CharField(
-        max_length=255, default="", null=True, blank=True
-    )
     order_date_of_birth = models.DateField(default="1970-01-01", null=True, blank=True)
-    order_account_holder_mobile_number = models.CharField(
-        max_length=255, default="", null=True, blank=True
-    )
     order_email_address = models.EmailField(
         max_length=255, default="", null=True, blank=True
     )
@@ -206,7 +204,7 @@ class Order(models.Model):
         default_manager_name = "objects"
 
     def __str__(self):
-        return f"{self.company} {self.order_name}"
+        return f"{self.company}"
 
     def get_absolute_url(self):
         return reverse("crm:OrderDetailView", args=[self.order_Number])

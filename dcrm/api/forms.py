@@ -77,12 +77,19 @@ class OrderForm(forms.ModelForm):
                         Div("order_tariff", css_class="col-md-6"),
                         Div("order_deal_source", css_class="col-md-6"),
                         Div("order_spend_cap", css_class="col-md-6"),
-                        Div("order_commission_details"),
-                        Div("order_additional_details"),
+                        Div("order_sim_required", css_class="col-md-6"),
+                        Div("order_commission_details",css_class="col-md-6"),
+                        Div("order_additional_details",css_class="col-md-6"),
                         css_class="row",
                     ),
-                    HTML("<br> <hr>"),
-                    Submit("submit", "Submit"),
+                    HTML("<br>"),
+                    Div(
+                        Submit(
+                            "submit",
+                            "Submit Order",
+                            css_class="btn btn-success",
+                        ),css_class="row"
+                    ),
                 ),
             ),
         )
@@ -106,7 +113,6 @@ class OrderForm(forms.ModelForm):
             "order_Delivery_County": "Delivery County",
             "order_Delivery_Postcode": "Delivery Postcode",
             "order_network": "Network",
-            "order_name": "Name",
             "order_box_value": "Box Value",
             "order_deal_source": "Deal Source",
             "order_loss_reason": "Loss Reason",
@@ -123,6 +129,7 @@ class OrderForm(forms.ModelForm):
             "order_commission_details": "Commission Details",
             "order_additional_details": "Addional Details",
             "order_spend_cap": "Spend Cap",
+            "order_sim_required": "Sim Required",
         }
 
         widgets = {

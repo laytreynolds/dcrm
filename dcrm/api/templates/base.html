@@ -20,10 +20,8 @@
     {% else %}
     <nav>{% include 'logged_out_nav.html' %}</nav>
     {% endif %}
-    <br />
 
     <div class="container-fluid">
-      <br />
       {% block heading %} {% endblock %}
       <hr />
 
@@ -58,6 +56,12 @@
     <style>
       #small {
         width: 70%;
+      }
+      body {
+
+        padding-top: 100px;
+        padding-bottom: 100px;
+
       }
     </style>
   </body>
