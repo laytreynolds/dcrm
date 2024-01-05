@@ -1,7 +1,8 @@
+from logging import DEBUG
 from django import forms
 from .models import Order
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML, Field
+from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
 
 
 class SearchForm(forms.Form):
@@ -26,9 +27,9 @@ class OrderForm(forms.ModelForm):
                 "Account Information",
                 Div(
                     Div("order_Title", css_class="col-md-6"),
-                    Div("order_company_type", css_class="col-md-6"),
+                    Div("order_company_name", css_class="col-md-6"),
                     Div("order_First_Name", css_class="col-md-6"),
-                    Div("company", css_class="col-md-6"),
+                    Div("order_company_type", css_class="col-md-6"),
                     Div("order_Last_Name", css_class="col-md-6"),
                     Div("order_Landline", css_class="col-md-6"),
                     Div("order_Email", css_class="col-md-6"),
@@ -40,10 +41,16 @@ class OrderForm(forms.ModelForm):
             ),
             Div(
                 HTML("<br> <hr>"),
+                Div(
+                    Div(
+                        css_class="col-md-9 offset-md-8",
+                    ),
+                    css_class="row",
+                ),
                 Fieldset(
                     "Billing Address",
                     Div(
-                        Div("order_House_Number"),
+                        Div("order_House_Number", css_id="order_house_number"),
                         Div("order_Street"),
                         Div("order_City"),
                         Div("order_County"),
@@ -54,7 +61,10 @@ class OrderForm(forms.ModelForm):
                 Fieldset(
                     "Delivery Address",
                     Div(
-                        Div("order_Delivery_House_Number"),
+                        Div(
+                            "order_Delivery_House_Number",
+                            css_id="delivery_house_number",
+                        ),
                         Div("order_Delivery_Street"),
                         Div("order_Delivery_City"),
                         Div("order_Delivery_County"),
@@ -78,8 +88,8 @@ class OrderForm(forms.ModelForm):
                         Div("order_deal_source", css_class="col-md-6"),
                         Div("order_spend_cap", css_class="col-md-6"),
                         Div("order_sim_required", css_class="col-md-6"),
-                        Div("order_commission_details",css_class="col-md-6"),
-                        Div("order_additional_details",css_class="col-md-6"),
+                        Div("order_commission_details", css_class="col-md-6"),
+                        Div("order_additional_details", css_class="col-md-6"),
                         css_class="row",
                     ),
                     HTML("<br>"),
@@ -88,7 +98,8 @@ class OrderForm(forms.ModelForm):
                             "submit",
                             "Submit Order",
                             css_class="btn btn-success",
-                        ),css_class="row"
+                        ),
+                        css_class="row",
                     ),
                 ),
             ),
@@ -99,7 +110,7 @@ class OrderForm(forms.ModelForm):
 
         labels = {
             "company": "Company",
-            "order_company_type": "Company Type",
+            "order_company_type": "Business Type",
             "order_Title": "Title",
             "order_First_Name": "First Name",
             "order_Last_Name": "Last Name",
@@ -115,7 +126,6 @@ class OrderForm(forms.ModelForm):
             "order_network": "Network",
             "order_box_value": "Box Value",
             "order_deal_source": "Deal Source",
-            "order_loss_reason": "Loss Reason",
             "order_Street": "Street",
             "order_City": "City",
             "order_County": "County",
@@ -130,6 +140,7 @@ class OrderForm(forms.ModelForm):
             "order_additional_details": "Addional Details",
             "order_spend_cap": "Spend Cap",
             "order_sim_required": "Sim Required",
+            "order_company_name": "Business Name"
         }
 
         widgets = {
@@ -139,3 +150,6 @@ class OrderForm(forms.ModelForm):
         }
 
         exclude = ["owner", "order_Open"]
+
+        CRISPY_FAIL_SILENTLY = not DEBUG
+

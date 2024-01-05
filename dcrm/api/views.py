@@ -12,7 +12,7 @@ from django.contrib.auth import get_user
 
 # Globals
 
-pagination = 3
+pagination = 10
 
 # HOME
 
@@ -103,7 +103,6 @@ class NewOrder(LoginRequiredMixin, View):
         if form.is_valid():
             order = form.save(commit=False)
             order.owner = current_user
-            order.status = 'NW'
             order.save()
             return redirect("crm:OrderDetailView", order_Number=order.order_Number)
         return render(request, "order/new.html", {"form": form})
