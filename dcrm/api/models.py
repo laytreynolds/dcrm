@@ -132,7 +132,7 @@ class Order(models.Model):
     order_Delivery_Postcode = models.CharField(max_length=255, default="", null=True, blank=True)
     status = models.CharField(max_length=5, choices=Status.choices, default=Status.new)
     order_network = models.CharField(max_length=100, default="", null=True, blank=True)
-    order_box_value = models.CharField(max_length=255, default="", null=True, blank=True)
+    order_box_value = models.IntegerField(default=0, null=True, blank=True)
     order_deal_source = models.CharField(max_length=255, default="", null=True, blank=True)
     order_connected_date = models.DateField(default="1970-01-01", null=True, blank=True)
     order_loss_reason = models.CharField(max_length=255, default="", null=True, blank=True)

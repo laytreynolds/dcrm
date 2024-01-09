@@ -44,27 +44,27 @@
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-            >Orders</a
+            >Reports</a
           >
           <ul class="dropdown-menu">
             <li>
               <a class="dropdown-item" href="{% url 'crm:OrdersListView' %}"
-                >All</a
+                >All Sales</a
               >
             </li>
             <li>
               <a class="dropdown-item" href="{% url 'crm:OrdersToday' %}"
-                >Today</a
+                > Sales Today</a
               >
             </li>
             <li>
               <a class="dropdown-item" href="{% url 'crm:OrdersThisWeek' %}"
-                >This Week</a
+                >Sales This Week</a
               >
             </li>
             <li>
               <a class="dropdown-item" href="{% url 'crm:OrderThisMonth' %}"
-                >This Month</a
+                >Sales This Month</a
               >
             </li>
           </ul>

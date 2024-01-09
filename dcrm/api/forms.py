@@ -1,8 +1,9 @@
-from logging import DEBUG
 from django import forms
 from .models import Order
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
+from crispy_forms.bootstrap import AppendedText, PrependedText, PrependedAppendedText
+from django.utils.safestring import mark_safe
 
 
 class SearchForm(forms.Form):
@@ -17,8 +18,20 @@ class OrderForm(forms.ModelForm):
             Div(
                 Fieldset(
                     None,
-                    Div("order_campaign", css_class="col-md-6"),
-                    Div("order_Mobile", css_class="col-md-6"),
+                    Div(
+                        PrependedText(
+                            "order_campaign",
+                            mark_safe('<i class="fa-solid fa-bullseye"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
+                    Div(
+                        PrependedText(
+                            "order_Mobile",
+                            mark_safe('<i class="fa-solid fa-mobile"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
                     css_class="row",
                 ),
                 HTML("<br>"),
@@ -26,14 +39,42 @@ class OrderForm(forms.ModelForm):
             Fieldset(
                 "Account Information",
                 Div(
-                    Div("order_Title", css_class="col-md-6"),
-                    Div("order_company_name", css_class="col-md-6"),
+                    Div(
+                        PrependedText(
+                            "order_Title", mark_safe('<i class="fa-solid fa-user"></i>')
+                        ),
+                        css_class="col-md-6",
+                    ),
+                    Div(
+                        PrependedText(
+                            "order_company_name",
+                            mark_safe('<i class="fa-solid fa-briefcase"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
                     Div("order_First_Name", css_class="col-md-6"),
                     Div("order_company_type", css_class="col-md-6"),
                     Div("order_Last_Name", css_class="col-md-6"),
-                    Div("order_Landline", css_class="col-md-6"),
-                    Div("order_Email", css_class="col-md-6"),
-                    Div("order_date_of_birth", css_class="col-md-6"),
+                    Div(
+                        PrependedText(
+                            "order_Landline",
+                            mark_safe('<i class="fa-solid fa-phone"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
+                    Div(
+                        PrependedText(
+                            "order_Email", mark_safe('<i class="fa-solid fa-at"></i>')
+                        ),
+                        css_class="col-md-6",
+                    ),
+                    Div(
+                        PrependedText(
+                            "order_date_of_birth",
+                            mark_safe('<i class="fa-solid fa-calendar"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
                     css_class="row",
                 ),
                 HTML("<br>")
@@ -50,7 +91,13 @@ class OrderForm(forms.ModelForm):
                 Fieldset(
                     "Billing Address",
                     Div(
-                        Div("order_House_Number", css_id="order_house_number"),
+                        Div(
+                            PrependedText(
+                                "order_House_Number",
+                                mark_safe('<i class="fa-solid fa-location-dot"></i>'),
+                            ),
+                            css_id="order_house_number",
+                        ),
                         Div("order_Street"),
                         Div("order_City"),
                         Div("order_County"),
@@ -62,7 +109,10 @@ class OrderForm(forms.ModelForm):
                     "Delivery Address",
                     Div(
                         Div(
-                            "order_Delivery_House_Number",
+                            PrependedText(
+                                "order_Delivery_House_Number",
+                                mark_safe('<i class="fa-solid fa-location-dot"></i>'),
+                            ),
                             css_id="delivery_house_number",
                         ),
                         Div("order_Delivery_Street"),
@@ -80,16 +130,67 @@ class OrderForm(forms.ModelForm):
                 Fieldset(
                     "Sale Details",
                     Div(
-                        Div("order_connection_type", css_class="col-md-6"),
-                        Div("order_network", css_class="col-md-6"),
-                        Div("order_box_value", css_class="col-md-6"),
-                        Div("order_eligibility_date", css_class="col-md-6"),
-                        Div("order_tariff", css_class="col-md-6"),
-                        Div("order_deal_source", css_class="col-md-6"),
-                        Div("order_spend_cap", css_class="col-md-6"),
-                        Div("order_sim_required", css_class="col-md-6"),
-                        Div("order_commission_details", css_class="col-md-6"),
-                        Div("order_additional_details", css_class="col-md-6"),
+                        Div(
+                            PrependedText(
+                                "order_connection_type",
+                                mark_safe('<i class="fa-solid fa-cart-shopping"></i>'),
+                            ),
+                            css_class="col-md-6",
+                        ),
+                        Div(
+                            PrependedText(
+                                "order_network",
+                                mark_safe('<i class="fa-solid fa-wifi"></i>'),
+                            ),
+                            css_class="col-md-6",
+                        ),
+                        Div(
+                            "order_tariff",
+                            css_class="col-md-6",
+                        ),
+                        Div(
+                            PrependedText(
+                                "order_eligibility_date",
+                                mark_safe('<i class="fa-solid fa-calendar"></i>'),
+                            ),
+                            css_class="col-md-6",
+                        ),
+                        Div(
+                            PrependedText(
+                                "order_box_value",
+                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),
+                            ),
+                            css_class="col-md-6",
+                        ),
+                        Div(
+                            PrependedAppendedText(
+                                "order_spend_cap",
+                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),
+                                ".00",
+                            ),
+                            css_class="col-md-6",
+                        ),
+                        Div(
+                            PrependedText(
+                                "order_sim_required",
+                                mark_safe('<i class="fa-solid fa-sim-card"></i>'),
+                            ),
+                            css_class="col-md-6",
+                        ),
+                        Div(
+                            PrependedText(
+                                "order_commission_details",
+                                mark_safe('<i class="fa-solid fa-percent"></i>'),
+                            ),
+                            css_class="col-md-6",
+                        ),
+                        Div(
+                            PrependedText(
+                                "order_additional_details",
+                                mark_safe('<i class="fa-solid fa-circle-info"></i>'),
+                            ),
+                            css_class="col-md-6",
+                        ),
                         css_class="row",
                     ),
                     HTML("<br>"),
@@ -140,7 +241,7 @@ class OrderForm(forms.ModelForm):
             "order_additional_details": "Addional Details",
             "order_spend_cap": "Spend Cap",
             "order_sim_required": "Sim Required",
-            "order_company_name": "Business Name"
+            "order_company_name": "Business Name",
         }
 
         widgets = {
@@ -151,5 +252,4 @@ class OrderForm(forms.ModelForm):
 
         exclude = ["owner", "order_Open"]
 
-        CRISPY_FAIL_SILENTLY = not DEBUG
-
+        AppendedText("field_name", "appended text to show")
