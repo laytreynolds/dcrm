@@ -1,23 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Company, User, Order
-from django.views.generic import ListView, DetailView
-from .forms import SearchForm
+from django.views.generic import ListView, DetailView, View
+from .forms import SearchForm, OrderForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.http import require_POST
+from django.contrib.auth import get_user
 
 
+# Globals
+
+pagination = 10
 
 # HOME
 
+
 @login_required
 def Home(request):
-    return render(request, "base.html")
+    return render(request, "home.html")
+
 
 # ORDER
 
-class OrderSearch(ListView):
+
+class OrderSearch(LoginRequiredMixin,ListView):
     def get(self, request):
         form = SearchForm()
         query = None
@@ -32,8 +40,7 @@ class OrderSearch(ListView):
                     "order_Mobile",
                     "order_First_Name",
                     "order_Last_Name",
-                    "order_Created",
-                )  # Specify the fields to search
+                )
                 results = Order.objects.annotate(search=vector).filter(
                     Q(search__icontains=query)
                 )
@@ -48,22 +55,29 @@ class OrderSearch(ListView):
 class OrdersListView(LoginRequiredMixin, ListView):
     queryset = Order.objects.all()
     context_object_name = "Orders"
-    paginate_by = 1
+    paginate_by = pagination
     template_name = "order/orders_list.html"
 
 
 class OrdersTodayListView(LoginRequiredMixin, ListView):
     queryset = Order.today.all()
     context_object_name = "OrdersToday"
-    paginate_by = 1
+    paginate_by = pagination
     template_name = "order/today.html"
 
 
 class OrdersThisMonthView(LoginRequiredMixin, ListView):
     queryset = Order.month.all()
     context_object_name = "OrdersThisMonth"
-    paginate_by = 1
+    paginate_by = pagination
     template_name = "order/month.html"
+
+
+class OrdersThisweekView(LoginRequiredMixin, ListView):
+    queryset = Order.week.all()
+    context_object_name = "OrdersThisWeek"
+    paginate_by = pagination
+    template_name = "order/week.html"
 
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
@@ -74,8 +88,24 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     slug_url_kwarg = "order_Number"
 
 
-def NewOrder(request):
-    return render(request, "order/new.html")
+class NewOrder(LoginRequiredMixin, View):
+    model = Order
+    method = ["get", "post"]
+
+    def get(self, request):
+        form = OrderForm()
+        return render(request, "order/new.html", {"form": form})
+
+
+    def post(self, request):
+        current_user = get_user(request)
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.owner = current_user
+            order.save()
+            return redirect("crm:OrderDetailView", order_Number=order.order_Number)
+        return render(request, "order/new.html", {"form": form})
 
 
 # COMPANY

@@ -16,26 +16,22 @@
 
   <body>
     {% if user.is_authenticated %}
-      <nav>{% include 'navbar.html' %}</nav>
-      {% else %}
-      <nav>{% include 'logged_out_nav.html' %}</nav>
-      {% endif %}
-      <br />
+    <nav>{% include 'navbar.html' %}</nav>
+    {% else %}
+    <nav>{% include 'logged_out_nav.html' %}</nav>
+    {% endif %}
+
     <div class="container-fluid">
-      <div class="container">
-          {% block heading %}
+      {% block heading %} {% endblock %}
+      <hr />
 
-
-          {% endblock %}
-          <hr />
-        <br />
-
-        <div id="content">
-          {% block content1 %}
-          {% endblock %}
-        </div>
-      </div>
+      {% block content1 %} {% endblock %}
     </div>
+
+    <script
+      src="https://kit.fontawesome.com/2744205f6d.js"
+      crossorigin="anonymous"
+    ></script>
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -62,5 +58,14 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <style>
+      #small {
+        width: 70%;
+      }
+      body {
+        padding-top: 100px;
+        padding-bottom: 100px;
+      }
+    </style>
   </body>
 </html>
