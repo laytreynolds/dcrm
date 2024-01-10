@@ -14,4 +14,6 @@ urlpatterns = [
     path("orders/month", views.OrdersThisMonthView.as_view(), name='OrderThisMonth'),
     path('search/', views.OrderSearch.as_view(), name='OrderSearch'),
     path('orders/week', views.OrdersThisweekView.as_view(), name='OrdersThisWeek'),
+    path('<str:order_number/edit', views.OrdersThisweekView.as_view(), name='OrderEdit'),
+
 ]

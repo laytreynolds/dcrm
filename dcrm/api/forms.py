@@ -156,17 +156,17 @@ class OrderForm(forms.ModelForm):
                             css_class="col-md-6",
                         ),
                         Div(
-                            PrependedText(
+                            PrependedAppendedText(
                                 "order_box_value",
-                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),
+                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),".00"
                             ),
                             css_class="col-md-6",
                         ),
                         Div(
-                            PrependedAppendedText(
+                            PrependedText(
                                 "order_spend_cap",
                                 mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),
-                                ".00",
+                                
                             ),
                             css_class="col-md-6",
                         ),
@@ -178,20 +178,24 @@ class OrderForm(forms.ModelForm):
                             css_class="col-md-6",
                         ),
                         Div(
-                            PrependedText(
-                                "order_commission_details",
-                                mark_safe('<i class="fa-solid fa-percent"></i>'),
+                            Div(
+                                PrependedText(
+                                    "order_commission_details",
+                                    mark_safe('<i class="fa-solid fa-percent"></i>'),
+                                ),
+                                css_class="col-md-6",
                             ),
-                            css_class="col-md-6",
-                        ),
-                        Div(
-                            PrependedText(
-                                "order_additional_details",
-                                mark_safe('<i class="fa-solid fa-circle-info"></i>'),
+                            Div(
+                                PrependedText(
+                                    "order_additional_details",
+                                    mark_safe(
+                                        '<i class="fa-solid fa-circle-info"></i>'
+                                    ),
+                                ),
+                                css_class="col-md-6",
                             ),
-                            css_class="col-md-6",
-                        ),
-                        css_class="row",
+                            css_class="row",
+                        ),css_class="row",
                     ),
                     HTML("<br>"),
                     Div(

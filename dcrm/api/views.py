@@ -25,7 +25,7 @@ def Home(request):
 # ORDER
 
 
-class OrderSearch(ListView):
+class OrderSearch(LoginRequiredMixin,ListView):
     def get(self, request):
         form = SearchForm()
         query = None

@@ -64,7 +64,6 @@ class Weekmanager(models.Manager):
 
 
 
-
 # CLASS
 
 class Order(models.Model):
@@ -108,6 +107,11 @@ class Order(models.Model):
         Yes = "Y", "Yes"
         No = "N", "No"
 
+    class Network(models.TextChoices):
+        O2 = "O2", 'O2'
+        EE = "EE", 'EE'
+        THREE = "THREE", 'Three'
+
     order_Id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(User, related_name="sales", on_delete=models.PROTECT, null=True)
     order_Number = models.CharField(unique=True, max_length=255, default="", editable=False)
@@ -132,21 +136,21 @@ class Order(models.Model):
     order_Delivery_Postcode = models.CharField(max_length=255, default="", null=True, blank=True)
     status = models.CharField(max_length=5, choices=Status.choices, default=Status.new)
     order_network = models.CharField(max_length=100, default="", null=True, blank=True)
-    order_box_value = models.IntegerField(default=0, null=True, blank=True)
+    order_box_value = models.FloatField(default=0, null=True, blank=True)
     order_deal_source = models.CharField(max_length=255, default="", null=True, blank=True)
     order_connected_date = models.DateField(default="1970-01-01", null=True, blank=True)
     order_loss_reason = models.CharField(max_length=255, default="", null=True, blank=True)
     order_date_of_birth = models.DateField(default="1970-01-01", null=True, blank=True)
     order_account_address = models.TextField(default="", null=True, blank=True)
     order_campaign = models.CharField(max_length=255, default="", null=True)
-    order_network = models.CharField(max_length=255, default="", null=True, blank=True)
+    order_network = models.CharField(choices=Network.choices, default="", null=True)
     order_connection_type = models.CharField(max_length=255, default="", null=True)
     order_eligibility_date = models.DateField(default="1970-01-01", null=True, blank=True)
     order_handset = models.CharField(max_length=255, default="", null=True, blank=True)
     order_tariff = models.CharField(max_length=255, default="", null=True, blank=True)
     order_sim_required = models.CharField(max_length=255, choices=SIM.choices, null=True,default=SIM.Yes)
     order_tariff_code = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_spend_cap = models.IntegerField(default=0, null=True)
+    order_spend_cap = models.FloatField(default=0, null=True)
     order_network_account_number = models.CharField(max_length=255, default="", null=True, blank=True)
     order_additional_details = models.TextField(default="", null=True, blank=True)
     order_commission_details = models.TextField(default="", null=True, blank=True)
