@@ -25,7 +25,7 @@ def Home(request):
 # ORDER
 
 
-class OrderSearch(LoginRequiredMixin,ListView):
+class OrderSearch(LoginRequiredMixin, ListView):
     def get(self, request):
         form = SearchForm()
         query = None
@@ -84,8 +84,8 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = "order/detail.html"
     context_object_name = "OrderDetail"
-    slug_field = "order_Number"
-    slug_url_kwarg = "order_Number"
+    slug_field = "order_Id"
+    slug_url_kwarg = "order_Id"
 
 
 class NewOrder(LoginRequiredMixin, View):
@@ -96,7 +96,6 @@ class NewOrder(LoginRequiredMixin, View):
         form = OrderForm()
         return render(request, "order/new.html", {"form": form})
 
-
     def post(self, request):
         current_user = get_user(request)
         form = OrderForm(request.POST)
@@ -104,8 +103,26 @@ class NewOrder(LoginRequiredMixin, View):
             order = form.save(commit=False)
             order.owner = current_user
             order.save()
-            return redirect("crm:OrderDetailView", order_Number=order.order_Number)
+            return redirect("crm:OrderDetailView", order_Id=order.order_Id)
         return render(request, "order/new.html", {"form": form})
+
+
+class OrderUpdate(LoginRequiredMixin, View):
+    model = Order
+
+    def get(self, request, order_Id):
+        order = Order.objects.get(order_Id=order_Id)
+        form = OrderForm(instance=order)
+        return render(request, "order/update.html", {"form": form, "order": order})
+
+    def post(self, request, order_Id):
+        order = Order.objects.get(order_Id=order_Id)
+        form = OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            order = form.save(commit=False)
+            form.save()
+            return redirect("crm:OrderDetailView", order_Id=order_Id)
+        return render(request, "order/update.html", {"form": form, "order": order})
 
 
 # COMPANY

@@ -19,6 +19,7 @@ class OrderForm(forms.ModelForm):
                 Fieldset(
                     None,
                     Div(
+                        Div("status"),
                         PrependedText(
                             "order_campaign",
                             mark_safe('<i class="fa-solid fa-bullseye"></i>'),
@@ -156,9 +157,9 @@ class OrderForm(forms.ModelForm):
                             css_class="col-md-6",
                         ),
                         Div(
-                            PrependedAppendedText(
+                            PrependedText(
                                 "order_box_value",
-                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),".00"
+                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>')
                             ),
                             css_class="col-md-6",
                         ),
@@ -255,5 +256,3 @@ class OrderForm(forms.ModelForm):
         }
 
         exclude = ["owner", "order_Open"]
-
-        AppendedText("field_name", "appended text to show")
