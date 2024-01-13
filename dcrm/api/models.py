@@ -11,7 +11,7 @@ from django.contrib.postgres.search import SearchVectorField
 
 def generate_order_number():
     while True:
-        order_Number = "CRM-" + "".join(random.choices(string.digits, k=6))
+        order_Number = "".join(random.choices(string.digits, k=6))
         # Check if the generated order number already exists
         if Order.objects.filter(order_Number=order_Number).count() == 0:
             break
@@ -136,7 +136,7 @@ class Order(models.Model):
     order_Delivery_Postcode = models.CharField(max_length=255, default="", null=True, blank=True)
     status = models.CharField(max_length=5, choices=Status.choices, default=Status.new)
     order_network = models.CharField(max_length=100, default="", null=True, blank=True)
-    order_box_value = models.FloatField(default=0, null=True, blank=True)
+    order_box_value = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
     order_deal_source = models.CharField(max_length=255, default="", null=True, blank=True)
     order_connected_date = models.DateField(default="1970-01-01", null=True, blank=True)
     order_loss_reason = models.CharField(max_length=255, default="", null=True, blank=True)
@@ -172,4 +172,4 @@ class Order(models.Model):
         return f"{self.company}"
 
     def get_absolute_url(self):
-        return reverse("crm:OrderDetailView", args=[self.order_Number])
+        return reverse("crm:OrderDetailView", args=[self.order_Id])
