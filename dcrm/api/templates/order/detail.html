@@ -1,26 +1,312 @@
 {% extends "base.html" %} {% block heading %}
 <div class="container" id="small">
-  <div>
-    <h1>{{ OrderDetail.order_Number }}</h1>
-  </div>
-  {% endblock %} {% block content1 %}
-  <br />
-  <h4 class="headings">Details</h4>
-
   <div class="row">
     <div class="col">
-    {{OrderDetail.owner}}
-    {{OrderDetail.get_status_display}}
+      <h1>{{ OrderDetail.order_company_name }}</h1>
+      <h4>
+        {{ OrderDetail.order_campaign}} {{OrderDetail.order_connection_type }}
+      </h4>
     </div>
-    <div class="col">
-    {{OrderDetail.order_company_name}}
-    {{OrderDetail.order_spend_cap}}
+    <div class="col d-flex justify-content-end align-items-end">
+      <a
+        href="{% url 'crm:OrderUpdate' OrderDetail.pk %}"
+        class="btn btn btn-outline-primary"
+      >
+        Edit
+      </a>
+      <h1 class="text-muted">{{ OrderDetail.order_Number }}</h1>
+    </div>
   </div>
-</div>
-  
+  {% endblock %} {% block content1 %}
+  <div class="row padding-top-small">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-user"></i>
+          <h5>Account Details</h5>
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Account Holder</strong>
+              </div>
+              <div class="col-lg-6">
+                {{ OrderDetail.order_First_Name }}
+                {{OrderDetail.order_Last_Name}}
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Business Name</strong>
+              </div>
+              <div class="col-lg-6">{{ OrderDetail.order_company_name }}</div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Business Type</strong>
+              </div>
+              <div class="col-lg-6">
+                {{ OrderDetail.get_order_company_type_display }}
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Date Of Birth</strong>
+              </div>
+              <div class="col-lg-6">{{ OrderDetail.order_date_of_birth }}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-  <p class="date">
-    Created at {{ OrderDetail.order_Created }} by {{ OrderDetail.owner }}
-  </p>
-  {% endblock %}
-</div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-bolt"></i>
+          <h5>Quick Details</h5>
+        </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Status</strong>
+              </div>
+              <div class="col-lg-6">{{ OrderDetail.get_status_display }}</div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Campaign</strong>
+              </div>
+              <div class="col-lg-6">{{ OrderDetail.order_campaign }}</div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Sale Type</strong>
+              </div>
+              <div class="col-lg-6">
+                {{ OrderDetail.order_connection_type }}
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Created Date</strong>
+              </div>
+              <div class="col-lg-6">
+                {{ OrderDetail.order_Created|date:"F d, Y" }}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row padding-top">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-receipt"></i>
+            <h5>Account Address</h5>
+          </div>
+        </div>
+        <div class="card-body">
+          {{ OrderDetail.order_House_Number }} {{ OrderDetail.order_Street }}
+          <br />
+          {{ OrderDetail.order_City }}
+          <br />
+          {{ OrderDetail.order_County }}
+          <br />
+          {{ OrderDetail.order_Postcode }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-truck"></i>
+            <h5>Delivery Address</h5>
+          </div>
+        </div>
+        <div class="card-body">
+          {{ OrderDetail.order_Delivery_House_Number}} {{OrderDetail.order_Delivery_Street }}
+          <br />
+          {{ OrderDetail.order_Delivery_City }}
+          <br />
+          {{ OrderDetail.order_Delivery_County }}
+          <br />
+          {{ OrderDetail.order_Delivery_Postcode }}
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-address-book"></i>
+            <h5>Contact Details</h5>
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Mobile</strong>
+              </div>
+              <div class="col-lg-6">{{OrderDetail.order_Mobile}}</div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Landline</strong>
+              </div>
+              <div class="col-lg-6">{{OrderDetail.order_Landline}}</div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-lg-6">
+                <strong>Email</strong>
+              </div>
+              <div class="col-lg-6">{{OrderDetail.order_Email}}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row padding-top">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Sale Details</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-lg-3">
+                  <i class="fa-solid fa-wifi"></i>
+                  <strong>Network</strong>
+                </div>
+                <div class="col-lg-3">{{OrderDetail.order_network}}
+                </div>
+                <div class="col-lg-3">
+                  <i class="fa-solid fa-shopping-cart"></i>
+                  <strong>Sale Type</strong>
+                </div>
+                <div class="col-lg-3">{{OrderDetail.order_connection_type}}
+                </div>
+              </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-lg-3">
+                  <i class="fa-solid fa-shopping-cart"></i>
+                  <strong>Tariff</strong>
+                </div>
+                <div class="col-lg-3">{{OrderDetail.order_tariff}}
+                </div>
+                <div class="col-lg-3">
+                  <i class="fa-solid fa-sim-card"></i>
+                  <strong>SIM Required?</strong>
+                </div>
+                <div class="col-lg-3">
+                  {{OrderDetail.get_order_sim_required_display}}
+                </div>
+              </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-lg-3">
+                  <i class="fa-solid fa-calendar"></i>
+                  <strong>Eligibility Date</strong>
+                </div>
+                <div class="col-lg-3">{{OrderDetail.order_eligibility_date|date:"F d, Y"}}
+                </div>
+                <div class="col-lg-3">
+                  <i class="fa-solid fa-sterling-sign"></i>
+                  <strong>Spend Cap</strong>
+                </div>
+                <div class="col-lg-3">
+                  £{{OrderDetail.order_spend_cap}}
+                </div>
+              </li>
+            </ul>
+          </div>
+
+              <div class="row padding-top">
+                <div class="col-md-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <i class="fa-solid fa-percent"></i>
+                          <h5>Commission Calculations</h5>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        {{ OrderDetail.order_commission_details}}
+                      </div>
+                    </div>
+                  </div>
+                <div class="col-md-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center">
+                          <i class="fa-solid fa-circle-info"></i>
+                          <h5>Addtional Details</h5>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        {{ OrderDetail.order_commission_details}}
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+
+
+
+
+
+
+                <style>
+                  i {
+                    padding-right: 10px;
+                  }
+
+                  .padding-top {
+                    padding-top: 3rem;
+                  }
+
+                  .padding-top-small {
+                    padding-top: 1rem;
+                  }
+
+                  .btn {
+                    margin-right: 2rem;
+                  }
+                </style>
+                {% endblock %}
+
+

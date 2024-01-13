@@ -2,7 +2,7 @@ from django import forms
 from .models import Order
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
-from crispy_forms.bootstrap import AppendedText, PrependedText, PrependedAppendedText
+from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
 
 
