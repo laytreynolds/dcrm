@@ -4,16 +4,16 @@
     <div class="col">
       <h1>{{ OrderDetail.order_company_name }}</h1>
       <h4>
-        {{ OrderDetail.order_campaign}} {{OrderDetail.order_connection_type }}
+       {{ OrderDetail.order_Mobile}} - {{ OrderDetail.order_campaign}} {{OrderDetail.order_connection_type }}   <a
+       href="{% url 'crm:OrderUpdate' OrderDetail.pk %}"
+       class="btn btn btn-outline-primary"
+     >
+       Edit
+     </a>
       </h4>
     </div>
     <div class="col d-flex justify-content-end align-items-end">
-      <a
-        href="{% url 'crm:OrderUpdate' OrderDetail.pk %}"
-        class="btn btn btn-outline-primary"
-      >
-        Edit
-      </a>
+
       <h1 class="text-muted">{{ OrderDetail.order_Number }}</h1>
     </div>
   </div>
@@ -197,24 +197,26 @@
         </ul>
       </div>
     </div>
+  </div>
 
     <div class="row padding-top">
-      <div class="col-md-12">
+      <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-shopping-cart"></i>
             <h5>Sale Details</h5>
+            </div>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <div class="row">
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-wifi"></i>
                   <strong>Network</strong>
                 </div>
                 <div class="col-lg-3">{{OrderDetail.order_network}}
                 </div>
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-shopping-cart"></i>
                   <strong>Sale Type</strong>
                 </div>
                 <div class="col-lg-3">{{OrderDetail.order_connection_type}}
@@ -223,13 +225,11 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-shopping-cart"></i>
                   <strong>Tariff</strong>
                 </div>
                 <div class="col-lg-3">{{OrderDetail.order_tariff}}
                 </div>
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-sim-card"></i>
                   <strong>SIM Required?</strong>
                 </div>
                 <div class="col-lg-3">
@@ -239,13 +239,11 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-calendar"></i>
                   <strong>Eligibility Date</strong>
                 </div>
                 <div class="col-lg-3">{{OrderDetail.order_eligibility_date|date:"F d, Y"}}
                 </div>
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-sterling-sign"></i>
                   <strong>Spend Cap</strong>
                 </div>
                 <div class="col-lg-3">
@@ -254,41 +252,38 @@
               </li>
             </ul>
           </div>
+        </div>
+      </div>
 
-              <div class="row padding-top">
-                <div class="col-md-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <div class="d-flex align-items-center">
-                          <i class="fa-solid fa-percent"></i>
-                          <h5>Commission Calculations</h5>
-                        </div>
-                      </div>
-                      <div class="card-body">
-                        {{ OrderDetail.order_commission_details}}
-                      </div>
-                    </div>
+
+          <div class="row padding-top">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-percent"></i>
+                    <h5>Commission Calculations</h5>
                   </div>
-                <div class="col-md-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <div class="d-flex align-items-center">
-                          <i class="fa-solid fa-circle-info"></i>
-                          <h5>Addtional Details</h5>
-                        </div>
-                      </div>
-                      <div class="card-body">
-                        {{ OrderDetail.order_commission_details}}
-                      </div>
-                    </div>
-                  </div>
+                </div>
+                <div class="card-body">
+                  {{ OrderDetail.order_commission_details }}
+                </div>
               </div>
-
-
-
-
-
-
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <h5>Additional Details</h5>
+                  </div>
+                </div>
+                <div class="card-body">
+                  {{ OrderDetail.order_additional_details }}
+                </div>
+              </div>
+            </div>
+          </div>
 
                 <style>
                   i {
@@ -304,7 +299,7 @@
                   }
 
                   .btn {
-                    margin-right: 2rem;
+                    margin-left: 1rem;
                   }
                 </style>
                 {% endblock %}

@@ -19,7 +19,10 @@ class OrderForm(forms.ModelForm):
                 Fieldset(
                     None,
                     Div(
-                        Div("status"),
+                        PrependedText(
+                            "status",
+                            mark_safe('<i class="fa-solid fa-chart-simple"></i>'),
+                        ),
                         PrependedText(
                             "order_campaign",
                             mark_safe('<i class="fa-solid fa-bullseye"></i>'),
@@ -30,6 +33,10 @@ class OrderForm(forms.ModelForm):
                         PrependedText(
                             "order_Mobile",
                             mark_safe('<i class="fa-solid fa-mobile"></i>'),
+                        ),
+                        PrependedText(
+                            "order_connection_type",
+                            mark_safe('<i class="fa-solid fa-shopping-cart"></i>'),
                         ),
                         css_class="col-md-6",
                     ),
@@ -159,7 +166,7 @@ class OrderForm(forms.ModelForm):
                         Div(
                             PrependedText(
                                 "order_box_value",
-                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>')
+                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),
                             ),
                             css_class="col-md-6",
                         ),
@@ -167,7 +174,6 @@ class OrderForm(forms.ModelForm):
                             PrependedText(
                                 "order_spend_cap",
                                 mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),
-                                
                             ),
                             css_class="col-md-6",
                         ),
@@ -196,7 +202,8 @@ class OrderForm(forms.ModelForm):
                                 css_class="col-md-6",
                             ),
                             css_class="row",
-                        ),css_class="row",
+                        ),
+                        css_class="row",
                     ),
                     HTML("<br>"),
                     Div(
