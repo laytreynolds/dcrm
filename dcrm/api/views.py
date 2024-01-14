@@ -135,7 +135,7 @@ def NewCompany(request):
 # Comment
 
 
-class OrderUpdate(LoginRequiredMixin, View):
+class OrderComment(LoginRequiredMixin, View):
     def post_comment(request, order_Id):
         order = get_object_or_404(Order, id=order_Id)
         comment = None
