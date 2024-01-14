@@ -184,7 +184,7 @@ class Comment(models.Model):
         open = "open", "Open"
         closed = "closed", "Closed"
 
-    owner = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    agent = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="comments")
     body = models.TextField(null=True)
     created = models.DateTimeField(auto_now_add=True)
