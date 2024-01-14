@@ -87,6 +87,14 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     slug_field = "order_Id"
     slug_url_kwarg = "order_Id"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        order = self.get_object()
+        context['form'] = CommentForm()
+        context['comments'] = order.comments.all()
+        return context
+
+
 
 class NewOrder(LoginRequiredMixin, View):
     model = Order
@@ -136,7 +144,13 @@ def NewCompany(request):
 
 
 class OrderComment(LoginRequiredMixin, View):
-    def post_comment(request, order_Id):
+
+    def get(request, order_Id):
+        order = Order.objects.get(order_Id=order_Id)
+        form = OrderForm()
+        return render(request, "order/comment_form.html", {"form": form, "order": order})
+
+    def post(request, order_Id):
         order = get_object_or_404(Order, id=order_Id)
         comment = None
         # A comment was posted
