@@ -1,7 +1,7 @@
 from django import forms
 from .models import Order, Comment
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
+from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML, Field
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
 
@@ -11,11 +11,19 @@ class CommentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = "post"
-        self.helper.add_input(Submit("submit", "Submit", css_class="btn btn-primary"))
+        self.helper.layout = Layout(
+            Field("body", label=""),
+            Field("status", label=""),
+            Submit("submit", "Submit", css_class="btn btn-primary"),
+        )
 
     class Meta:
         model = Comment
-        fields = ["body", "status"]
+        exclude = ['owner', 'order']
+        labels = {
+            'body': '',
+            'status': '',
+        }
 
 
 class SearchForm(forms.Form):

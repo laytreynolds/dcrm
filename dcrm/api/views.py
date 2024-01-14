@@ -165,4 +165,4 @@ class OrderComment(LoginRequiredMixin, View):
                 comment.owner = request.user
             # Save the comment to the database
                 comment.save()
-        return render(request, "order/comment.html",{"order": order, "form": form, "comment": comment})
+        return redirect("crm:OrderDetailView", order_Id=order.order_Id)

@@ -6,7 +6,7 @@
       <h4>
        {{ OrderDetail.order_Mobile}} - {{ OrderDetail.order_campaign}} {{OrderDetail.order_connection_type }}   <a
        href="{% url 'crm:OrderUpdate' OrderDetail.pk %}"
-       class="btn btn btn-outline-primary"
+       class="btn btn-outline-primary" id="edit-button"
      >
        Edit
      </a>
@@ -303,7 +303,7 @@
             </div>
           </div>
 
-          <p>Order ID: {{ OrderDetail.order_Id }}</p>
+
 
 
           {% with comments.count as total_comments %}
@@ -325,7 +325,28 @@
 {% endfor %}
 
 
-{% include "order/comment_form.html" %}
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+       <div class="d-flex align-items-center">
+        <i class="fa-solid fa-circle-info"></i>
+        <h5>Add note</h5>
+      </div>
+    </div>
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        {% include "order/comment_form.html" %}
+      </div>
+    </div>
+  </div>
+
+
+
+
+
 
           
       <style>
@@ -345,8 +366,12 @@
           padding-bottom: 3rem;
         }
         
-        .btn {
+        #edit-button {
           margin-left: 1rem;
+        }
+
+        #submit-button  {
+          margin-bottom: 1rem;
         }
       </style>
       
