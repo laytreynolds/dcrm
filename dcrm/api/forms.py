@@ -5,10 +5,17 @@ from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
 
+
 class CommentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("submit", "Submit", css_class="btn btn-primary"))
+
     class Meta:
         model = Comment
-        fields = ['body', 'status']
+        fields = ["body", "status"]
 
 
 class SearchForm(forms.Form):
@@ -16,7 +23,6 @@ class SearchForm(forms.Form):
 
 
 class OrderForm(forms.ModelForm):
-    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)

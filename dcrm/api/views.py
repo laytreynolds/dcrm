@@ -149,7 +149,7 @@ class OrderComment(LoginRequiredMixin, View):
 
     def get(self, request, order_Id):
         order = Order.objects.get(order_Id=order_Id)
-        form = OrderForm()
+        form = OrderForm(order_id=order_Id)
         return render(request, "order/comment_form.html", {"form": form, "order": order})
 
     def post(self, request, order_Id):
