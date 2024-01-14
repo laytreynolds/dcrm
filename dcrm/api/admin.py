@@ -12,8 +12,8 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-       list_display = ['agent', 'order', 'created', 'body'] 
-       list_filter = ['agent', 'created', 'order']
-       search_fields = ['agent', 'order', 'body']
+       list_display = ['owner', 'order', 'created', 'body'] 
+       list_filter = ['owner', 'created', 'order']
+       search_fields = ['owner', 'order', 'body']
 
 

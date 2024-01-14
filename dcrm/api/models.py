@@ -170,7 +170,7 @@ class Order(models.Model):
         default_manager_name = "objects"
 
     def __str__(self):
-        return f"{self.order_Number} / {self.order_First_Name} {self.order_Last_Name} "
+        return f"{self.order_Number} / {self.order_company_name}"
 
     def get_absolute_url(self):
         return reverse("crm:OrderDetailView", args=[self.order_Id])
@@ -184,7 +184,7 @@ class Comment(models.Model):
         open = "open", "Open"
         closed = "closed", "Closed"
 
-    agent = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="comments")
     body = models.TextField(null=True)
     created = models.DateTimeField(auto_now_add=True)
