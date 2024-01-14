@@ -17,7 +17,25 @@
       <h1 class="text-muted">{{ OrderDetail.order_Number }}</h1>
     </div>
   </div>
-  {% endblock %} {% block content1 %}
+  {% endblock %} 
+  
+  {% block content1 %}
+
+  {% if OrderDetail.status == "CN" %}
+  <div class="alert alert-success" role="alert">
+  Order <strong>{{ OrderDetail.get_status_display }}</strong>
+  </div>
+{% elif OrderDetail.status == "CNL" %}
+<div class="alert alert-danger" role="alert">
+  Order <strong>{{ OrderDetail.get_status_display }}</strong>
+</div>
+{% else %}
+  <div class="alert alert-info" role="alert">
+    This order is currently in <strong>{{ OrderDetail.get_status_display }}</strong>
+  </div>
+{% endif %}
+
+
   <div class="row padding-top-small">
     <div class="col-md-8">
       <div class="card">
@@ -256,7 +274,7 @@
       </div>
 
 
-          <div class="row padding-top">
+          <div class="row padding-top padding-bottom">
             <div class="col-md-6">
               <div class="card">
                 <div class="card-header">
@@ -284,24 +302,32 @@
               </div>
             </div>
           </div>
+      
+      
+      <style>
+        i {
+          padding-right: 10px;
+        }
+        
+        .padding-top {
+          padding-top: 3rem;
+        }
+        
+        .padding-top-small {
+          padding-top: 1rem;
+        }
 
-                <style>
-                  i {
-                    padding-right: 10px;
-                  }
+        .padding-bottom {
+          padding-bottom: 3rem;
+        }
+        
+        .btn {
+          margin-left: 1rem;
+        }
+      </style>
+      
+      
+      {% endblock %}
 
-                  .padding-top {
-                    padding-top: 3rem;
-                  }
-
-                  .padding-top-small {
-                    padding-top: 1rem;
-                  }
-
-                  .btn {
-                    margin-left: 1rem;
-                  }
-                </style>
-                {% endblock %}
 
 

@@ -83,6 +83,7 @@ class Order(models.Model):
         awaiting_Stock = "AW", "Awaiting Stock"
         issues = "IS", "Issues"
         connected = "CN", "Connected"
+        cancelled = "CNL", "Cancelled"
 
     class CompanyType(models.TextChoices):
         sole_trader = "SOT", "Sole Trader"
@@ -113,7 +114,7 @@ class Order(models.Model):
         THREE = "THREE", 'Three'
 
     order_Id = models.AutoField(primary_key=True)
-    owner = models.ForeignKey(User, related_name="sales", on_delete=models.PROTECT, null=True)
+    owner = models.ForeignKey(User, related_name="Sales", on_delete=models.PROTECT, null=True)
     order_Number = models.CharField(unique=True, max_length=255, default="", editable=False)
     company = models.ForeignKey(Company, blank=True, null=True, on_delete=models.CASCADE, related_name="orders")
     order_Created = models.DateTimeField(auto_now=True)
@@ -150,7 +151,7 @@ class Order(models.Model):
     order_tariff = models.CharField(max_length=255, default="", null=True, blank=True)
     order_sim_required = models.CharField(max_length=255, choices=SIM.choices, null=True,default=SIM.Yes)
     order_tariff_code = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_spend_cap = models.FloatField(default=0, null=True)
+    order_spend_cap = models.DecimalField(default=0,decimal_places=2, max_digits=10,null=True)
     order_network_account_number = models.CharField(max_length=255, default="", null=True, blank=True)
     order_additional_details = models.TextField(default="", null=True, blank=True)
     order_commission_details = models.TextField(default="", null=True, blank=True)
@@ -169,7 +170,32 @@ class Order(models.Model):
         default_manager_name = "objects"
 
     def __str__(self):
-        return f"{self.company}"
+        return f"{self.order_Number} / {self.order_First_Name} {self.order_Last_Name} "
 
     def get_absolute_url(self):
         return reverse("crm:OrderDetailView", args=[self.order_Id])
+
+
+# COMMENTS
+
+class Comment(models.Model):
+
+    class Status(models.TextChoices):
+        open = "open", "Open"
+        closed = "closed", "Closed"
+
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="comments")
+    body = models.TextField(null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(choices=Status.choices, default="", null=True)
+    
+
+    class Meta:
+        ordering = ['-created']
+        indexes = [
+            models.Index(fields=['created']),
+        ]
+
+    def __str__(self):
+        return f'Comment by {self.owner} on {self.order}'
