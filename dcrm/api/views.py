@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Company, User, Order
+from .models import Company, User, Order, Comment
 from django.views.generic import ListView, DetailView, View
 from .forms import SearchForm, OrderForm
 from django.contrib.postgres.search import SearchVector
