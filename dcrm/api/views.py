@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.http import require_POST
 from django.contrib.auth import get_user
+from django.urls import reverse
+
 
 
 # Globals
@@ -146,12 +148,12 @@ def NewCompany(request):
 class OrderComment(LoginRequiredMixin, View):
 
     def get(self, request, order_Id):
-        order = Order.objects.get(pk=order_Id)
+        order = Order.objects.get(order_Id=order_Id)
         form = OrderForm()
         return render(request, "order/comment_form.html", {"form": form, "order": order})
 
     def post(self, request, order_Id):
-        order = get_object_or_404(Order, pk=order_Id)
+        order = get_object_or_404(Order, order_Id=order_Id)
         comment = None
         # A comment was posted
         form = CommentForm(request.POST)
@@ -160,6 +162,7 @@ class OrderComment(LoginRequiredMixin, View):
                 comment = form.save(commit=False)
             # Assign the order to the comment
                 comment.order = order
+                comment.owner = request.user
             # Save the comment to the database
                 comment.save()
         return render(request, "order/comment.html",{"order": order, "form": form, "comment": comment})
