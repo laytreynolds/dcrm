@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Company, User, Order, Comment
 from django.views.generic import ListView, DetailView, View
-from .forms import SearchForm, OrderForm
+from .forms import SearchForm, OrderForm, CommentForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -130,3 +130,26 @@ class OrderUpdate(LoginRequiredMixin, View):
 
 def NewCompany(request):
     return render(request, "company/new.html")
+
+
+# Comment
+
+
+class OrderUpdate(LoginRequiredMixin, View):
+    def post_comment(request, order_Id):
+        order = get_object_or_404(Order, id=order_Id)
+        comment = None
+        # A comment was posted
+        form = CommentForm()
+        if form.is_valid():
+            # Create a Comment object without saving it to the database 
+            comment = form.save(commit=False)
+            # Assign the order to the comment
+            comment.order = order
+            # Save the comment to the database
+            comment.save()
+        return render(
+            request,
+            "order/comment.html",
+            {"order": order, "form": form, "comment": comment},
+        )
