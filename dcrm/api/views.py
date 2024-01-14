@@ -145,25 +145,21 @@ def NewCompany(request):
 
 class OrderComment(LoginRequiredMixin, View):
 
-    def get(request, order_Id):
-        order = Order.objects.get(order_Id=order_Id)
+    def get(self, request, order_Id):
+        order = Order.objects.get(pk=order_Id)
         form = OrderForm()
         return render(request, "order/comment_form.html", {"form": form, "order": order})
 
-    def post(request, order_Id):
-        order = get_object_or_404(Order, id=order_Id)
+    def post(self, request, order_Id):
+        order = get_object_or_404(Order, pk=order_Id)
         comment = None
         # A comment was posted
-        form = CommentForm()
+        form = CommentForm(request.POST)
         if form.is_valid():
             # Create a Comment object without saving it to the database 
-            comment = form.save(commit=False)
+                comment = form.save(commit=False)
             # Assign the order to the comment
-            comment.order = order
+                comment.order = order
             # Save the comment to the database
-            comment.save()
-        return render(
-            request,
-            "order/comment.html",
-            {"order": order, "form": form, "comment": comment},
-        )
+                comment.save()
+        return render(request, "order/comment.html",{"order": order, "form": form, "comment": comment})
