@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Company, User, Order, Comment
 from django.views.generic import ListView, DetailView, View
@@ -168,3 +169,16 @@ class OrderComment(LoginRequiredMixin, View):
             # Save the comment to the database
                 comment.save()
         return redirect("crm:OrderDetailView", order_Id=order.order_Id)
+
+
+
+class Dashboard(LoginRequiredMixin, View):
+    template_name = "order/home.html"
+
+    def get(self, request):
+        # Calculate total box value using the model manager
+        total_box_value_today = Order.today.aggregate(total=Sum("order_box_value"))["total"]
+
+        # Include the total_box_value in the context
+        context = {"total_box_value_today": total_box_value_today,}
+        return render(request, "home.html", context)
