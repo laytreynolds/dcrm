@@ -5,7 +5,7 @@ from django.contrib.auth import views as auth_views
 app_name = 'crm'
 
 urlpatterns = [
-    path("", views.Home, name='home'),
+    path("", views.Dashboard.as_view(), name='dashboard'),
     path('orders/', views.OrdersListView.as_view(), name='OrdersListView'),
     path('<int:order_Id>', views.OrderDetailView.as_view(), name='OrderDetailView'),
     path("new/order", views.NewOrder.as_view(), name='NewOrder'),
