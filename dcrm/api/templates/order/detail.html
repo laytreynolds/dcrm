@@ -1,23 +1,37 @@
-{% extends "base.html" %} {% block heading %}
+{% extends "base.html" %}
+
+ {% block heading %}
 <div class="container" id="small">
   <div class="row">
     <div class="col">
-      <h1>{{ OrderDetail.order_company_name }}</h1>
-      <h4>
-        {{ OrderDetail.order_campaign}} {{OrderDetail.order_connection_type }}
+      <div class="d-flex align-items-center">
+        <h1>{{ OrderDetail.order_company_name }}</h1>
+        {% if OrderDetail.status == "CN" %}
+        <h5><span class="badge margin-left text-bg-success">{{ OrderDetail.get_status_display }}</span></h5>
+        {% elif OrderDetail.status == "CNL" %}
+        <h5><span class="badge margin-left text-bg-danger">{{ OrderDetail.get_status_display }}</span></h5>
+        {% else %}
+        <h5><span class="badge margin-left text-bg-info">{{ OrderDetail.get_status_display }}</span></h5>
+      {% endif %}
+    </div>
+    <h4>
+       {{ OrderDetail.order_Mobile}} - {{ OrderDetail.order_campaign}} {{OrderDetail.order_connection_type }}   <a
+       href="{% url 'crm:OrderUpdate' OrderDetail.pk %}"
+       class="btn btn-outline-primary" id="edit-button"
+     >
+       Edit
+     </a>
       </h4>
     </div>
     <div class="col d-flex justify-content-end align-items-end">
-      <a
-        href="{% url 'crm:OrderUpdate' OrderDetail.pk %}"
-        class="btn btn btn-outline-primary"
-      >
-        Edit
-      </a>
+
       <h1 class="text-muted">{{ OrderDetail.order_Number }}</h1>
     </div>
   </div>
-  {% endblock %} {% block content1 %}
+  {% endblock %} 
+  
+  {% block content1 %}
+
   <div class="row padding-top-small">
     <div class="col-md-8">
       <div class="card">
@@ -197,24 +211,26 @@
         </ul>
       </div>
     </div>
+  </div>
 
     <div class="row padding-top">
-      <div class="col-md-12">
+      <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-shopping-cart"></i>
             <h5>Sale Details</h5>
+            </div>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <div class="row">
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-wifi"></i>
                   <strong>Network</strong>
                 </div>
                 <div class="col-lg-3">{{OrderDetail.order_network}}
                 </div>
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-shopping-cart"></i>
                   <strong>Sale Type</strong>
                 </div>
                 <div class="col-lg-3">{{OrderDetail.order_connection_type}}
@@ -223,13 +239,11 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-shopping-cart"></i>
                   <strong>Tariff</strong>
                 </div>
                 <div class="col-lg-3">{{OrderDetail.order_tariff}}
                 </div>
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-sim-card"></i>
                   <strong>SIM Required?</strong>
                 </div>
                 <div class="col-lg-3">
@@ -239,13 +253,11 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-calendar"></i>
                   <strong>Eligibility Date</strong>
                 </div>
                 <div class="col-lg-3">{{OrderDetail.order_eligibility_date|date:"F d, Y"}}
                 </div>
                 <div class="col-lg-3">
-                  <i class="fa-solid fa-sterling-sign"></i>
                   <strong>Spend Cap</strong>
                 </div>
                 <div class="col-lg-3">
@@ -254,59 +266,130 @@
               </li>
             </ul>
           </div>
+        </div>
+      </div>
 
-              <div class="row padding-top">
-                <div class="col-md-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <div class="d-flex align-items-center">
-                          <i class="fa-solid fa-percent"></i>
-                          <h5>Commission Calculations</h5>
-                        </div>
-                      </div>
-                      <div class="card-body">
-                        {{ OrderDetail.order_commission_details}}
-                      </div>
-                    </div>
+
+          <div class="row padding-top padding-bottom">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-percent"></i>
+                    <h5>Commission Calculations</h5>
                   </div>
-                <div class="col-md-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <div class="d-flex align-items-center">
-                          <i class="fa-solid fa-circle-info"></i>
-                          <h5>Addtional Details</h5>
-                        </div>
-                      </div>
-                      <div class="card-body">
-                        {{ OrderDetail.order_commission_details}}
-                      </div>
-                    </div>
-                  </div>
+                </div>
+                <div class="card-body">
+                  {{ OrderDetail.order_commission_details }}
+                </div>
               </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <h5>Additional Details</h5>
+                  </div>
+                </div>
+                <div class="card-body">
+                  {{ OrderDetail.order_additional_details }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <div class="d-flex align-items-center">
+                  <i class="fa-solid fa-note-sticky"></i>
+                <strong>View Notes ({{ comments.count }})</strong>
+              </div>    
+              </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          
+                  {% with comments.count as total_comments %}
+              {% endwith %}
+          
+              <ul class="list-group list-group-flush">
+              {% for comment in comments %}
+               <div class="comment"> 
+                  <li class="list-group-item">
+                  <p class="info">
+                   Note from {{ comment.owner.first_name }} {{ comment.owner.last_name }} on {{ comment.created|date:"F j, H:i" }}
+                    {% if comment.status == "open" %}
+                      <span class="badge margin-left text-bg-secondary">Open</span>
+                    {% else %}
+                    <span class="badge margin-left text-bg-success">Closed</span>
+                  </p>
+                  {% endif %}
+                  {{ comment.body|linebreaks }}
+               </div>
+                {% empty %}
+               <p>No notes to show.</p>
+          {% endfor %}
+          
+          
+              </ul> 
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-pen"></i>        
+                    <strong>Add a Note</strong>
+                </div> 
+                 </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  {% include "order/comment_form.html" %}
+                </div>
+              </div>
+            </div>
+          
+          
 
 
 
 
+          
+      <style>
+        i {
+          padding-right: 10px;
+        }
+        
+        .padding-top {
+          padding-top: 3rem;
+        }
+        
+        .padding-top-small {
+          padding-top: 1rem;
+        }
 
+        .padding-bottom {
+          padding-bottom: 3rem;
+        }
+        
+        #edit-button {
+          margin-left: 1rem;
+        }
 
+        #submit-button  {
+          margin-bottom: 1rem;
+        }
 
-                <style>
-                  i {
-                    padding-right: 10px;
-                  }
+        .margin-left {
+          margin-left: 1rem;
+        }
+      </style>
+      
+      
+      {% endblock %}
 
-                  .padding-top {
-                    padding-top: 3rem;
-                  }
-
-                  .padding-top-small {
-                    padding-top: 1rem;
-                  }
-
-                  .btn {
-                    margin-right: 2rem;
-                  }
-                </style>
-                {% endblock %}
 
 

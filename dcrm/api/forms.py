@@ -1,9 +1,29 @@
 from django import forms
-from .models import Order
+from .models import Order, Comment
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML
+from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML, Field
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
+
+
+class CommentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = "post"
+        self.helper.layout = Layout(
+            Field("body", label=""),
+            Field("status", label=""),
+            Submit("submit", "Submit", css_class="btn btn-primary"),
+        )
+
+    class Meta:
+        model = Comment
+        exclude = ['owner', 'order']
+        labels = {
+            'body': '',
+            'status': '',
+        }
 
 
 class SearchForm(forms.Form):
@@ -19,7 +39,10 @@ class OrderForm(forms.ModelForm):
                 Fieldset(
                     None,
                     Div(
-                        Div("status"),
+                        PrependedText(
+                            "status",
+                            mark_safe('<i class="fa-solid fa-chart-simple"></i>'),
+                        ),
                         PrependedText(
                             "order_campaign",
                             mark_safe('<i class="fa-solid fa-bullseye"></i>'),
@@ -30,6 +53,10 @@ class OrderForm(forms.ModelForm):
                         PrependedText(
                             "order_Mobile",
                             mark_safe('<i class="fa-solid fa-mobile"></i>'),
+                        ),
+                        PrependedText(
+                            "order_connection_type",
+                            mark_safe('<i class="fa-solid fa-shopping-cart"></i>'),
                         ),
                         css_class="col-md-6",
                     ),
@@ -159,7 +186,7 @@ class OrderForm(forms.ModelForm):
                         Div(
                             PrependedText(
                                 "order_box_value",
-                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>')
+                                mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),
                             ),
                             css_class="col-md-6",
                         ),
@@ -167,7 +194,6 @@ class OrderForm(forms.ModelForm):
                             PrependedText(
                                 "order_spend_cap",
                                 mark_safe('<i class="fa-solid fa-sterling-sign"></i>'),
-                                
                             ),
                             css_class="col-md-6",
                         ),
@@ -196,7 +222,8 @@ class OrderForm(forms.ModelForm):
                                 css_class="col-md-6",
                             ),
                             css_class="row",
-                        ),css_class="row",
+                        ),
+                        css_class="row",
                     ),
                     HTML("<br>"),
                     Div(

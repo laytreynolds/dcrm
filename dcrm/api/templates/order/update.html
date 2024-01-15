@@ -2,7 +2,26 @@
 
 {% block heading %}
 <div class="container" id="small">
-  <h1>Update order {{ order.order_Number }}</h1>
+  <div class="row">
+    <div class="col">
+      <div class="d-flex align-items-center">
+        <h1>Edit {{ order.order_company_name }}</h1>
+        {% if order.status == "CN" %}
+        <h5><span class="badge margin-left text-bg-success">{{ order.get_status_display }}</span></h5>
+        {% elif order.status == "CNL" %}
+        <h5><span class="badge margin-left text-bg-danger">{{ order.get_status_display }}</span></h5>
+        {% else %}
+        <h5><span class="badge margin-left text-bg-info">{{ order.get_status_display }}</span></h5>
+      {% endif %}
+    </div>
+    <h4>
+       {{ order.order_Mobile}} - {{ order.order_campaign}} {{order.order_connection_type }} 
+      </h4>
+    </div>
+    <div class="col d-flex justify-content-end align-items-end">
+      <h1 class="text-muted">{{ order.order_Number }}</h1>
+    </div>
+  </div>
   {% endblock %} 
   
   
@@ -26,7 +45,35 @@
   </form>
 </div>
 
-<style>
+  <style>
+    i {
+      padding-right: 10px;
+    }
+    
+    .padding-top {
+      padding-top: 3rem;
+    }
+    
+    .padding-top-small {
+      padding-top: 1rem;
+    }
+
+    .padding-bottom {
+      padding-bottom: 3rem;
+    }
+    
+    #edit-button {
+      margin-left: 1rem;
+    }
+
+    #submit-button  {
+      margin-bottom: 1rem;
+    }
+
+    .margin-left {
+      margin-left: 1rem;
+    }
+
   .address-inline {
     width: 50%;
   }

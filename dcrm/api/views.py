@@ -1,13 +1,15 @@
-from django.shortcuts import render, redirect
-from .models import Company, User, Order
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Company, User, Order, Comment
 from django.views.generic import ListView, DetailView, View
-from .forms import SearchForm, OrderForm
+from .forms import SearchForm, OrderForm, CommentForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.http import require_POST
 from django.contrib.auth import get_user
+from django.urls import reverse
+
 
 
 # Globals
@@ -36,6 +38,8 @@ class OrderSearch(LoginRequiredMixin, ListView):
             if form.is_valid():
                 query = form.cleaned_data["query"]
                 vector = SearchVector(
+                    "order_Email",
+                    "order_company_name",
                     "order_Number",
                     "order_Mobile",
                     "order_First_Name",
@@ -87,6 +91,14 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     slug_field = "order_Id"
     slug_url_kwarg = "order_Id"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        order = self.get_object()
+        context['form'] = CommentForm()
+        context['comments'] = order.comments.all()
+        return context
+
+
 
 class NewOrder(LoginRequiredMixin, View):
     model = Order
@@ -130,3 +142,29 @@ class OrderUpdate(LoginRequiredMixin, View):
 
 def NewCompany(request):
     return render(request, "company/new.html")
+
+
+# Comment
+
+
+class OrderComment(LoginRequiredMixin, View):
+
+    def get(self, request, order_Id):
+        order = Order.objects.get(order_Id=order_Id)
+        form = OrderForm(order_id=order_Id)
+        return render(request, "order/comment_form.html", {"form": form, "order": order})
+
+    def post(self, request, order_Id):
+        order = get_object_or_404(Order, order_Id=order_Id)
+        comment = None
+        # A comment was posted
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            # Create a Comment object without saving it to the database 
+                comment = form.save(commit=False)
+            # Assign the order to the comment
+                comment.order = order
+                comment.owner = request.user
+            # Save the comment to the database
+                comment.save()
+        return redirect("crm:OrderDetailView", order_Id=order.order_Id)
