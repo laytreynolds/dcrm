@@ -1,9 +1,20 @@
-{% extends "base.html" %} {% block heading %}
+{% extends "base.html" %}
+
+ {% block heading %}
 <div class="container" id="small">
   <div class="row">
     <div class="col">
-      <h1>{{ OrderDetail.order_company_name }}</h1>
-      <h4>
+      <div class="d-flex align-items-center">
+        <h1>{{ OrderDetail.order_company_name }}</h1>
+        {% if OrderDetail.status == "CN" %}
+        <h5><span class="badge margin-left text-bg-success">{{ OrderDetail.get_status_display }}</span></h5>
+        {% elif OrderDetail.status == "CNL" %}
+        <h5><span class="badge margin-left text-bg-danger">{{ OrderDetail.get_status_display }}</span></h5>
+        {% else %}
+        <h5><span class="badge margin-left text-bg-info">{{ OrderDetail.get_status_display }}</span></h5>
+      {% endif %}
+    </div>
+    <h4>
        {{ OrderDetail.order_Mobile}} - {{ OrderDetail.order_campaign}} {{OrderDetail.order_connection_type }}   <a
        href="{% url 'crm:OrderUpdate' OrderDetail.pk %}"
        class="btn btn-outline-primary" id="edit-button"
@@ -21,19 +32,59 @@
   
   {% block content1 %}
 
-  {% if OrderDetail.status == "CN" %}
-  <div class="alert alert-success" role="alert">
-  Order <strong>{{ OrderDetail.get_status_display }}</strong>
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+      <div class="d-flex align-items-center">
+        <i class="fa-solid fa-note-sticky"></i>
+      <strong>View Notes ({{ comments.count }})</strong>
+    </div>    
+    </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+
+        {% with comments.count as total_comments %}
+    {% endwith %}
+
+    <ul class="list-group list-group-flush">
+    {% for comment in comments %}
+     <div class="comment"> 
+        <li class="list-group-item">
+        <p class="info">
+         Note from {{ comment.owner.first_name }} {{ comment.owner.last_name }} on {{ comment.created|date:"F j, H:i" }}
+          {% if comment.status == "open" %}
+            <span class="badge margin-left text-bg-secondary">Open</span>
+          {% else %}
+          <span class="badge margin-left text-bg-success">Closed</span>
+        </p>
+        {% endif %}
+        {{ comment.body|linebreaks }}
+     </div>
+      {% empty %}
+     <p>No notes to show.</p>
+{% endfor %}
+
+
+    </ul> 
+    </div>
   </div>
-{% elif OrderDetail.status == "CNL" %}
-<div class="alert alert-danger" role="alert">
-  Order <strong>{{ OrderDetail.get_status_display }}</strong>
-</div>
-{% else %}
-  <div class="alert alert-info" role="alert">
-    This order is currently in <strong>{{ OrderDetail.get_status_display }}</strong>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <div class="d-flex align-items-center">
+          <i class="fa-solid fa-pen"></i>        
+          <strong>Add a Note</strong>
+      </div> 
+       </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        {% include "order/comment_form.html" %}
+      </div>
+    </div>
   </div>
-{% endif %}
+
 
 
   <div class="row padding-top-small">
@@ -303,51 +354,6 @@
             </div>
           </div>
 
-
-
-
-          {% with comments.count as total_comments %}
-          <h2>
-            {{ total_comments }} comment{{ total_comments|pluralize }}
-          </h2>
-      {% endwith %}
-
-      {% for comment in comments %}
-       <div class="comment">   
-          <p class="info">
-           Comment {{ forloop.counter }} by {{ comment.owner.first_name }} {{ comment.owner.last_name }}
-           {{ comment.created }}
-          </p>
-          {{ comment.body|linebreaks }}
-       </div>
-        {% empty %}
-       <p>There are no comments.</p>
-{% endfor %}
-
-
-<div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-       <div class="d-flex align-items-center">
-        <i class="fa-solid fa-circle-info"></i>
-        <h5>Add note</h5>
-      </div>
-    </div>
-      </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        {% include "order/comment_form.html" %}
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
           
       <style>
         i {
@@ -372,6 +378,10 @@
 
         #submit-button  {
           margin-bottom: 1rem;
+        }
+
+        .margin-left {
+          margin-left: 1rem;
         }
       </style>
       
