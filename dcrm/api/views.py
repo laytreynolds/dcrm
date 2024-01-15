@@ -177,8 +177,11 @@ class Dashboard(LoginRequiredMixin, View):
 
     def get(self, request):
         # Calculate total box value using the model manager
-        total_box_value_today = Order.today.aggregate(total=Sum("order_box_value"))["total"]
+        revenue_today = Order.today.aggregate(total=Sum("order_box_value"))["total"]
+        revenue_week = Order.week.aggregate(total=Sum("order_box_value"))["total"]
+        revenue_month = Order.month.aggregate(total=Sum("order_box_value"))["total"]
+
 
         # Include the total_box_value in the context
-        context = {"total_box_value_today": total_box_value_today,}
+        context = {"revenue_today": revenue_today, "revenue_month": revenue_month, "revenue_week": revenue_week}
         return render(request, "home.html", context)

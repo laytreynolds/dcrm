@@ -1,13 +1,17 @@
 {% extends "base.html" %} 
+
 {% block heading %}
+<div class="container">
 <h1>Dashboard</h1>
-{% endblock %} {% block content1 %}
+{% endblock %} 
+{% block content1 %}
+
     <div class="row">
       <div class="col-md-3">
         <div class="card d-flex align-items-stretch border-secondary mb-3">
           <div class="card-body">
             <h5 class="card-title">Sales Today</h5>
-            <p class="card-text">£{{ total_box_value_today }}</p>
+            <p class="card-text">£{{ revenue_today }}</p>
           </div>
         </div>
       </div>
@@ -15,7 +19,7 @@
         <div class="card d-flex align-items-stretch border-secondary mb-3">
           <div class="card-body">
             <h5 class="card-title">Sales This Week</h5>
-            <p class="card-text">£2,094.98</p>
+            <p class="card-text">£{{ revenue_week }}</p>
           </div>
         </div>
       </div>
@@ -23,7 +27,7 @@
         <div class="card d-flex align-items-stretch border-secondary mb-3">
           <div class="card-body">
             <h5 class="card-title">Sales This Month</h5>
-            <p class="card-text">£45,493.29</p>
+            <p class="card-text">£{{ revenue_month }}</p>
           </div>
         </div>
       </div>
@@ -37,5 +41,7 @@
       </div>
     </div>
   </div>
+</div>
+</div>
 </div>
 {% endblock %}
