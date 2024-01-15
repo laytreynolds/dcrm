@@ -38,6 +38,8 @@ class OrderSearch(LoginRequiredMixin, ListView):
             if form.is_valid():
                 query = form.cleaned_data["query"]
                 vector = SearchVector(
+                    "order_Email",
+                    "order_company_name",
                     "order_Number",
                     "order_Mobile",
                     "order_First_Name",

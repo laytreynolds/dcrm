@@ -6,8 +6,6 @@
 
 {% block content1 %}
 {% if query %}
-
-    
     <h4>
         {% with results.count as total_results %} Found {{ total_results }} 
         result{{total_results|pluralize }} {% endwith %}
@@ -17,10 +15,11 @@
         <thead>
             <tr>
                 <th scope="col">Order Number</th>
-                <th scope="col">Company</th>
+                <th scope="col">Business Name</th>
                 <th scope="col">Name</th>
                 <th scope="col">Mobile</th>
                 <th scope="col">Created Date</th>
+                <th scope="col">Sales Agent</th>
             </tr>
         </thead>
         <tbody>
@@ -29,10 +28,11 @@
                 <td>
                     <a href="{{ order.get_absolute_url }}">{{ order.order_Number }}</a>
                   </td>
-                  <td>{{ order.company }}</td>
+                  <td>{{ order.order_company_name }}</td>
                   <td>{{ order.order_First_Name }} {{ order.order_Last_Name }}</td>
                   <td>{{ order.order_Mobile }}</td>
                   <td>{{ order.order_Created }}</td>
+                  <td>{{ order.owner.first_name }} {{ order.owner.last_name }}</td>
                 </tr>
             {% empty %}
                 <tr>
