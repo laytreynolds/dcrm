@@ -1,15 +1,15 @@
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Company, User, Order, Comment
+from .models import User, Order, Comment
 from django.views.generic import ListView, DetailView, View
 from .forms import SearchForm, OrderForm, CommentForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.decorators.http import require_POST
 from django.contrib.auth import get_user
-from django.urls import reverse
+from django.utils.timezone import now
+
 
 
 
@@ -176,12 +176,23 @@ class Dashboard(LoginRequiredMixin, View):
     template_name = "order/home.html"
 
     def get(self, request):
+
         # Calculate total box value using the model manager
+
+        # Daily values 
         revenue_today = Order.today.aggregate(total=Sum("order_box_value"))["total"]
         revenue_week = Order.week.aggregate(total=Sum("order_box_value"))["total"]
         revenue_month = Order.month.aggregate(total=Sum("order_box_value"))["total"]
 
+        # Connected values
+        connected_revenue_month = Order.connected.filter(order_Created__month=now().month).aggregate(total=Sum("order_box_value"))["total"]
+        monthly_users_leaderboard = User.objects.annotate(total_box_value=Sum('sales__order_box_value')).order_by('-total_box_value')[:10]
+        
+
+
+        # Agent Values
+
 
         # Include the total_box_value in the context
-        context = {"revenue_today": revenue_today, "revenue_month": revenue_month, "revenue_week": revenue_week}
+        context = {"revenue_today": revenue_today, "revenue_month": revenue_month, "revenue_week": revenue_week,"connected_revenue_month": connected_revenue_month, 'monthly_users_leaderboard': monthly_users_leaderboard}
         return render(request, "home.html", context)
