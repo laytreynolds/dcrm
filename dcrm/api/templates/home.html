@@ -7,7 +7,7 @@
     <div class="col-md-3">
       <div class="card d-flex align-items-stretch border-secondary mb-3">
         <div class="card-body">
-          <h5 class="card-title">Sales Today</h5>
+          <h4 class="card-title">Sales Today</h4>
           <p class="card-text">£{{ revenue_today }}</p>
         </div>
       </div>
@@ -15,7 +15,7 @@
     <div class="col-md-3">
       <div class="card d-flex align-items-stretch border-secondary mb-3">
         <div class="card-body">
-          <h5 class="card-title">Sales This Week</h5>
+          <h4 class="card-title">Sales This Week</h4>
           <p class="card-text">£{{ revenue_week }}</p>
         </div>
       </div>
@@ -23,7 +23,7 @@
     <div class="col-md-3">
       <div class="card d-flex align-items-stretch border-secondary mb-3">
         <div class="card-body">
-          <h5 class="card-title">Sales This Month</h5>
+          <h4 class="card-title">Sales This Month</h4>
           <p class="card-text">£{{ revenue_month }}</p>
         </div>
       </div>
@@ -31,7 +31,7 @@
     <div class="col-md-3">
       <div class="card d-flex align-items-stretch border-secondary mb-3">
         <div class="card-body">
-          <h5 class="card-title">Connections This Month</h5>
+          <h4 class="card-title">Connections This Month</h4>
           <p class="card-text">£{{connected_revenue_month}}</p>
         </div>
       </div>
@@ -40,7 +40,7 @@
 
   <div class="card width-50">
     <div class="card-header">
-        <h2>Top 10 Agents</h2>
+        <h4>Top 10 Agents</h4>
     </div>
     <div class="card-body">
         {% for user in monthly_users_leaderboard %}

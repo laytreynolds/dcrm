@@ -12,6 +12,7 @@ urlpatterns = [
     path("new/company", views.NewCompany, name='NewCompany'),
     path("orders/today", views.OrdersTodayListView.as_view(), name='OrdersToday'),
     path("orders/month", views.OrdersThisMonthView.as_view(), name='OrderThisMonth'),
+    path("orders/connected/month", views.ConnectionsThisMonth.as_view(), name='ConnectionsThisMonth'),
     path('search/', views.OrderSearch.as_view(), name='OrderSearch'),
     path('orders/week', views.OrdersThisweekView.as_view(), name='OrdersThisWeek'),
     path('<int:order_Id>/update', views.OrderUpdate.as_view(), name='OrderUpdate'),

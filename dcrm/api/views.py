@@ -84,6 +84,12 @@ class OrdersThisweekView(LoginRequiredMixin, ListView):
     paginate_by = pagination
     template_name = "order/week.html"
 
+class ConnectionsThisMonth(LoginRequiredMixin, ListView):
+    queryset = Order.connected.filter(order_Created__month=now().month)
+    context_object_name = "ConnectionsThisMonth"
+    paginate_by = pagination
+    template_name = "order/connected_month.html"
+
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
