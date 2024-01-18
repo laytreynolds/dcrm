@@ -194,10 +194,7 @@ class Dashboard(LoginRequiredMixin, View):
         connected_revenue_month = Order.connected.filter(order_Created__month=now().month).aggregate(total=Sum("order_box_value"))["total"]
         monthly_users_leaderboard = User.objects.annotate(total_box_value=Sum('sales__order_box_value')).order_by('-total_box_value')[:10]
         
-
-
-        # Agent Values
-
+        
 
         # Include the total_box_value in the context
         context = {"revenue_today": revenue_today, "revenue_month": revenue_month, "revenue_week": revenue_week,"connected_revenue_month": connected_revenue_month, 'monthly_users_leaderboard': monthly_users_leaderboard}
