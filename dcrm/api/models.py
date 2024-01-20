@@ -3,6 +3,7 @@ import string, random
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.timezone import now
+from simple_history.models import HistoricalRecords
 
 
 # Generate randomm unique CRM-xxxxxx Number
@@ -123,6 +124,7 @@ class Order(models.Model):
         EE = "EE", "EE"
         THREE = "THREE", "Three"
 
+    history = HistoricalRecords()
     order_Id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(User, related_name="sales", on_delete=models.PROTECT, null=True)
     order_Number = models.CharField(unique=True, max_length=255, default="", editable=False)

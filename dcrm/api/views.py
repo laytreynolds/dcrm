@@ -12,9 +12,6 @@ from django.utils.timezone import now
 from django.db.models.functions import Coalesce
 
 
-
-
-
 # Globals
 
 pagination = 10
@@ -86,6 +83,7 @@ class OrdersThisweekView(LoginRequiredMixin, ListView):
     paginate_by = pagination
     template_name = "order/week.html"
 
+
 class ConnectionsThisMonth(LoginRequiredMixin, ListView):
     queryset = Order.connected.filter(order_Created__month=now().month)
     context_object_name = "ConnectionsThisMonth"
@@ -102,11 +100,17 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        order = self.get_object()
-        context['form'] = CommentForm()
-        context['comments'] = order.comments.all()
+        obj = self.get_object()
+        history_records = obj.history.all()
+        if len(history_records) >= 2:
+            new_record = history_records.latest()
+            old_record = history_records.order_by("-history_date")[1]
+            context["delta"] = new_record.diff_against(old_record)
+        else:
+            context["delta"] = None
+        context["form"] = CommentForm()
+        context["comments"] = obj.comments.all()
         return context
-
 
 
 class NewOrder(LoginRequiredMixin, View):
@@ -157,11 +161,12 @@ def NewCompany(request):
 
 
 class OrderComment(LoginRequiredMixin, View):
-
     def get(self, request, order_Id):
         order = Order.objects.get(order_Id=order_Id)
         form = OrderForm(order_id=order_Id)
-        return render(request, "order/comment_form.html", {"form": form, "order": order})
+        return render(
+            request, "order/comment_form.html", {"form": form, "order": order}
+        )
 
     def post(self, request, order_Id):
         order = get_object_or_404(Order, order_Id=order_Id)
@@ -169,37 +174,50 @@ class OrderComment(LoginRequiredMixin, View):
         # A comment was posted
         form = CommentForm(request.POST)
         if form.is_valid():
-            # Create a Comment object without saving it to the database 
-                comment = form.save(commit=False)
+            # Create a Comment object without saving it to the database
+            comment = form.save(commit=False)
             # Assign the order to the comment
-                comment.order = order
-                comment.owner = request.user
+            comment.order = order
+            comment.owner = request.user
             # Save the comment to the database
-                comment.save()
+            comment.save()
         return redirect("crm:OrderDetailView", order_Id=order.order_Id)
-
 
 
 class Dashboard(LoginRequiredMixin, View):
     template_name = "order/home.html"
 
     def get(self, request):
-
         # Calculate total box value using the model manager
 
-        # Daily values 
+        # Daily values
         revenue_today = Order.today.aggregate(total=Sum("order_box_value"))["total"]
         revenue_week = Order.week.aggregate(total=Sum("order_box_value"))["total"]
         revenue_month = Order.month.aggregate(total=Sum("order_box_value"))["total"]
 
         # Connected values
-        connected_revenue_month = Order.connected.filter(order_Created__month=now().month).aggregate(total=Sum("order_box_value"))["total"]
-        monthly_users_leaderboard = User.objects.annotate(total_box_value=Sum('sales__order_box_value')).order_by('-total_box_value')[:10]
-        
+        connected_revenue_month = Order.connected.filter(
+            order_Created__month=now().month
+        ).aggregate(total=Sum("order_box_value"))["total"]
+        monthly_users_leaderboard = User.objects.annotate(
+            total_box_value=Sum("sales__order_box_value")
+        ).order_by("-total_box_value")[:10]
+
         # Campaigns
 
-        campaign = Campaign.objects.annotate(total_campaign_value=Coalesce(Sum('sales__order_box_value', output_field=IntegerField()), Value(0))).order_by('-total_campaign_value')        
+        campaign = Campaign.objects.annotate(
+            total_campaign_value=Coalesce(
+                Sum("sales__order_box_value", output_field=IntegerField()), Value(0)
+            )
+        ).order_by("-total_campaign_value")
 
         # Include the total_box_value in the context
-        context = {"campaign":campaign, "revenue_today": revenue_today, "revenue_month": revenue_month, "revenue_week": revenue_week,"connected_revenue_month": connected_revenue_month, 'monthly_users_leaderboard': monthly_users_leaderboard}
+        context = {
+            "campaign": campaign,
+            "revenue_today": revenue_today,
+            "revenue_month": revenue_month,
+            "revenue_week": revenue_week,
+            "connected_revenue_month": connected_revenue_month,
+            "monthly_users_leaderboard": monthly_users_leaderboard,
+        }
         return render(request, "home.html", context)

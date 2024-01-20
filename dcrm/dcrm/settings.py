@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     "rest_framework",
     'django.contrib.postgres',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'simple_history'
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'simple_history.middleware.HistoryRequestMiddleware'
 ]
 
 ROOT_URLCONF = "dcrm.urls"
