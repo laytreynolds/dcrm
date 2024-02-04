@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,13 +25,15 @@ SECRET_KEY = "django-insecure-=-(ke37$!$jf=ig8p=d9a36l1qng4p!d3r5w0+la=nla=vf2=-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "0.0.0.0"
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    "api.apps.ApiConfig",
+    "dcrm.api.apps.ApiConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -60,7 +62,7 @@ MIDDLEWARE = [
     'simple_history.middleware.HistoryRequestMiddleware'
 ]
 
-ROOT_URLCONF = "dcrm.urls"
+ROOT_URLCONF = "dcrm.dcrm.urls"
 
 TEMPLATES = [
     {
@@ -131,8 +133,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
-STATIC_ROOT = '/static/'
+STATIC_URL = "dcrm/static/"
+STATIC_ROOT = "dcrm/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
