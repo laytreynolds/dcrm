@@ -4,11 +4,11 @@ import os
 import sys
 
 # Add the path to the dcrm directory
-sys.path.append(os.path.abspath('dcrm'))
+sys.path.append(os.path.abspath('dcrm.dcrm'))
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dcrm.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dcrm.dcrm.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
