@@ -1,0 +1,38 @@
+{% extends "base.html" %} 
+
+{% block heading %}
+<div class="container" id="small">
+  <h1>New Order</h1>
+  {% endblock %} 
+  
+  
+  {%block content1 %}
+
+  {% if form.errors %}
+  {% for field in form %} 
+  {% for error in field.errors %}
+  <div class="alert alert-danger" role="alert">
+    {{field.label}}: {{ error|escape }}
+  </div>
+       {% endfor %}
+        {% endfor %}
+         {% endif %}
+
+
+  <form method="post">
+    {% load crispy_forms_tags %}
+     {% csrf_token %}
+      {% crispy form form.helper %}
+  </form>
+</div>
+
+<style>
+  .address-inline {
+    width: 50%;
+  }
+  legend {
+    font-weight: 700;
+  }
+</style>
+
+{% endblock%}

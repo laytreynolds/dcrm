@@ -1,0 +1,9 @@
+{% load crispy_forms_tags %}
+
+  <div class="container padding-top-small">
+  <form
+    action="{% url 'crm:OrderComment' order_Id=OrderDetail.order_Id %}"method="POST">
+    {% csrf_token %} {{ form|crispy }}
+    <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+  </form>
+</div>

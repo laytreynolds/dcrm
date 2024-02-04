@@ -1,0 +1,130 @@
+{% extends "base.html" %} {% block heading %}
+<div class="container">
+  <h1>Dashboard</h1>
+  {% endblock %} {% block content1 %}
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card d-flex align-items-stretch mb-3 shadow-sm p-3 bg-white rounded">
+        <div class="card-body">
+          <a href="{% url 'crm:OrdersToday' %}"><h4 class="card-title">Sales Today</h4></a>
+          <p class="card-text">£{{ revenue_today }}</p>
+        </div>
+      </div>
+    </div>
+  </a>
+    <div class="col-md-3">
+      <div
+        class="card d-flex align-items-stretch mb-3 shadow-sm p-3 bg-white rounded"
+      >
+        <div class="card-body">
+          <a href="{% url 'crm:OrdersThisWeek' %}"><h4 class="card-title">Sales This Week</h4></a>
+          <p class="card-text">£{{ revenue_week }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        class="card d-flex align-items-stretch mb-3 shadow-sm p-3 bg-white rounded"
+      >
+        <div class="card-body">
+          <a href="{% url 'crm:OrderThisMonth' %}"><h4 class="card-title">Sales This Month</h4></a>
+          <p class="card-text">£{{ revenue_month }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        class="card d-flex align-items-stretch mb-3 shadow-sm p-3 bg-white rounded"
+      >
+        <div class="card-body">
+          <a href="{% url 'crm:ConnectionsThisMonth' %}"><h4 class="card-title">Connections This Month</h4></a>
+          <p class="card-text">£{{connected_revenue_month}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow-sm-sm-sm">
+        <div class="card-header">
+          <h4>Top 10 Agents This Month</h4>
+        </div>
+        <div class="card-body">
+          {% for user in monthly_users_leaderboard %}
+          <div class="row">
+            <div class="col-md-1">
+              {% if forloop.counter == 1 %}
+              <i class="fa-solid fa-medal fa-xl" style="color: #ffd700"></i>
+              {% elif forloop.counter == 2 %}
+              <i class="fa-solid fa-medal fa-xl" style="color: #c0c0c0"></i>
+              {% elif forloop.counter == 3 %}
+              <i class="fa-solid fa-medal fa-xl" style="color: #cd7f32"></i>
+              {% else %}
+              <span><h5 style="padding-left: 5px">{{ forloop.counter }}</h5></span>
+              {% endif %}
+            </div>
+            <div class="col-md-5">
+              {{ user.first_name }} {{ user.last_name }}<br />
+            </div>
+            <div class="col-md-5 d-flex justify-content-end align-items-end">
+              <p>£{{ user.total_box_value }}</p>
+              <p class="text-muted margin-left">({{ user.sales.count}})</p>
+              <br />
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card shadow-sm-sm-sm">
+        <div class="card-header">
+          <h4>Sales By Campaign</h4>
+        </div>
+        <div class="card-body">
+          {% for c in campaign %}
+          <div class="row">
+            <div class="col-md-1">
+              {% if forloop.counter == 1 %}
+              <i class="fa-solid fa-medal fa-xl" style="color: #ffd700"></i>
+              {% elif forloop.counter == 2 %}
+              <i class="fa-solid fa-medal fa-xl" style="color: #c0c0c0"></i>
+              {% elif forloop.counter == 3 %}
+              <i class="fa-solid fa-medal fa-xl" style="color: #cd7f32"></i>
+              {% else %}
+              <span><h5 style="padding-left: 5px">{{ forloop.counter }}</h5></span>
+              {% endif %}
+            </div>
+            <div class="col-md-5">
+              {{c.name }} <br />
+            </div>
+            <div class="col-md-5 d-flex justify-content-end align-items-end">
+              {% if not c.total_campaign_value %}
+              <p>£0</p>
+              {% else %}
+              <p>£{{ c.total_campaign_value }} </p>
+              {% endif %}
+              <p class="text-muted margin-left">({{ c.sales.count}})</p>
+              <br />
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .width-50 {
+      width: 33%;
+    }
+
+    .margin-left {
+      margin-left: 10px;
+    }
+  </style>
+
+  {% endblock %}
+</div>
