@@ -27,7 +27,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
-    "chadwell-crm-77239a942fea.herokuapp.com"
+    "chadwell-crm-77239a942fea.herokuapp.com",
     "www.laytonreynolds.com"
 ]
 
