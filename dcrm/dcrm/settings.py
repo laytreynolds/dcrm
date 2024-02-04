@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-=-(ke37$!$jf=ig8p=d9a36l1qng4p!d3r5w0+la=nla=vf2=-
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "0.0.0.0"
+    "0.0.0.0",
     "chadwell-crm-77239a942fea.herokuapp.com"
 ]
 
