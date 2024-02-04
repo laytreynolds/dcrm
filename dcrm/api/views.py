@@ -1,6 +1,6 @@
-from django.db.models import Sum, Value, DecimalField, IntegerField
+from django.db.models import Sum, Value, IntegerField
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, Order, Campaign
+from .models import User, Order, Campaign, Activity
 from django.views.generic import ListView, DetailView, View
 from .forms import SearchForm, OrderForm, CommentForm
 from django.contrib.postgres.search import SearchVector
@@ -24,8 +24,16 @@ def Home(request):
     return render(request, "home.html")
 
 
-# ORDER
 
+
+# ACTIVITY
+
+class OrderActivity(LoginRequiredMixin, View):
+    pass
+
+
+
+# ORDER
 
 class OrderSearch(LoginRequiredMixin, ListView):
     def get(self, request):

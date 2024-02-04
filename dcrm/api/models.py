@@ -27,6 +27,15 @@ class Campaign(models.Model):
         return f"{self.name}"
 
 
+
+# Activity
+    
+class Activity(models.Model):
+    text = models.TextField(default=None, null=True, blank=True)
+    changed_date = models.DateField(auto_now_add=True)
+    changed_by = models.ForeignKey(User, related_name="user", on_delete=models.PROTECT)
+    
+
 # COMPANY
 
 
@@ -50,7 +59,6 @@ class Company(models.Model):
 
 
 # ORDER
-
 
 class ConnectManager(models.Manager):
     def get_queryset(self):

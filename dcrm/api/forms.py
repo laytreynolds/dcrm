@@ -160,13 +160,6 @@ class OrderForm(forms.ModelForm):
                     Div(
                         Div(
                             PrependedText(
-                                "order_connection_type",
-                                mark_safe('<i class="fa-solid fa-cart-shopping"></i>'),
-                            ),
-                            css_class="col-md-6",
-                        ),
-                        Div(
-                            PrependedText(
                                 "order_network",
                                 mark_safe('<i class="fa-solid fa-wifi"></i>'),
                             ),
