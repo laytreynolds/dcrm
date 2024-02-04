@@ -3,6 +3,8 @@
 import os
 import sys
 
+# Add the path to the dcrm directory
+sys.path.append(os.path.abspath('dcrm'))
 
 def main():
     """Run administrative tasks."""
