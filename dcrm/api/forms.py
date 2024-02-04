@@ -44,7 +44,7 @@ class OrderForm(forms.ModelForm):
                             mark_safe('<i class="fa-solid fa-chart-simple"></i>'),
                         ),
                         PrependedText(
-                            "order_campaign",
+                            "campaign",
                             mark_safe('<i class="fa-solid fa-bullseye"></i>'),
                         ),
                         css_class="col-md-6",
@@ -160,13 +160,6 @@ class OrderForm(forms.ModelForm):
                     Div(
                         Div(
                             PrependedText(
-                                "order_connection_type",
-                                mark_safe('<i class="fa-solid fa-cart-shopping"></i>'),
-                            ),
-                            css_class="col-md-6",
-                        ),
-                        Div(
-                            PrependedText(
                                 "order_network",
                                 mark_safe('<i class="fa-solid fa-wifi"></i>'),
                             ),
@@ -264,7 +257,7 @@ class OrderForm(forms.ModelForm):
             "order_County": "County",
             "order_Postcode": "Postcode",
             "order_date_of_birth": "Date of Birth",
-            "order_campaign": "Campaign",
+            "campaign": "Campaign",
             "order_eligibility_date": "Eligibility Date",
             "order_connected_date": "Connected Date",
             "order_tariff": "Tariff",

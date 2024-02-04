@@ -15,7 +15,7 @@
       {% endif %}
     </div>
     <h4>
-       {{ OrderDetail.order_Mobile}} - {{ OrderDetail.order_campaign}} {{OrderDetail.order_connection_type }}   <a
+       {{ OrderDetail.order_Mobile}} - {{ OrderDetail.campaign}} {{OrderDetail.order_connection_type }}   <a
        href="{% url 'crm:OrderUpdate' OrderDetail.pk %}"
        class="btn btn-outline-primary" id="edit-button"
      >
@@ -25,7 +25,7 @@
     </div>
     <div class="col d-flex justify-content-end align-items-end">
 
-      <h1 class="text-muted">{{ OrderDetail.order_Number }}</h1>
+      <h1 class="text-muted shadow p-3 mb-3 bg-white rounded">{{ OrderDetail.order_Number }}</h1>
     </div>
   </div>
   {% endblock %} 
@@ -105,7 +105,7 @@
               <div class="col-lg-6">
                 <strong>Campaign</strong>
               </div>
-              <div class="col-lg-6">{{ OrderDetail.order_campaign }}</div>
+              <div class="col-lg-6">{{ OrderDetail.campaign }}</div>
             </div>
           </li>
           <li class="list-group-item">
@@ -235,7 +235,7 @@
                 </div>
                 <div class="col-lg-3">{{OrderDetail.order_connection_type}}
                 </div>
-              </li>
+            </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-lg-3">
@@ -299,6 +299,13 @@
             </div>
           </div>
 
+
+
+
+
+
+
+          
           <div class="accordion" id="accordionExample">
             <div class="accordion-item">
               <h2 class="accordion-header">
@@ -330,7 +337,7 @@
                </div>
                 {% empty %}
                <p>No notes to show.</p>
-          {% endfor %}
+              {% endfor %}
           
           
               </ul> 
@@ -350,6 +357,37 @@
                   {% include "order/comment_form.html" %}
                 </div>
               </div>
+            </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <div class="d-flex align-items-center">
+                      <i class="fa-solid fa-pen"></i>        
+                      <strong>View History</strong>
+                  </div> 
+                   </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <ul>
+                      {% for change in delta.changes %}
+                        <div class="change"> 
+                          <li class="list-group-item">
+                            <p class="info">
+                              {{ change.field }} changed from {{ change.old }} to {{ change.new }}
+                            </p>
+                          </li>
+                        </div>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+
+
+
+
+
+
             </div>
           
           
