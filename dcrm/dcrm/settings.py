@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "0.0.0.0"
+    "chadwell-crm-77239a942fea.herokuapp.com"
 ]
 
 
