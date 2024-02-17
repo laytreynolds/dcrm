@@ -91,10 +91,10 @@ WSGI_APPLICATION = "dcrm.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "d26vtbkdld8h37",
-        "USER": "gxbudwwictwmkw",
-        "PASSWORD": "5360db64ef296c0803a6d97b80a2cbf07d37cfa9c734180a77f9cf104e6a1140",
-        "HOST": "ec2-54-73-22-169.eu-west-1.compute.amazonaws.com",
+        "NAME": "d77aem4n4dr09e",
+        "USER": "ylvzkxufaxcear",
+        "PASSWORD": "035be5535ee2db2f496ff4705d5be4dda98fcaf644fd4ff569be1acabb325108",
+        "HOST": "ec2-52-211-88-48.eu-west-1.compute.amazonaws.com",
         "PORT": "5432",    
     }
 
@@ -146,3 +146,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = '/crm/'
 LOGIN_URL = '/login'
 LOGOUT_URL = '/logout'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+      'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+] }
