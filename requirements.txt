@@ -8,6 +8,7 @@ django-simple-history==3.4.0
 djangorestframework==3.14.0
 gunicorn==21.2.0
 idna==3.6
+newrelic==9.6.0
 packaging==23.2
 psycopg2-binary==2.9.3
 pytz==2023.3.post1
