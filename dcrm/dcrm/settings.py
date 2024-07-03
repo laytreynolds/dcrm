@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'crispy_forms',
     'crispy_bootstrap5',
-    'simple_history'
+    'simple_history',
+    'chat'
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
