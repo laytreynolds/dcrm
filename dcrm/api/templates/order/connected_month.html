@@ -8,7 +8,7 @@
       <th scope="col">Order Number</th>
       <th scope="col">Owner</th>
       <th scope="col">Status</th>
-      <th scope="col">Company</th>
+      <th scope="col">Business Name</th>
       <th scope="col">Contact Name</th>
       <th scope="col">Mobile</th>
       <th scope="col">Campaign</th>
@@ -30,7 +30,7 @@
       </td>
       <td>{{ order.owner }}</td>
       <td>{{ order.get_status_display }}</td>
-      <td>{{ order.company }}</td>
+      <td>{{ order.order_company_name }}</td>
       <td>{{ order.order_First_Name }} {{ order.order_Last_Name }}</td>
       <td>{{ order.order_Mobile }}</td>
       <td>{{ order.campaign }}</td>

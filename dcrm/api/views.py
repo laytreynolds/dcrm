@@ -1,4 +1,4 @@
-from django.db.models import Sum, Value, IntegerField
+from django.db.models import Sum, Value, IntegerField, FloatField, Q
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Order, Campaign, Activity
 from django.views.generic import ListView, DetailView, View
@@ -24,16 +24,15 @@ def Home(request):
     return render(request, "home.html")
 
 
-
-
 # ACTIVITY
+
 
 class OrderActivity(LoginRequiredMixin, View):
     pass
 
 
-
 # ORDER
+
 
 class OrderSearch(LoginRequiredMixin, ListView):
     def get(self, request):
@@ -207,17 +206,18 @@ class Dashboard(LoginRequiredMixin, View):
         connected_revenue_month = Order.connected.filter(
             order_Created__month=now().month
         ).aggregate(total=Sum("order_box_value"))["total"]
+
         monthly_users_leaderboard = User.objects.annotate(
             total_box_value=Sum("sales__order_box_value")
-        ).order_by("-total_box_value")[:10]
+        ).order_by("total_box_value")[:10]
+
+        monthly_users_leaderboard = User.objects.filter(
+        sales__isnull=False).annotate(total_box_value=Coalesce(Sum("sales__order_box_value", output_field=FloatField()), Value(0.00))).order_by("-total_box_value")[:10]
 
         # Campaigns
 
-        campaign = Campaign.objects.annotate(
-            total_campaign_value=Coalesce(
-                Sum("sales__order_box_value", output_field=IntegerField()), Value(0)
-            )
-        ).order_by("-total_campaign_value")
+        campaign = Campaign.objects.filter(sales__isnull=False).annotate(
+            total_campaign_value=Coalesce(Sum("sales__order_box_value", output_field=FloatField()), Value(0.00))).order_by("-total_campaign_value")
 
         # Include the total_box_value in the context
         context = {
