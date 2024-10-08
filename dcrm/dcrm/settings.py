@@ -29,7 +29,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "chadwell-crm-77239a942fea.herokuapp.com",
-    "www.laytonreynolds.com"
+    "www.laytonreynolds.com",
 ]
 
 
@@ -44,16 +44,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    'django.contrib.postgres',
-    'crispy_forms',
-    'crispy_bootstrap5',
-    'simple_history',
-    'chat'
+    "django.contrib.postgres",
+    "crispy_forms",
+    "crispy_bootstrap5",
+    "simple_history",
+    "chat",
 ]
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'simple_history.middleware.HistoryRequestMiddleware'
+    "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
 ROOT_URLCONF = "dcrm.dcrm.urls"
@@ -97,9 +97,8 @@ DATABASES = {
         "USER": "ylvzkxufaxcear",
         "PASSWORD": "035be5535ee2db2f496ff4705d5be4dda98fcaf644fd4ff569be1acabb325108",
         "HOST": "ec2-52-211-88-48.eu-west-1.compute.amazonaws.com",
-        "PORT": "5432",    
+        "PORT": "5432",
     }
-
 }
 
 
@@ -145,11 +144,12 @@ STATIC_ROOT = "dcrm/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = '/crm/'
-LOGIN_URL = '/login'
-LOGOUT_URL = '/logout'
+LOGIN_REDIRECT_URL = "/crm/"
+LOGIN_URL = "/login"
+LOGOUT_URL = "/logout"
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-      'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-] }
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ]
+}
