@@ -11,10 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from environs import Env
-
-env = Env()
-env.read_env()  # Reads the .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -24,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = "django-insecure-=-(ke37$!$jf=ig8p=d9a36l1qng4p!d3r5w0+la=nla=vf2=-"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -32,7 +28,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "chadwell-crm-77239a942fea.herokuapp.com",
-    "www.laytonreynolds.com",
+    "www.laytonreynolds.com"
 ]
 
 
@@ -47,16 +43,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "django.contrib.postgres",
-    "crispy_forms",
-    "crispy_bootstrap5",
-    "simple_history",
-    "chat",
+    'django.contrib.postgres',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'simple_history',
+    'chat'
 ]
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -66,7 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "simple_history.middleware.HistoryRequestMiddleware",
+    'simple_history.middleware.HistoryRequestMiddleware'
 ]
 
 ROOT_URLCONF = "dcrm.dcrm.urls"
@@ -96,12 +92,13 @@ WSGI_APPLICATION = "dcrm.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DB_NAME"),
-        "USER": env("DB_USER"),
-        "PASSWORD": env("DB_PASSWORD"),
-        "HOST": env("DB_HOST"),
-        "PORT": "5432",
+        "NAME": "d77aem4n4dr09e",
+        "USER": "ylvzkxufaxcear",
+        "PASSWORD": "035be5535ee2db2f496ff4705d5be4dda98fcaf644fd4ff569be1acabb325108",
+        "HOST": "ec2-52-211-88-48.eu-west-1.compute.amazonaws.com",
+        "PORT": "5432",    
     }
+
 }
 
 
@@ -147,12 +144,11 @@ STATIC_ROOT = "dcrm/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = "/crm/"
-LOGIN_URL = "/login"
-LOGOUT_URL = "/logout"
+LOGIN_REDIRECT_URL = '/crm/'
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
-    ]
-}
+    'DEFAULT_PERMISSION_CLASSES': [
+      'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+] }
