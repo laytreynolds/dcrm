@@ -1,2 +1,2 @@
-web: gunicorn dcrm.dcrm.wsgi --log-file ./app.log
+web: gunicorn dcrm.dcrm.wsgi --log-file -
 
