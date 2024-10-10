@@ -1,78 +1,52 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CRM</title>
+{% extends "base.html" %} {% load static %} {% load crispy_forms_tags %} 
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM5B0I5jV6OaDgDg5zB+Y5q2fJ8cZf5H5T4U9R"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    {% load crispy_forms_tags %} {% block content1 %}
-    <section class="vh-100 gradient-custom">
-      <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div class="card bg-dark text-white" style="border-radius: 1rem">
-              <div class="card-body p-5 text-center">
-                <div class="mb-md-5 mt-md-4 pb-5">
-                  <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                  <p class="text-white-50 mb-5">
-                    Please enter your Username and password.
-                  </p>
-                  <form method="post">
-                    {% csrf_token %} {{ form|crispy }}
-                    <input type="hidden" name="next" value="{{ next }}" />
-                    <button class="btn btn-success" type="submit">Login</button>
-                  </form>
-                  <div
-                    class="d-flex justify-content-center text-center mt-4 pt-1"
-                  >
-                    <a href="#!" class="text-white"
-                      ><i class="fab fa-facebook-f fa-lg"></i
-                    ></a>
-                    <a href="#!" class="text-white"
-                      ><i class="fab fa-twitter fa-lg mx-4 px-2"></i
-                    ></a>
-                    <a href="#!" class="text-white"
-                      ><i class="fab fa-google fa-lg"></i
-                    ></a>
-                  </div>
-                </div>
+
+{% block heading %} 
+<style>
+  body {
+    background-image: url("{% static 'images/dunes.jpg' %}");
+    background-size: cover; /* Ensures the background image covers the entire area */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the background image from repeating */
+  }
+  .card.bg-dark {
+    background-color: rgba(0, 0, 0, 0.5) !important; /* Adjust the alpha value as needed */
+  }
+</style>
+{% endblock %}
+{% block content1 %}
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem">
+          <div class="card-body p-5 text-center">
+            <div class="mb-md-5 mt-md-4 pb-5">
+              <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+              <p class="text-white-50 mb-5">
+                Please enter your Username and password.
+              </p>
+              <form method="post">
+                {% csrf_token %} {{ form|crispy }}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <button class="btn btn-secondary btn-lg" type="submit">Login</button>
+              </form>
+              <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                <a href="#!" class="text-white"
+                  ><i class="fab fa-facebook-f fa-lg"></i
+                ></a>
+                <a href="#!" class="text-white"
+                  ><i class="fab fa-twitter fa-lg mx-4 px-2"></i
+                ></a>
+                <a href="#!" class="text-white"
+                  ><i class="fab fa-google fa-lg"></i
+                ></a>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    {% endblock %}
-
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+    </div>
+  </div>
+</section>
+{% endblock %}

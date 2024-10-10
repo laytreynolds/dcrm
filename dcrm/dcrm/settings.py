@@ -27,12 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "chadwell-crm-77239a942fea.herokuapp.com",
     "www.laytonreynolds.com",
+    "127.0.0.1",
 ]
 
 
@@ -87,7 +88,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "dcrm.wsgi.application"
+
+WSGI_APPLICATION = "dcrm.dcrm.wsgi.application"
 
 
 # Database
@@ -139,11 +141,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Add this line to include the global static directory
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
