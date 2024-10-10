@@ -18,19 +18,6 @@
       integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM5B0I5jV6OaDgDg5zB+Y5q2fJ8cZf5H5T4U9R"
       crossorigin="anonymous"
     />
-    <style>
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-      }
-      section.vh-100.gradient-custom {
-        background-image: url('{% static "images/blur.webp" %}') !important;
-        background-size: cover;
-        background-position: center;
-        height: 100vh; /* Ensures it takes full viewport height */
-      }
-    </style>
   </head>
   <body>
     {% load crispy_forms_tags %} {% block content1 %}
@@ -43,7 +30,7 @@
                 <div class="mb-md-5 mt-md-4 pb-5">
                   <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                   <p class="text-white-50 mb-5">
-                    Please enter your Username and password!
+                    Please enter your Username and password.
                   </p>
                   <form method="post">
                     {% csrf_token %} {{ form|crispy }}
