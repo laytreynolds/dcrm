@@ -17,13 +17,10 @@
   <body>
     {% if user.is_authenticated %}
     <nav>{% include 'navbar.html' %}</nav>
-    {% else %}
-    <nav>{% include 'logged_out_nav.html' %}</nav>
     {% endif %}
 
     <div class="container-fluid">
       {% block heading %} {% endblock %}
-      <hr />
 
       {% block content1 %} {% endblock %}
     </div>
@@ -61,10 +58,6 @@
     <style>
       #small {
         width: 70%;
-      }
-      body {
-        padding-top: 100px;
-        padding-bottom: 100px;
       }
     </style>
   </body>
