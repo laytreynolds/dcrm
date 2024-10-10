@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
@@ -89,7 +89,7 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = "dcrm.dcrm.wsgi.application"
+WSGI_APPLICATION = "dcrm.wsgi.application"
 
 
 # Database
