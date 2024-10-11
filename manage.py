@@ -29,6 +29,12 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+
+    # Check if runserver_plus is available and use it with SSL
+    if "runserver_plus" in sys.argv:
+        cert_file = env("SSL_CERT_FILE", default="cert.pem")
+        key_file = env("SSL_KEY_FILE", default="key.pem")
+        sys.argv += ["--cert-file", cert_file, "--key-file", key_file]
     execute_from_command_line(sys.argv)
 
 
