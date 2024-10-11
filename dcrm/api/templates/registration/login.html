@@ -12,6 +12,14 @@
   .card.bg-dark {
     background-color: rgba(0, 0, 0, 0.5) !important; /* Adjust the alpha value as needed */
   }
+  .form-control {
+    background-color: rgba(255, 255, 255, 0.2); /* Makes the input background semi-transparent */
+    color: white; /* Ensures the text color is readable */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Adds a border with some transparency */
+  }
+  .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Makes the placeholder text semi-transparent */
+  }
 </style>
 {% endblock %}
 {% block content1 %}
