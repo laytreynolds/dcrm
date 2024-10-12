@@ -12,18 +12,24 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
   </head>
 
   <body class="bg-dark text-white">
     {% if user.is_authenticated %}
     <nav>{% include 'navbar.html' %}</nav>
-    {% endif %}
+    {% endif %} 
+    
+    {% block heading %} 
+    
+    {% endblock %} 
 
-    <div class="container-fluid">
-      {% block heading %} {% endblock %}
-
-      {% block content1 %} {% endblock %}
-    </div>
+    {% block content1 %} 
+    
+    {% endblock %}
 
     <script
       src="https://kit.fontawesome.com/2744205f6d.js"
@@ -56,8 +62,22 @@
       crossorigin="anonymous"
     ></script>
     <style>
-      #small {
-        width: 70%;
+      .form-control {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.2
+        ); /* Makes the input background semi-transparent */
+        border: 1px solid rgba(255, 255, 255, 0.5); /* Adds a border with some transparency */
+      }
+      .form-control::placeholder {
+        color: rgba(
+          255,
+          255,
+          255,
+          0.7
+        ); /* Makes the placeholder text semi-transparent */
       }
     </style>
   </body>
