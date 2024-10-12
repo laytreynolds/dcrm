@@ -1,6 +1,13 @@
+{% load static%}
+<style>
+  .logo {
+    width: 100px;
+  }
+</style>
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
   <div class="container" id="navbar">
-    <a class="navbar-brand" href="{% url 'crm:dashboard' %}">CRM</a>
+    <a class="navbar-brand" href="{% url 'crm:dashboard' %}"><img class="logo" src={% static 'images/crm.png'%}>
+    </a>
     <button
       class="navbar-toggler"
       type="button"
