@@ -12,7 +12,7 @@ env = environ.Env(
 env_file = os.getenv('DJANGO_ENV_FILE', '.env')
 env.read_env(os.path.join(BASE_DIR, env_file))
 
-ALLOWED_HOSTS= env.list("ALLOWED_HOSTS")
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 SECURE_HSTS_SECONDS= env("SECURE_HSTS_SECONDS")
 SECURE_SSL_REDIRECT= env("SECURE_SSL_REDIRECT")
