@@ -48,7 +48,9 @@
   </head>
 
   <body class="bg-dark text-white">
+    {% if user.authenticted %}
     {% include 'navbar.html' %}
+    {% endif %}
     <div class="main-content">
       {% block heading %}{% endblock %} {% block content1 %}{% endblock %}
     </div>
