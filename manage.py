@@ -5,7 +5,7 @@ import sys
 import environ
 
 # Add the path to the dcrm directory
-sys.path.append(os.path.abspath("dcrm.dcrm"))
+sys.path.append(os.path.abspath("dcrm"))
 
 # Load the appropriate .env file
 env = environ.Env()
@@ -16,10 +16,10 @@ environ.Env.read_env(env_file)
 def main():
     """Run administrative tasks."""
     os.environ.setdefault(
-        "DJANGO_SETTINGS_MODULE", "dcrm.dcrm.settings.dev"
+        "DJANGO_SETTINGS_MODULE", "dcrm.settings.dev"
     )  # Default to development settings
 
-    settings_module = os.getenv("DJANGO_SETTINGS_MODULE", "dcrm.dcrm.settings.dev")
+    settings_module = os.getenv("DJANGO_SETTINGS_MODULE", "dcrm.settings.dev")
     os.environ["DJANGO_SETTINGS_MODULE"] = settings_module
     try:
         from django.core.management import execute_from_command_line
