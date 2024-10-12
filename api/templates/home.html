@@ -1,51 +1,9 @@
-{% extends "base.html" %} {% block heading %}
-<div class="container">
-  <h1>Dashboard</h1>
-</div>
-{% endblock %} {% block content1 %}
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-3">{% include 'navbar.html' %}</div>
+{% extends "base.html" %} 
+{% block heading %}
+<h1>Dashboard</h1>
+{% endblock %}
 
-    <!-- Main Content -->
-    <div class="col-md-9">
-      <div class="row">
-        <div class="col-md-4">
-          <div
-            class="card d-flex align-items-stretch mb-3 shadow-sm p-3 bg-white rounded"
-          >
-            <div class="card-body">
-              <a href="{% url 'crm:OrdersToday' %}">
-                <h4 class="card-title">Sales Today</h4>
-              </a>
-              {% if revenue_today == None %}
-              <p class="card-text">£0</p>
-              {% else %}
-              <p class="card-text">£{{ revenue_today }}</p>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div
-            class="card d-flex align-items-stretch mb-3 shadow-sm p-3 bg-white rounded"
-          >
-            <div class="card-body">
-              <a href="{% url 'crm:OrdersThisWeek' %}">
-                <h4 class="card-title">Sales This Week</h4>
-              </a>
-              {% if revenue_week == None %}
-              <p class="card-text">£0</p>
-              {% else %}
-              <p class="card-text">£{{ revenue_week }}</p>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        <!-- Add more cards as needed -->
-      </div>
-    </div>
-  </div>
-  {% endblock %}
-</div>
+ {% block content1 %}
+ {% endblock %}
+  <!-- Main Content -->
+
