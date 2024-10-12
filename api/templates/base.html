@@ -48,8 +48,8 @@
   </head>
 
   <body class="bg-dark text-white">
-    {% if user.authenticted %}
-    {% include 'navbar.html' %}
+    {% if user.is_authenticated %}
+    <nav>{% include 'navbar.html' %}</nav>
     {% endif %}
     <div class="main-content">
       {% block heading %}{% endblock %} {% block content1 %}{% endblock %}
