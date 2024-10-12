@@ -21,7 +21,6 @@
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items horizontally */
   }
 
   .sidebar a,
@@ -32,6 +31,7 @@
     color: white;
     display: block;
     margin-bottom: 5px; /* Add margin between menu items */
+    width: 100%; /* Ensure full width for consistency */
   }
 
   .sidebar a:hover:not(.no-hover) {
@@ -40,6 +40,27 @@
 
   .sidebar .collapse {
     background-color: #343a40;
+    width: 100%; /* Ensure full width for consistency */
+  }
+
+  .sidebar .collapse a {
+    padding-left: 15px; /* Indent the items inside the collapsible menu */
+    width: calc(100% - 30px); /* Adjust width to account for padding */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: flex-start; /* Align items to the left */
+  }
+
+  .sidebar .collapsing a {
+    padding-left: 15px; /* Indent the items inside the collapsible menu */
+    display: flex; /* Use flexbox for alignment */
+    justify-content: flex-start; /* Align items to the left */
+    width: calc(100% - 30px); /* Adjust width to account for padding */
+
+    }
+
+  .sidebar .collapse a:hover {
+    background-color: #575d63;
   }
 
   .search-container {
@@ -48,7 +69,7 @@
   }
 
   .search-container input[type="search"] {
-    width: 100; /* Adjust width to account for padding and icon */
+    width: 100%% /* Adjust width to account for padding and icon */
     padding-left: 35px; /* Add padding to make space for the icon */
     box-sizing: border-box; /* Ensure padding is included in the width */
   }
@@ -64,18 +85,12 @@
 
   .sidebar .collapse a {
     color: white;
-    padding-left: 30px; /* Indent the items inside the collapsible menu */
   }
 
   .sidebar .collapse a:hover {
     background-color: #575d63;
   }
-
-  .content {
-    margin-left: 260px;
-    padding: 20px;
-  }
-
+  
   .sidebar .nav-link.collapsible::after {
     content: "\f078"; /* Font Awesome down arrow */
     font-family: "Font Awesome 5 Free";
@@ -113,15 +128,10 @@
 
   .user-section .collapse:not(.show) {
     display: none;
-  }
-
-  .no-padding {
-    padding: 0 20px !important;
-  }
 </style>
 
 <div class="sidebar">
-  <a class="navbar-brand no-hover no-padding" href="{% url 'crm:dashboard' %}">
+  <a class="navbar-brand no-hover" href="{% url 'crm:dashboard' %}">
     <img class="logo" src="{% static 'images/crm.png' %}" />
   </a>
 
@@ -139,7 +149,7 @@
         aria-label="Search"
         name="query"
       />
-      <i class="fas fa-search" aria-hidden="true" style="top: 30px"></i>
+      <i class="fas fa-search"></i>
     </form>
   </div>
 
