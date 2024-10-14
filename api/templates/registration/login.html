@@ -1,61 +1,146 @@
-{% extends "base.html" %} {% load static %} {% load crispy_forms_tags %} 
-{%block heading %}
-<style>
-  .logo {
-    width: 100px;
-    margin: 25px;
-  }
+{% load static %} {% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CRM</title>
 
-  .card.bg-dark {
-    background-color: rgba(
-      0,
-      0,
-      0,
-      0.2
-    ) !important; /* Adjust the alpha value as needed */
-    backdrop-filter: blur(10px); /* Adds a blur effect */
-    -webkit-backdrop-filter: blur(10px); /* Adds a blur effect for Safari */
-  }
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      .form-control, .form-select {
+        background-color: rgba(255, 255, 255, 0.2); /* Makes the input background semi-transparent */
+        border: 1px solid rgba(255, 255, 255, 0.5); /* Adds a border with some transparency */
+        color: #ffffff; /* Makes the text color white */
+      }
 
-  button {
-    width: 100%;
-  }
-</style>
-{% endblock %} {% block content1 %}
-<section class="vh-100 gradient-custom">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card bg-dark text-white" style="border-radius: 1rem">
-          <div class="card-body p-5 text-center">
-            <div class="mb-md-5 mt-md-4 pb-5">
-              <img class="logo" src={% static 'images/logo.png'%}>
-              <p class="text-white-50 mb-4">
-                Please enter your Username and password.
-              </p>
-              <form method="post">
-                {% csrf_token %} {{ form|crispy }}
-                <input type="hidden" name="next" value="{{ next }}" />
-                <button class="btn btn-primary btn-lg mt-2 mb-5" type="submit">
-                  Login
-                </button>
-              </form>
-              <div class="d-flex justify-content-center text-center mt-4 pt-1">
-                <a href="#!" class="text-blue"
-                  ><i class="fab fa-facebook-f fa-lg"></i
-                ></a>
-                <a href="#!" class="text-green"
-                  ><i class="fab fa-twitter fa-lg mx-4 px-2"></i
-                ></a>
-                <a href="#!" class="text-red"
-                  ><i class="fab fa-google fa-lg"></i
-                ></a>
+      .form-control::placeholder, .form-select::placeholder {
+        color: rgba(255, 255, 255, 0.7); /* Makes the placeholder text semi-transparent white */
+      }
+
+      .form-control:focus, .form-select:focus {
+        background-color: rgba(255, 255, 255, 0.3); /* Slightly lighter background on focus */
+        color: #ffffff; /* Keeps the text color white */
+        border-color: rgba(255, 255, 255, 0.8); /* Slightly more opaque border on focus */
+        outline: none; /* Removes the default outline */
+        box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25); /* Custom focus shadow */
+      }
+
+      .sidebar {
+        height: 100%;
+        width: 15%;
+        top: 0;
+        left: 0;
+        background-color: #343a40;
+        padding-top: 20px;
+        overflow-x: hidden;
+      }
+
+      .container-fluid {
+        padding: 0;
+      }
+
+      .logo {
+        width: 100px;
+        margin: 25px;
+      }
+
+      .card.bg-dark {
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.2
+        ) !important; /* Adjust the alpha value as needed */
+        backdrop-filter: blur(10px); /* Adds a blur effect */
+        -webkit-backdrop-filter: blur(10px); /* Adds a blur effect for Safari */
+      }
+
+      button {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body class="bg-dark text-white">
+    <section class="vh-100 gradient-custom">
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-dark text-white" style="border-radius: 1rem">
+              <div class="card-body p-5 text-center">
+                <div class="mb-md-5 mt-md-4 pb-5">
+                  <img class="logo" src={% static 'images/logo.png'%}>
+                  <p class="text-white-50 mb-4">
+                    Please enter your Username and password.
+                  </p>
+                  <form method="post">
+                    {% csrf_token %} {{ form|crispy }}
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    <button
+                      class="btn btn-primary btn-lg mt-2 mb-5"
+                      type="submit"
+                    >
+                      Login
+                    </button>
+                  </form>
+                  <div
+                    class="d-flex justify-content-center text-center mt-4 pt-1"
+                  >
+                    <a href="#!" class="text-blue"
+                      ><i class="fab fa-facebook-f fa-lg"></i
+                    ></a>
+                    <a href="#!" class="text-green"
+                      ><i class="fab fa-twitter fa-lg mx-4 px-2"></i
+                    ></a>
+                    <a href="#!" class="text-red"
+                      ><i class="fab fa-google fa-lg"></i
+                    ></a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-{% endblock %}
+    </section>
+    <script
+      src="https://kit.fontawesome.com/2744205f6d.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

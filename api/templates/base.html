@@ -18,6 +18,47 @@
     />
 
     <style>
+      .form-control,
+      .form-select {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.2
+        ); /* Makes the input background semi-transparent */
+        border: 1px solid rgba(255, 255, 255, 0.5); /* Adds a border with some transparency */
+        color: #ffffff; /* Makes the text color white */
+      }
+
+      .form-control::placeholder,
+      .form-select::placeholder {
+        color: rgba(
+          255,
+          255,
+          255,
+          0.7
+        ); /* Makes the placeholder text semi-transparent white */
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.3
+        ); /* Slightly lighter background on focus */
+        color: #ffffff; /* Keeps the text color white */
+        border-color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Slightly more opaque border on focus */
+        outline: none; /* Removes the default outline */
+        box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25); /* Custom focus shadow */
+      }
+
       body {
         display: flex;
         min-height: 100vh;
@@ -85,24 +126,5 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
-    <style>
-      .form-control {
-        background-color: rgba(
-          255,
-          255,
-          255,
-          0.2
-        ); /* Makes the input background semi-transparent */
-        border: 1px solid rgba(255, 255, 255, 0.5); /* Adds a border with some transparency */
-      }
-      .form-control::placeholder {
-        color: rgba(
-          255,
-          255,
-          255,
-          0.7
-        ); /* Makes the placeholder text semi-transparent */
-      }
-    </style>
   </body>
 </html>
