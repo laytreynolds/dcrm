@@ -1,7 +1,6 @@
 {% extends "base.html" %} 
 
 {% block heading %}
-<div class="container" id="small">
   <h1>New Order</h1>
   {% endblock %} 
   
@@ -24,7 +23,6 @@
      {% csrf_token %}
       {% crispy form form.helper %}
   </form>
-</div>
 
 <style>
   .address-inline {

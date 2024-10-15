@@ -93,7 +93,9 @@
     <nav>{% include 'navbar.html' %}</nav>
     {% endif %}
     <div class="main-content">
-      {% block heading %}{% endblock %} {% block content1 %}{% endblock %}
+      <div class="container" id="small">
+        {% block heading %}{% endblock %} {% block content1 %}{% endblock %}
+      </div>
     </div>
 
     <script

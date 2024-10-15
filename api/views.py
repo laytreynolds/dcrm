@@ -211,13 +211,29 @@ class Dashboard(LoginRequiredMixin, View):
             total_box_value=Sum("sales__order_box_value")
         ).order_by("total_box_value")[:10]
 
-        monthly_users_leaderboard = User.objects.filter(
-        sales__isnull=False).annotate(total_box_value=Coalesce(Sum("sales__order_box_value", output_field=FloatField()), Value(0.00))).order_by("-total_box_value")[:10]
+        monthly_users_leaderboard = (
+            User.objects.filter(sales__isnull=False)
+            .annotate(
+                total_box_value=Coalesce(
+                    Sum("sales__order_box_value", output_field=FloatField()),
+                    Value(0.00),
+                )
+            )
+            .order_by("-total_box_value")[:10]
+        )
 
         # Campaigns
 
-        campaign = Campaign.objects.filter(sales__isnull=False).annotate(
-            total_campaign_value=Coalesce(Sum("sales__order_box_value", output_field=FloatField()), Value(0.00))).order_by("-total_campaign_value")
+        campaign = (
+            Campaign.objects.filter(sales__isnull=False)
+            .annotate(
+                total_campaign_value=Coalesce(
+                    Sum("sales__order_box_value", output_field=FloatField()),
+                    Value(0.00),
+                )
+            )
+            .order_by("-total_campaign_value")
+        )
 
         # Include the total_box_value in the context
         context = {
