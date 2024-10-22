@@ -18,13 +18,13 @@
     />
 
     <style>
+      .card {
+        background-color: rgb(52, 58, 63);
+      }
       .table th,
       .table td {
-        padding: 15px 20px; /* Increase padding for more spacing */
-      }
-
-      .table {
-        border-radius: 5px !important; /* Add rounded corners to the table */
+        padding: 15px 15px; /* Increase padding for more spacing */
+        vertical-align: middle; /* Vertically align the text in table header columns */
       }
 
       .form-control,
@@ -107,7 +107,7 @@
     {% endif %}
     <div class="main-content">
       <div class="container" id="small">
-        {% block heading %}{% endblock %} {% block content1 %}{% endblock %}
+        {% block heading %} {% endblock %} {% block content1 %} {% endblock %}
       </div>
     </div>
 
@@ -141,5 +141,18 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <scribe-shadow
+      id="crxjs-ext"
+      style="
+        position: fixed;
+        width: 0px;
+        height: 0px;
+        top: 0px;
+        left: 0px;
+        z-index: 2147483647;
+        overflow: visible;
+        visibility: visible;
+      "
+    ></scribe-shadow>
   </body>
 </html>
