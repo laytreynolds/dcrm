@@ -1,9 +1,42 @@
-{% extends "base.html" %} 
-{% block heading %}
+{% extends "base.html" %} {% block heading %}
 <h1>Dashboard</h1>
-{% endblock %}
+<style>
+  .card.bg-dark {
+    background-color: rgba(
+      0,
+      0,
+      0,
+      0.2
+    ) !important; /* Adjust the alpha value as needed */
+    backdrop-filter: blur(10px); /* Adds a blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Adds a blur effect for Safari */
+  }
 
- {% block content1 %}
- {% endblock %}
-  <!-- Main Content -->
-
+  .container {
+    padding: 20px 0px;
+  }
+</style>
+{% endblock %} {% block content %} {% endblock %} {% block content1 %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card bg-dark text-white">
+        <div class="card-header"></div>
+        <div class="card-body"></div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-dark text-white">
+        <div class="card-header"></div>
+        <div class="card-body"></div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-dark text-white">
+        <div class="card-header"></div>
+        <div class="card-body"></div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>
