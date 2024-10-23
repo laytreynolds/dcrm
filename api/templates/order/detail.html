@@ -35,14 +35,14 @@
   <div class="row padding-top-small">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header text-white text-white">
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-user"></i>
           <h5>Account Details</h5>
           </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">
+        <ul class="list-group dark list-group-flush">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Account Holder</strong>
@@ -53,7 +53,7 @@
               </div>
             </div>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Business Name</strong>
@@ -61,7 +61,7 @@
               <div class="col-lg-6">{{ OrderDetail.order_company_name }}</div>
             </div>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Business Type</strong>
@@ -71,7 +71,7 @@
               </div>
             </div>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0 text-white">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Date Of Birth</strong>
@@ -85,14 +85,14 @@
 
     <div class="col-md-4">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header text-white">
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-bolt"></i>
           <h5>Quick Details</h5>
         </div>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Status</strong>
@@ -100,7 +100,7 @@
               <div class="col-lg-6">{{ OrderDetail.get_status_display }}</div>
             </div>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Campaign</strong>
@@ -108,7 +108,7 @@
               <div class="col-lg-6">{{ OrderDetail.campaign }}</div>
             </div>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Sale Type</strong>
@@ -118,7 +118,7 @@
               </div>
             </div>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Created Date</strong>
@@ -136,13 +136,13 @@
   <div class="row padding-top">
     <div class="col-md-4">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header text-white">
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-receipt"></i>
             <h5>Account Address</h5>
           </div>
         </div>
-        <div class="card-body">
+        <div class="card-body text-white">
           {{ OrderDetail.order_House_Number }} {{ OrderDetail.order_Street }}
           <br />
           {{ OrderDetail.order_City }}
@@ -155,13 +155,13 @@
     </div>
     <div class="col-md-4">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header text-white">
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-truck"></i>
             <h5>Delivery Address</h5>
           </div>
         </div>
-        <div class="card-body">
+        <div class="card-body text-white">
           {{ OrderDetail.order_Delivery_House_Number}} {{OrderDetail.order_Delivery_Street }}
           <br />
           {{ OrderDetail.order_Delivery_City }}
@@ -177,14 +177,14 @@
 
     <div class="col-md-4">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header text-white">
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-address-book"></i>
             <h5>Contact Details</h5>
           </div>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Mobile</strong>
@@ -192,7 +192,7 @@
               <div class="col-lg-6">{{OrderDetail.order_Mobile}}</div>
             </div>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Landline</strong>
@@ -200,7 +200,7 @@
               <div class="col-lg-6">{{OrderDetail.order_Landline}}</div>
             </div>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
                 <strong>Email</strong>
@@ -216,14 +216,14 @@
     <div class="row padding-top">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header text-white">
             <div class="d-flex align-items-center">
               <i class="fa-solid fa-shopping-cart"></i>
             <h5>Sale Details</h5>
             </div>
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">
+            <li class="list-group-item text-white border-0">
               <div class="row">
                 <div class="col-lg-3">
                   <strong>Network</strong>
@@ -236,7 +236,7 @@
                 <div class="col-lg-3">{{OrderDetail.order_connection_type}}
                 </div>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item text-white border-0">
               <div class="row">
                 <div class="col-lg-3">
                   <strong>Tariff</strong>
@@ -250,7 +250,7 @@
                   {{OrderDetail.get_order_sim_required_display}}
                 </div>
               </li>
-            <li class="list-group-item">
+            <li class="list-group-item text-white border-0">
               <div class="row">
                 <div class="col-lg-3">
                   <strong>Eligibility Date</strong>
@@ -273,7 +273,7 @@
           <div class="row padding-top padding-bottom">
             <div class="col-md-6">
               <div class="card">
-                <div class="card-header">
+                <div class="card-header text-white">
                   <div class="d-flex align-items-center">
                     <i class="fa-solid fa-percent"></i>
                     <h5>Commission Calculations</h5>
@@ -286,7 +286,7 @@
             </div>
             <div class="col-md-6">
               <div class="card">
-                <div class="card-header">
+                <div class="card-header text-white">
                   <div class="d-flex align-items-center">
                     <i class="fa-solid fa-circle-info"></i>
                     <h5>Additional Details</h5>
@@ -324,7 +324,7 @@
               <ul class="list-group list-group-flush">
               {% for comment in comments %}
                <div class="comment"> 
-                  <li class="list-group-item">
+                  <li class="list-group-item text-white border-0">
                   <p class="info">
                    Note from {{ comment.owner.first_name }} {{ comment.owner.last_name }} on {{ comment.created|date:"F j, H:i" }}
                     {% if comment.status == "open" %}
@@ -343,7 +343,7 @@
               </ul> 
               </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item bg-dark">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                   <div class="d-flex align-items-center">
@@ -372,7 +372,7 @@
                     <ul>
                       {% for change in delta.changes %}
                         <div class="change"> 
-                          <li class="list-group-item">
+                          <li class="list-group-item text-white border-0">
                             <p class="info">
                               {{ change.field }} changed from {{ change.old }} to {{ change.new }}
                             </p>
@@ -382,20 +382,7 @@
                     </ul>
                   </div>
                 </div>
-
-
-
-
-
-
             </div>
-          
-          
-
-
-
-
-          
       <style>
         i {
           padding-right: 10px;
@@ -423,6 +410,11 @@
 
         .margin-left {
           margin-left: 1rem;
+        }
+
+        ul, li {
+          background-color: rgb(52,58,63) !important;
+          text-color: white;
         }
       </style>
       
