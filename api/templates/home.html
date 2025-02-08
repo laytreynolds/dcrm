@@ -17,7 +17,7 @@
   }
 
   h3 {
-    rgb(255, 255, 255) !important;
+    color: rgb(255, 255, 255) !important;
   }
 </style>
 {% endblock %} {% block content %} {% endblock %} {% block content1 %}
@@ -34,7 +34,7 @@
               >
                 Sales Today
               </h5>
-              <h3 class="my-2 text-white py-1">9,184</h3>
+              <h3 class="my-2 text-white py-1">£{{ revenue_today }}</h3>
               <p class="mb-0 text-white"></p>
             </div>
             <div class="col-6">
@@ -718,7 +718,7 @@
               >
                 Sales this month
               </h5>
-              <h3 class="my-2 text-white py-1">3,254</h3>
+              <h3 class="my-2 text-white py-1"> £{{ revenue_month }}</h3>
             </div>
             <div class="col-6">
               <div class="text-end">
@@ -1107,7 +1107,7 @@
               <h5 class="text-white fw-normal mt-0 text-truncate" title="Deals">
                 Connections this month
               </h5>
-              <h3 class="my-2 text-white py-1">861</h3>
+              <h3 class="my-2 text-white py-1">£{{ connected_revenue_month }}</h3>
               <p class="mb-0 text-white"></p>
             </div>
             <div class="col-6">
