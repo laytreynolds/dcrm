@@ -190,6 +190,7 @@ class OrderComment(LoginRequiredMixin, View):
             comment.save()
         return redirect("crm:OrderDetailView", order_Id=order.order_Id)
 
+# DASHBOARD
 
 class Dashboard(LoginRequiredMixin, View):
     template_name = "order/home.html"

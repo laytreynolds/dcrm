@@ -80,10 +80,6 @@ class Weekmanager(models.Manager):
         current_week = now().isocalendar()[1]
         return super().get_queryset().filter(order_Created__week=current_week)
 
-
-# CLASS
-
-
 class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.order_Number:
