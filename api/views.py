@@ -2,7 +2,7 @@ from django.db.models import Sum, Value, IntegerField, FloatField, Q
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Order, Campaign, Activity
 from django.views.generic import ListView, DetailView, View
-from .forms import SearchForm, OrderForm, CommentForm
+from .forms import SearchForm, OrderForm, CommentForm, OrderUpdateForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -144,7 +144,7 @@ class OrderUpdate(LoginRequiredMixin, View):
 
     def get(self, request, order_Id):
         order = Order.objects.get(order_Id=order_Id)
-        form = OrderForm(instance=order)
+        form = OrderUpdateForm(instance=order)
         return render(request, "order/update.html", {"form": form, "order": order})
 
     def post(self, request, order_Id):
