@@ -34,7 +34,13 @@
               >
                 Sales Today
               </h5>
-              <h3 class="my-2 text-white py-1">£{{ revenue_today }}</h3>
+              <h3 class="my-2 text-white py-1">
+                {% if revenue_today == None %}
+                0
+                {% else %}
+                £{{ revenue_today }}
+                {% endif %}
+              </h3>
               <p class="mb-0 text-white"></p>
             </div>
             <div class="col-6">
@@ -718,7 +724,13 @@
               >
                 Sales this month
               </h5>
-              <h3 class="my-2 text-white py-1"> £{{ revenue_month }}</h3>
+              <h3 class="my-2 text-white py-1"> 
+                {% if revenue_month == None %}
+                0
+                {% else %}
+                £{{ revenue_month }}
+                {% endif %}
+              </h3>
             </div>
             <div class="col-6">
               <div class="text-end">
@@ -1107,7 +1119,12 @@
               <h5 class="text-white fw-normal mt-0 text-truncate" title="Deals">
                 Connections this month
               </h5>
-              <h3 class="my-2 text-white py-1">£{{ connected_revenue_month }}</h3>
+              <h3 class="my-2 text-white py-1">
+                {% if connected_revenue_month == None %}
+                0
+                {% else %}
+                £{{ connected_revenue_month }}
+                {% endif %}</h3>
               <p class="mb-0 text-white"></p>
             </div>
             <div class="col-6">
