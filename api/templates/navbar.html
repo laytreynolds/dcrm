@@ -219,10 +219,12 @@
     </a>
   </div>
   <div>
-
+    
+    {% if user.is_staff %}
     <a class="nav-link" aria-current="page" href="{% url 'crm:Admin' %}">
       <i class="fa-solid fa-user-tie"></i> Admin
     </a>
+    {% endif %}
   </div>
 
   <!-- User Section at the Bottom -->
