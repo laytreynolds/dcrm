@@ -19,5 +19,5 @@ urlpatterns = [
     path('<int:order_Id>/comment',views.OrderComment.as_view(), name='OrderComment'),
     path('admin', views.Admin.as_view(), name='Admin'),
     path("admin/createuser", views.CreateUser.as_view(), name='CreateUser'),
-
+    path('admin/<int:id>/updateuser', views.EditUser.as_view(), name='EditUser'),
 ]

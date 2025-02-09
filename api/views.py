@@ -283,3 +283,23 @@ class CreateUser(LoginRequiredMixin, View):
         else:
             # If the form is not valid, render the form again with errors
             return render(request, "admin/createuser.html", {"form": user_form})
+
+class EditUser(LoginRequiredMixin, View):
+    
+    def get(self, request, id):
+        user = User.objects.get(id=id)
+        form = CreateUserForm(instance=user)
+        return render(request, "admin/edituser.html", {"form": form, "user": user})
+    
+    def post(self, request, id):
+        user = get_object_or_404(User, id=id)
+        form = CreateUserForm(request.POST, instance=user)
+
+        if form.is_valid():
+            # Save the changes to the user
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])  # Set password if changed
+            new_user.save()
+            return redirect("crm:Admin")  # Redirect after successful update
+
+        return render(request, "admin/edituser.html", {"form": form, "user": user})  # Re-render with errors

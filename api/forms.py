@@ -532,6 +532,7 @@ class CreateUserForm(forms.ModelForm):
         label="Repeat Password",
         widget=forms.PasswordInput,
         strip=False,
+        required=False,  # Make this optional for editing
         help_text="Enter the same password as above, for verification."
     )
     
@@ -559,24 +560,34 @@ class CreateUserForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
+        # Check if the form is being initialized for editing
+        user_instance = kwargs.get('instance', None)
         super().__init__(*args, **kwargs)
+        
+        if user_instance:
+            # If editing a user, make password field optional
+            self.fields['password'] = forms.CharField(
+                label="Password",
+                widget=forms.PasswordInput,
+                required=False  # Password is not required when editing
+            )
+        
         self.helper = FormHelper(self)
         self.helper.form_method = "post"
         self.helper.layout = Layout(
             Field("username", label="Username"),
             Field("first_name", label="First Name"),
             Field("last_name", label="Last Name"),
-            Field("email", label="Email"),
-            Field("password", label="Password"),
-            Field("password2"),  # Include the confirmation field in the layout
-            Field("is_active"),  # Use the radio button for active status
-            Field("is_staff"),   # Use the radio button for staff status
+            Field("password", label="Password"),  # Optional now
+            Field("password2"),  
+            Field("is_active"),  
+            Field("is_staff"), 
             Submit("Create User", "Submit", css_class="btn btn-primary"),
         )
 
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "password", "is_active", "is_staff", "email"]
+        fields = ["username", "first_name", "last_name", "password", "is_active", "is_staff"]
         widgets = {
             "password": forms.PasswordInput,
         }
@@ -590,3 +601,4 @@ class CreateUserForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match.")
 
         return cleaned_data
+    
