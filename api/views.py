@@ -269,3 +269,17 @@ class CreateUser(LoginRequiredMixin, View):
     def get(self, request):
         form = CreateUserForm
         return render(request, "admin/createuser.html", { "form": form})
+    
+    def post(self, request):
+        user_form = CreateUserForm(request.POST)
+        if user_form.is_valid():
+            # Create a new user object but avoid saving it yet
+            new_user = user_form.save(commit=False)
+            # Set the chosen password
+            new_user.set_password(user_form.cleaned_data['password'])
+            # Save the User object
+            new_user.save()
+            return redirect("crm:Admin")
+        else:
+            # If the form is not valid, render the form again with errors
+            return render(request, "admin/createuser.html", {"form": user_form})

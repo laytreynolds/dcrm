@@ -527,6 +527,13 @@ class OrderUpdateForm(forms.ModelForm):
         exclude = ["owner", "order_Open"]
         
 class CreateUserForm(forms.ModelForm):
+    password2 = forms.CharField(
+        label="Repeat Password",
+        widget=forms.PasswordInput,
+        strip=False,  # Prevent stripping whitespace
+        help_text="Enter the same password as above, for verification."
+    )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -536,21 +543,23 @@ class CreateUserForm(forms.ModelForm):
             Field("first_name", label="First Name"),
             Field("last_name", label="Last Name"),
             Field("password", label="Password"),
-            Field("password2", label="Repeat Password"),
+            Field("password2"),  # Include the confirmation field in the layout
             Submit("Create User", "Submit", css_class="btn btn-primary"),
         )
-        
+
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name", "password"]
         widgets = {
             "password": forms.PasswordInput,
-            "password2": forms.PasswordInput 
-
         }
-        
-    def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-            raise forms.ValidationError('Passwords don\'t match.')
-        return cd['password2']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        password2 = cleaned_data.get("password2")
+
+        if password and password2 and password != password2:
+            raise forms.ValidationError("Passwords do not match.")
+
+        return cleaned_data
