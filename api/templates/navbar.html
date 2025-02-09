@@ -10,9 +10,12 @@
     width: 90%;
     border-radius: 5px;
     display: flex;
-    align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
-    margin: 0 auto; /* Center the nav-link itself */
+    align-items: center;
+    /* Center items vertically */
+    justify-content: center;
+    /* Center items horizontally */
+    margin: 0 auto;
+    /* Center the nav-link itself */
   }
 
   .form-control {
@@ -30,20 +33,24 @@
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    position: fixed; /* Fix the sidebar to the viewport */
+    position: fixed;
+    /* Fix the sidebar to the viewport */
     top: 0;
     left: 0;
   }
 
   .sidebar a,
   .sidebar form {
-    padding: 10px 20px; /* Increase padding for larger margin */
+    padding: 10px 20px;
+    /* Increase padding for larger margin */
     text-decoration: none;
     font-size: 15px;
     color: white;
     display: block;
-    margin-bottom: 5px; /* Add margin between menu items */
-    width: 100%; /* Ensure full width for consistency */
+    margin-bottom: 5px;
+    /* Add margin between menu items */
+    width: 100%;
+    /* Ensure full width for consistency */
   }
 
   .sidebar a:hover:not(.no-hover) {
@@ -52,24 +59,34 @@
 
   .sidebar .collapse {
     background-color: #343a40;
-    width: 100%; /* Ensure full width for consistency */
+    width: 100%;
+    /* Ensure full width for consistency */
   }
 
   .sidebar .collapse a {
-    padding-left: 15px; /* Indent the items inside the collapsible menu */
-    width: calc(100% - 30px); /* Adjust width to account for padding */
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Center items vertically */
-    justify-content: flex-start; /* Align items to the left */
+    padding-left: 15px;
+    /* Indent the items inside the collapsible menu */
+    width: calc(100% - 30px);
+    /* Adjust width to account for padding */
+    display: flex;
+    /* Use flexbox for alignment */
+    align-items: center;
+    /* Center items vertically */
+    justify-content: flex-start;
+    /* Align items to the left */
   }
 
   .sidebar .collapsing a {
-    padding-left: 15px; /* Indent the items inside the collapsible menu */
-    display: flex; /* Use flexbox for alignment */
-    justify-content: flex-start; /* Align items to the left */
-    width: calc(100% - 30px); /* Adjust width to account for padding */
+    padding-left: 15px;
+    /* Indent the items inside the collapsible menu */
+    display: flex;
+    /* Use flexbox for alignment */
+    justify-content: flex-start;
+    /* Align items to the left */
+    width: calc(100% - 30px);
+    /* Adjust width to account for padding */
 
-    }
+  }
 
   .sidebar .collapse a:hover {
     background-color: #575d63;
@@ -77,13 +94,17 @@
 
   .search-container {
     position: relative;
-    width: 100%; /* Ensure full width for centering */
+    width: 100%;
+    /* Ensure full width for centering */
   }
 
   .search-container input[type="search"] {
-    width: 100%% /* Adjust width to account for padding and icon */
-    padding-left: 35px; /* Add padding to make space for the icon */
-    box-sizing: border-box; /* Ensure padding is included in the width */
+    width: 100%%
+      /* Adjust width to account for padding and icon */
+      padding-left: 35px;
+    /* Add padding to make space for the icon */
+    box-sizing: border-box;
+    /* Ensure padding is included in the width */
   }
 
   .search-container .fa-search {
@@ -92,7 +113,8 @@
     left: 10px;
     transform: translateY(-50%);
     color: #aaa;
-    pointer-events: none; /* Make sure the icon doesn't interfere with input */
+    pointer-events: none;
+    /* Make sure the icon doesn't interfere with input */
   }
 
   .sidebar .collapse a {
@@ -104,7 +126,8 @@
   }
 
   .sidebar .nav-link.collapsible::after {
-    content: "\f078"; /* Font Awesome down arrow */
+    content: "\f078";
+    /* Font Awesome down arrow */
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     float: right;
@@ -112,7 +135,8 @@
   }
 
   .sidebar .nav-link.collapsible[aria-expanded="true"]::after {
-    transform: rotate(180deg); /* Rotate the arrow when expanded */
+    transform: rotate(180deg);
+    /* Rotate the arrow when expanded */
   }
 
   i:not(.no-margin) {
@@ -124,7 +148,8 @@
   }
 
   .user-section {
-    margin-top: auto; /* Push the user section to the bottom */
+    margin-top: auto;
+    /* Push the user section to the bottom */
     width: 100%;
   }
 
@@ -149,19 +174,8 @@
   </a>
 
   <div class="search-container">
-    <form
-      class="d-flex"
-      role="search"
-      action="{% url 'crm:OrderSearch' %}"
-      method="GET"
-    >
-      <input
-        class="form-control me-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-        name="query"
-      />
+    <form class="d-flex" role="search" action="{% url 'crm:OrderSearch' %}" method="GET">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query" />
       <i class="fas fa-search"></i>
     </form>
   </div>
@@ -171,14 +185,8 @@
   </a>
 
   <!-- Collapsible New Section -->
-  <a
-    class="nav-link collapsible"
-    data-bs-toggle="collapse"
-    href="#collapseNew"
-    role="button"
-    aria-expanded="false"
-    aria-controls="collapseNew"
-  >
+  <a class="nav-link collapsible" data-bs-toggle="collapse" href="#collapseNew" role="button" aria-expanded="false"
+    aria-controls="collapseNew">
     <i class="fas fa-plus"></i> New
   </a>
   <div class="collapse" id="collapseNew">
@@ -189,14 +197,8 @@
   </div>
 
   <!-- Collapsible Reports Section -->
-  <a
-    class="nav-link collapsible"
-    data-bs-toggle="collapse"
-    href="#collapseReports"
-    role="button"
-    aria-expanded="false"
-    aria-controls="collapseReports"
-  >
+  <a class="nav-link collapsible" data-bs-toggle="collapse" href="#collapseReports" role="button" aria-expanded="false"
+    aria-controls="collapseReports">
     <i class="fas fa-chart-line"></i> Reports
   </a>
   <div class="collapse" id="collapseReports">
@@ -216,33 +218,24 @@
       <i class="fas fa-link"></i> Connections This Month
     </a>
   </div>
+  <div>
+
+    <a class="nav-link" aria-current="page" href="{% url 'crm:dashboard' %}">
+      <i class="fa-solid fa-user-tie"></i> Admin
+    </a>
+  </div>
 
   <!-- User Section at the Bottom -->
   <div class="user-section">
-    <a
-      class="nav-link collapsible"
-      data-bs-toggle="collapse"
-      href="#collapseUser"
-      role="button"
-      aria-expanded="false"
-      aria-controls="collapseUser"
-    >
+    <a class="nav-link collapsible" data-bs-toggle="collapse" href="#collapseUser" role="button" aria-expanded="false"
+      aria-controls="collapseUser">
       <i class="fas fa-user"></i> {{ user.first_name }} {{ user.last_name }}
     </a>
     <div class="collapse" id="collapseUser">
-      <a
-        class="nav-link"
-        href="#"
-        onclick="document.getElementById('logout-form').submit();"
-      >
+      <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit();">
         <i class="fas fa-sign-out-alt"></i> Log out
       </a>
-      <form
-        id="logout-form"
-        method="post"
-        action="/logout/"
-        style="display: none"
-      >
+      <form id="logout-form" method="post" action="/logout/" style="display: none">
         {% csrf_token %}
       </form>
     </div>
