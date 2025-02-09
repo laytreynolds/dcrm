@@ -2,6 +2,7 @@ from django import forms
 from .models import Order, Comment
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML, Field
+from django.forms.widgets import RadioSelect
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
@@ -525,13 +526,36 @@ class OrderUpdateForm(forms.ModelForm):
         }
 
         exclude = ["owner", "order_Open"]
-        
+
 class CreateUserForm(forms.ModelForm):
     password2 = forms.CharField(
         label="Repeat Password",
         widget=forms.PasswordInput,
-        strip=False,  # Prevent stripping whitespace
+        strip=False,
         help_text="Enter the same password as above, for verification."
+    )
+    
+    # Adding choices for is_active and is_staff fields
+    ACTIVE_STATUS_CHOICES = [
+        (True, 'Active'),
+        (False, 'Inactive'),
+    ]
+    
+    STAFF_STATUS_CHOICES = [
+        (True, 'Staff'),
+        (False, 'Non-Staff'),
+    ]
+
+    is_active = forms.ChoiceField(
+        choices=ACTIVE_STATUS_CHOICES,
+        widget=RadioSelect,
+        label="Active Status"
+    )
+    
+    is_staff = forms.ChoiceField(
+        choices=STAFF_STATUS_CHOICES,
+        widget=RadioSelect,
+        label="Staff Status"
     )
 
     def __init__(self, *args, **kwargs):
@@ -542,14 +566,17 @@ class CreateUserForm(forms.ModelForm):
             Field("username", label="Username"),
             Field("first_name", label="First Name"),
             Field("last_name", label="Last Name"),
+            Field("email", label="Email"),
             Field("password", label="Password"),
             Field("password2"),  # Include the confirmation field in the layout
+            Field("is_active"),  # Use the radio button for active status
+            Field("is_staff"),   # Use the radio button for staff status
             Submit("Create User", "Submit", css_class="btn btn-primary"),
         )
 
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "password"]
+        fields = ["username", "first_name", "last_name", "password", "is_active", "is_staff", "email"]
         widgets = {
             "password": forms.PasswordInput,
         }
