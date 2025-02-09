@@ -256,10 +256,13 @@ class Dashboard(LoginRequiredMixin, View):
         return render(request, "home.html", context)
 
 class Admin(LoginRequiredMixin, ListView):
-        queryset = User.objects.all()
-        context_object_name = "Users"
-        paginate_by = pagination
-        template_name = "admin/admin.html"
+    context_object_name = "Users"
+    paginate_by = pagination
+    template_name = "admin/admin.html"
+
+    def get_queryset(self):
+        # Order users by last_login field
+        return User.objects.all().order_by('last_login')
     
 class CreateUser(LoginRequiredMixin, View):
     

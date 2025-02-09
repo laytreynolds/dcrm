@@ -9,6 +9,13 @@
     a {
         margin-bottom: 10px
     }
+
+    i {
+        margin: auto;
+        padding: 0px;
+        align-items: right;
+        text-align: right;
+    }
 </style>
 {% endblock %} {% block content1 %}
 <div>
@@ -23,8 +30,9 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Date Joined</th>
+            <th scope="col">Last Login</th>
             <th scope="col">Status</th>
-            <th scope="col">last Login</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -44,7 +52,7 @@
                 {% endif %}
             </td>
             <td>
-                <a href="{% url 'crm:EditUser' user.id %}" class="btn btn-secondary">Edit User</a>
+                <a href="{% url 'crm:EditUser' user.id %}" class="btn btn-secondary"><i id="edit" class="fa-solid fa-pen-to-square"></i></a>
             </td>
         </tr>
         {% endfor %}

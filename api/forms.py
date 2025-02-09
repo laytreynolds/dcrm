@@ -578,6 +578,7 @@ class CreateUserForm(forms.ModelForm):
             Field("username", label="Username"),
             Field("first_name", label="First Name"),
             Field("last_name", label="Last Name"),
+            Field("email", label="Email Address"),
             Field("password", label="Password"),  # Optional now
             Field("password2"),  
             Field("is_active"),  
@@ -587,7 +588,7 @@ class CreateUserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "password", "is_active", "is_staff"]
+        fields = ["username", "first_name", "last_name", "password", "is_active", "is_staff", "email"]
         widgets = {
             "password": forms.PasswordInput,
         }
