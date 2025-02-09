@@ -254,3 +254,12 @@ class Dashboard(LoginRequiredMixin, View):
             "monthly_users_leaderboard": monthly_users_leaderboard,
         }
         return render(request, "home.html", context)
+
+class Admin(LoginRequiredMixin, View):
+
+    def get(self, request):
+        context = {
+            "": ""
+        }
+        return render(request, 'admin.html', context)
+

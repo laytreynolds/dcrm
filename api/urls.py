@@ -16,5 +16,6 @@ urlpatterns = [
     path('search/', views.OrderSearch.as_view(), name='OrderSearch'),
     path('orders/week', views.OrdersThisweekView.as_view(), name='OrdersThisWeek'),
     path('<int:order_Id>/update', views.OrderUpdate.as_view(), name='OrderUpdate'),
-    path('<int:order_Id>/comment',views.OrderComment.as_view(), name='OrderComment')
+    path('<int:order_Id>/comment',views.OrderComment.as_view(), name='OrderComment'),
+    path('admin', views.Admin.as_view(), name='Admin')
 ]
