@@ -2,7 +2,7 @@ from django.db.models import Sum, Value, IntegerField, FloatField, Q
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Order, Campaign, Activity
 from django.views.generic import ListView, DetailView, View
-from .forms import SearchForm, OrderForm, CommentForm, OrderUpdateForm
+from .forms import SearchForm, OrderForm, CommentForm, OrderUpdateForm, CreateUserForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -10,6 +10,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
 from django.utils.timezone import now
 from django.db.models.functions import Coalesce
+from django.contrib import messages
+
 
 
 # Globals
@@ -135,7 +137,10 @@ class NewOrder(LoginRequiredMixin, View):
             order = form.save(commit=False)
             order.owner = current_user
             order.save()
+            messages.success(request, "Order created successfully")
             return redirect("crm:OrderDetailView", order_Id=order.order_Id)
+        else:
+            messages.error(request, 'Error Creating order')
         return render(request, "order/new.html", {"form": form})
 
 
@@ -153,7 +158,10 @@ class OrderUpdate(LoginRequiredMixin, View):
         if form.is_valid():
             order = form.save(commit=False)
             form.save()
+            messages.success(request, "Order updated successfully")
             return redirect("crm:OrderDetailView", order_Id=order_Id)
+        else:
+            messages.error(request, 'Error updating order')
         return render(request, "order/update.html", {"form": form, "order": order})
 
 
@@ -246,3 +254,55 @@ class Dashboard(LoginRequiredMixin, View):
             "monthly_users_leaderboard": monthly_users_leaderboard,
         }
         return render(request, "home.html", context)
+
+class Admin(LoginRequiredMixin, ListView):
+    context_object_name = "Users"
+    paginate_by = pagination
+    template_name = "admin/admin.html"
+
+    def get_queryset(self):
+        # Order users by last_login field
+        return User.objects.all().order_by('last_login')
+    
+class CreateUser(LoginRequiredMixin, View):
+    
+    model = User
+    method = ["get", "post"]
+    
+    def get(self, request):
+        form = CreateUserForm
+        return render(request, "admin/createuser.html", { "form": form})
+    
+    def post(self, request):
+        user_form = CreateUserForm(request.POST)
+        if user_form.is_valid():
+            # Create a new user object but avoid saving it yet
+            new_user = user_form.save(commit=False)
+            # Set the chosen password
+            new_user.set_password(user_form.cleaned_data['password'])
+            # Save the User object
+            new_user.save()
+            return redirect("crm:Admin")
+        else:
+            # If the form is not valid, render the form again with errors
+            return render(request, "admin/createuser.html", {"form": user_form})
+
+class EditUser(LoginRequiredMixin, View):
+    
+    def get(self, request, id):
+        user = User.objects.get(id=id)
+        form = CreateUserForm(instance=user)
+        return render(request, "admin/edituser.html", {"form": form, "user": user})
+    
+    def post(self, request, id):
+        user = get_object_or_404(User, id=id)
+        form = CreateUserForm(request.POST, instance=user)
+
+        if form.is_valid():
+            # Save the changes to the user
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])  # Set password if changed
+            new_user.save()
+            return redirect("crm:Admin")  # Redirect after successful update
+
+        return render(request, "admin/edituser.html", {"form": form, "user": user})  # Re-render with errors

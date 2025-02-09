@@ -2,8 +2,11 @@ from django import forms
 from .models import Order, Comment
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML, Field
+from django.forms.widgets import RadioSelect
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
+
 
 
 class CommentForm(forms.ModelForm):
@@ -523,3 +526,80 @@ class OrderUpdateForm(forms.ModelForm):
         }
 
         exclude = ["owner", "order_Open"]
+
+class CreateUserForm(forms.ModelForm):
+    password2 = forms.CharField(
+        label="Repeat Password",
+        widget=forms.PasswordInput,
+        strip=False,
+        required=False,  # Make this optional for editing
+        help_text="Enter the same password as above, for verification."
+    )
+    
+    # Adding choices for is_active and is_staff fields
+    ACTIVE_STATUS_CHOICES = [
+        (True, 'Active'),
+        (False, 'Inactive'),
+    ]
+    
+    STAFF_STATUS_CHOICES = [
+        (True, 'Staff'),
+        (False, 'Non-Staff'),
+    ]
+
+    is_active = forms.ChoiceField(
+        choices=ACTIVE_STATUS_CHOICES,
+        widget=RadioSelect,
+        label="Active Status"
+    )
+    
+    is_staff = forms.ChoiceField(
+        choices=STAFF_STATUS_CHOICES,
+        widget=RadioSelect,
+        label="Staff Status"
+    )
+
+    def __init__(self, *args, **kwargs):
+        # Check if the form is being initialized for editing
+        user_instance = kwargs.get('instance', None)
+        super().__init__(*args, **kwargs)
+        
+        if user_instance:
+            # If editing a user, make password field optional
+            self.fields['password'] = forms.CharField(
+                label="Password",
+                widget=forms.PasswordInput,
+                required=False  # Password is not required when editing
+            )
+        
+        self.helper = FormHelper(self)
+        self.helper.form_method = "post"
+        self.helper.layout = Layout(
+            Field("username", label="Username"),
+            Field("first_name", label="First Name"),
+            Field("last_name", label="Last Name"),
+            Field("email", label="Email Address"),
+            Field("password", label="Password"),  # Optional now
+            Field("password2"),  
+            Field("is_active"),  
+            Field("is_staff"), 
+            Submit("Create User", "Submit", css_class="btn btn-primary"),
+        )
+
+    class Meta:
+        model = User
+        fields = ["username", "first_name", "last_name", "password", "is_active", "is_staff", "email"]
+        widgets = {
+            "password": forms.PasswordInput,
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        password2 = cleaned_data.get("password2")
+
+        if password and password2 and password != password2:
+            raise forms.ValidationError("Passwords do not match.")
+
+        return cleaned_data
+    
