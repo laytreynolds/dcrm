@@ -1,145 +1,141 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CRM</title>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
-    <style>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CRM</title>
 
-      option {
-        color: black;
-      }
-      .card {
-        background-color: rgb(52, 58, 63);
-      }
-      .table th,
-      .table td {
-        padding: 15px 15px; /* Increase padding for more spacing */
-        vertical-align: middle; /* Vertically align the text in table header columns */
-      }
-      .form-control,
-      .form-select {
-        background-color: rgba(
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    option {
+      color: black;
+    }
+
+    .card {
+      background-color: rgb(52, 58, 63);
+    }
+
+    .table th,
+    .table td {
+      padding: 15px 15px;
+      /* Increase padding for more spacing */
+      vertical-align: middle;
+      /* Vertically align the text in table header columns */
+    }
+
+    .form-control,
+    .form-select {
+      background-color: rgba(255,
           255,
           255,
-          255,
-          0.2
-        ); /* Makes the input background semi-transparent */
-        border: 0px;
-        color: #ffffff; /* Makes the text color white */
-      }
+          0.2);
+      /* Makes the input background semi-transparent */
+      border: 0px;
+      color: #ffffff;
+      /* Makes the text color white */
+    }
 
-      .form-control::placeholder,
-      .form-select::placeholder {
-        color: rgba(
-          255,
-          255,
-          255,
-          0.7
-        ); /* Makes the placeholder text semi-transparent white */
-      }
-
-      .form-control:focus,
-      .form-select:focus {
-        background-color: rgba(
+    .form-control::placeholder,
+    .form-select::placeholder {
+      color: rgba(255,
           255,
           255,
+          0.7);
+      /* Makes the placeholder text semi-transparent white */
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      background-color: rgba(255,
           255,
-          0.3
-        ); /* Slightly lighter background on focus */
-        color: #ffffff; /* Keeps the text color white */
-        outline: none; /* Removes the default outline */
-        box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25); /* Custom focus shadow */
-      }
+          255,
+          0.3);
+      /* Slightly lighter background on focus */
+      color: #ffffff;
+      /* Keeps the text color white */
+      outline: none;
+      /* Removes the default outline */
+      box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+      /* Custom focus shadow */
+    }
 
-      body {
-        display: flex;
-        min-height: 100vh;
-        margin: 0;
-      }
+    body {
+      display: flex;
+      min-height: 100vh;
+      margin: 0;
+    }
 
-      .sidebar {
-        height: 100%;
-        width: 15%;
-        top: 0;
-        left: 0;
-        background-color: #343a40;
-        padding-top: 20px;
-        overflow-x: hidden;
-      }
+    .sidebar {
+      height: 100%;
+      width: 15%;
+      top: 0;
+      left: 0;
+      background-color: #343a40;
+      padding-top: 20px;
+      overflow-x: hidden;
+    }
 
-      .main-content {
-        flex-grow: 1;
-        padding: 20px;
-        width: 50%;
-        margin-left: 250px; /* Adjust margin to account for the fixed sidebar */
-      }
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+      width: 50%;
+      margin-left: 250px;
+      /* Adjust margin to account for the fixed sidebar */
+    }
 
-      .container-fluid {
-        padding: 0;
-      }
+    .container-fluid {
+      padding: 0;
+    }
 
-      .container {
-        padding-top: 20px;
-      }
-    </style>
-  </head>
+    .container {
+      padding-top: 20px;
+    }
+  </style>
+</head>
 
-  <body class="bg-dark text-white">
-    {% if user.is_authenticated %}
-    <nav>{% include 'navbar.html' %}</nav>
-    {% endif %}
-    <div class="main-content">
-      <div class="container" id="small">
-        {% block heading %} {% endblock %} {% block content1 %} {% endblock %}
-      </div>
+<body class="bg-dark text-white">
+  {% if user.is_authenticated %}
+  <nav>{% include 'navbar.html' %}</nav>
+  {% endif %}
+  <div class="main-content">
+    <div class="container" id="small">
+      {% block heading %} {% endblock %} {% block content1 %}
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+          <a href="#" class="close">✖</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endblock %}
     </div>
+  </div>
 
-    <script
-      src="https://kit.fontawesome.com/2744205f6d.js"
-      crossorigin="anonymous"
-    ></script>
+  <script src="https://kit.fontawesome.com/2744205f6d.js" crossorigin="anonymous"></script>
 
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-      crossorigin="anonymous"
-    ></script>
-    <scribe-shadow
-      id="crxjs-ext"
-      style="
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <scribe-shadow id="crxjs-ext" style="
         position: fixed;
         width: 0px;
         height: 0px;
@@ -148,7 +144,7 @@
         z-index: 2147483647;
         overflow: visible;
         visibility: visible;
-      "
-    ></scribe-shadow>
-  </body>
+      "></scribe-shadow>
+</body>
+
 </html>

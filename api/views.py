@@ -10,6 +10,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user
 from django.utils.timezone import now
 from django.db.models.functions import Coalesce
+from django.contrib import messages
+
 
 
 # Globals
@@ -135,7 +137,10 @@ class NewOrder(LoginRequiredMixin, View):
             order = form.save(commit=False)
             order.owner = current_user
             order.save()
+            messages.success(request, "Order created successfully")
             return redirect("crm:OrderDetailView", order_Id=order.order_Id)
+        else:
+            messages.error(request, 'Error Creating order')
         return render(request, "order/new.html", {"form": form})
 
 
@@ -153,7 +158,10 @@ class OrderUpdate(LoginRequiredMixin, View):
         if form.is_valid():
             order = form.save(commit=False)
             form.save()
+            messages.success(request, "Order updated successfully")
             return redirect("crm:OrderDetailView", order_Id=order_Id)
+        else:
+            messages.error(request, 'Error updating order')
         return render(request, "order/update.html", {"form": form, "order": order})
 
 
