@@ -255,11 +255,9 @@ class Dashboard(LoginRequiredMixin, View):
         }
         return render(request, "home.html", context)
 
-class Admin(LoginRequiredMixin, View):
-
-    def get(self, request):
-        context = {
-            "": ""
-        }
-        return render(request, 'admin.html', context)
+class Admin(LoginRequiredMixin, ListView):
+        queryset = User.objects.all()
+        context_object_name = "Users"
+        paginate_by = pagination
+        template_name = "admin/admin.html"
 
