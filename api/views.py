@@ -2,7 +2,7 @@ from django.db.models import Sum, Value, IntegerField, FloatField, Q
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Order, Campaign, Activity
 from django.views.generic import ListView, DetailView, View
-from .forms import SearchForm, OrderForm, CommentForm, OrderUpdateForm
+from .forms import SearchForm, OrderForm, CommentForm, OrderUpdateForm, CreateUserForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -260,4 +260,12 @@ class Admin(LoginRequiredMixin, ListView):
         context_object_name = "Users"
         paginate_by = pagination
         template_name = "admin/admin.html"
-
+    
+class CreateUser(LoginRequiredMixin, View):
+    
+    model = User
+    method = ["get", "post"]
+    
+    def get(self, request):
+        form = CreateUserForm
+        return render(request, "admin/createuser.html", { "form": form})

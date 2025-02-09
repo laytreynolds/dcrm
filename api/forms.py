@@ -4,6 +4,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML, Field
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
+
 
 
 class CommentForm(forms.ModelForm):
@@ -523,3 +525,32 @@ class OrderUpdateForm(forms.ModelForm):
         }
 
         exclude = ["owner", "order_Open"]
+        
+class CreateUserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = "post"
+        self.helper.layout = Layout(
+            Field("username", label="Username"),
+            Field("first_name", label="First Name"),
+            Field("last_name", label="Last Name"),
+            Field("password", label="Password"),
+            Field("password2", label="Repeat Password"),
+            Submit("Create User", "Submit", css_class="btn btn-primary"),
+        )
+        
+    class Meta:
+        model = User
+        fields = ["username", "first_name", "last_name", "password"]
+        widgets = {
+            "password": forms.PasswordInput,
+            "password2": forms.PasswordInput 
+
+        }
+        
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Passwords don\'t match.')
+        return cd['password2']

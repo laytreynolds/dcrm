@@ -6,14 +6,14 @@
         padding-bottom: 10px
     }
 
-    button {
+    a {
         margin-bottom: 10px
     }
 </style>
 {% endblock %} {% block content1 %}
 <div>
     <h2>Users</h2>
-    <button type="button" class="btn btn-success">Add User</button>
+    <a href="{% url 'crm:CreateUser' %}" type="button" class="btn btn-success">Add User</a>
 </div>
 <table class="table table-hover table-dark table-responsive table-borderless table-centered table-nowrap mb-0">
     <thead class="table-active">
