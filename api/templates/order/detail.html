@@ -355,72 +355,76 @@
           </div>
         </button>
       </h2>
-      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div id="collapseThree" class="accordion-collapse collapse text-white" data-bs-parent="#accordionExample">
         <ul class="list-group list-group-flush">
-          {% for change in delta.changes %}
-          <li class="list-group-item text-white border-0">
-            <p class="info">
-              {{ change.field }} changed from {{ change.old }} to {{ change.new }}
-            </p>
+          {% for change in changes_list %}
+          <li class="list-group-item text-white">
+            <strong>{{ change.field }}:</strong> {{ change.old }} → {{ change.new }} <br>
+            <small>Changed on {{ change.date }} by {{ change.user }}</small>
           </li>
+          {% empty %}
+          <li class="list-group-item text-white">
+            No changes found.</li>
           {% endfor %}
+        </ul>
         </ul>
       </div>
     </div>
   </div>
+</div>
 
-  <style>
-    i {
-      padding-right: 10px;
-    }
+<style>
+  i {
+    padding-right: 10px;
+  }
 
-    .padding-top {
-      padding-top: 3rem;
-    }
+  .padding-top {
+    padding-top: 3rem;
+  }
 
-    .padding-top-small {
-      padding-top: 1rem;
-    }
+  .padding-top-small {
+    padding-top: 1rem;
+  }
 
-    .padding-bottom {
-      padding-bottom: 3rem;
-    }
+  .padding-bottom {
+    padding-bottom: 3rem;
+  }
 
-    #edit-button {
-      margin-left: 1rem;
-    }
+  #edit-button {
+    margin-left: 1rem;
+  }
 
-    #submit-button {
-      margin-bottom: 1rem;
-    }
+  #submit-button {
+    margin-bottom: 1rem;
+  }
 
-    .margin-left {
-      margin-left: 1rem;
-    }
+  .margin-left {
+    margin-left: 1rem;
+  }
 
-    ul,
-    li {
-      background-color: rgb(52, 58, 63) !important;
-      color: white;
-    }
+  ul,
+  li {
+    background-color: rgb(52, 58, 63) !important;
+    color: white;
+  }
 
-    .accordion-button {
-      background-color: rgba(52, 58, 63, 0.8);
-      /* Slightly transparent dark background */
-      border: none;
-      /* Remove border */
-    }
+  .accordion-button {
+    background-color: rgba(52, 58, 63, 0.8);
+    /* Slightly transparent dark background */
+    border: none;
+    /* Remove border */
+  }
 
-    .accordion-button:hover {
-      background-color: rgba(52, 58, 63, 1);
-      /* Darken on hover */
-    }
-    
-    .accordion-body {
-      background-color: #343a40;
-      /* Dark background for the body */
-    }
-  </style>
+  .accordion-button:hover {
+    background-color: rgba(52, 58, 63, 1);
+    /* Darken on hover */
+  }
+
+  .accordion-body {
+    background-color: #343a40;
+    /* Dark background for the body */
+  }
+</style>
 
 
-  {% endblock %}
+{% endblock %}

@@ -110,17 +110,41 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         obj = self.get_object()
-        history_records = obj.history.all()
+
+        # Retrieve all history records and order them by date
+        history_records = list(obj.history.all().order_by("-history_date"))  # Fetch all and order by date
+
+        # Prepare a list to hold changes
+        changes_list = []
+        
         if len(history_records) >= 2:
-            new_record = history_records.latest()
-            old_record = history_records.order_by("-history_date")[1]
-            context["delta"] = new_record.diff_against(old_record)
-        else:
-            context["delta"] = None
+            # Start with the latest record
+            current_record = history_records[0]  # Latest record
+            
+            # Loop through previous records
+            for previous_record in history_records[1:]:
+                # Get the differences between the current and previous record
+                delta = current_record.diff_against(previous_record)
+                
+                # Extract changes from the delta object
+                for field in delta.changed_fields:
+                    changes_list.append({
+                        'field': field,
+                        'old': getattr(previous_record, field),  # Old value
+                        'new': getattr(current_record, field),   # New value
+                        'date': previous_record.history_date,
+                        'user': previous_record.history_user,
+                    })
+                
+                # Move the current record back to the previous one for the next iteration
+                current_record = previous_record  # Update current_record for the next comparison
+
+        context["history_records"] = history_records
+        context["changes_list"] = changes_list  # List of changes for display
         context["form"] = CommentForm()
         context["comments"] = obj.comments.all()
+        
         return context
-
 
 class NewOrder(LoginRequiredMixin, View):
     model = Order
