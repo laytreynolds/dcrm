@@ -17,6 +17,7 @@ urlpatterns = [
     path('orders/week', views.OrdersThisweekView.as_view(), name='OrdersThisWeek'),
     path('<int:order_Id>/update', views.OrderUpdate.as_view(), name='OrderUpdate'),
     path('<int:order_Id>/comment',views.OrderComment.as_view(), name='OrderComment'),
+    path('<int:order_Id>/comment/update',views.OrderCommentUpdate.as_view(), name='OrderCommentUpdate'),
     path('admin', views.Admin.as_view(), name='Admin'),
     path("admin/createuser", views.CreateUser.as_view(), name='CreateUser'),
     path('admin/<int:id>/updateuser', views.EditUser.as_view(), name='EditUser'),

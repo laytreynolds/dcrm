@@ -312,12 +312,41 @@
           {% for comment in comments %}
           <li class="list-group-item text-white border-0">
             <p class="info">
-              Note from {{ comment.owner.first_name }} {{ comment.owner.last_name }} on {{ comment.created|date:"F j, H:i" }}
-              {% if comment.status == "open" %}
-              <span class="badge margin-left text-bg-secondary">Open</span>
-              {% else %}
-              <span class="badge margin-left text-bg-success">Closed</span>
-              {% endif %}
+              {{ comment.id }} Note from {{ comment.owner.first_name }} {{ comment.owner.last_name }} on {{ comment.created|date:"F j, H:i" }}
+              <!-- Status Change Button -->
+              <button id="status-button" class="btn btn-secondary" data-toggle="modal" data-target="#statusModal">{{ comment.status }}</button>
+
+              <!-- Modal -->
+            <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="statusModalLabel">Change Comment Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="status-form">
+                      <div class="form-group">
+                        <label for="status">Select Status</label>
+                        <select class="form-control" id="status" name="status">
+                          <option value="open">Open</option>
+                          <option value="closed">Closed</option>
+                          <option value="inprogress">In Progress</option>
+                        </select>
+                      </div>
+                      <input type="hidden" id="comment-id" name="comment_id">
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-status">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             </p>
             {{ comment.body|linebreaks }}
           </li>
@@ -371,9 +400,19 @@
       </div>
     </div>
   </div>
+
+
 </div>
 
 <style>
+  label,
+  option,
+  .modal-title,
+  #status,
+  select {
+    color: black;
+  }
+
   i {
     padding-right: 10px;
   }
@@ -417,6 +456,7 @@
 
   .accordion-button:hover {
     background-color: rgba(52, 58, 63, 1);
+    color: white;
     /* Darken on hover */
   }
 
@@ -425,6 +465,5 @@
     /* Dark background for the body */
   }
 </style>
-
 
 {% endblock %}

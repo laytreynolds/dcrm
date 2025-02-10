@@ -198,8 +198,9 @@ class Order(models.Model):
 
 class Comment(models.Model):
     class Status(models.TextChoices):
-        open = "open", "Open"
-        closed = "closed", "Closed"
+        Open = "Open", "Open"
+        Closed = "Closed", "Closed"
+        InProgress = "In Progress", "In Progress"
 
     owner = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="comments")

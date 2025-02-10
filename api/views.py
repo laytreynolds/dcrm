@@ -1,6 +1,6 @@
 from django.db.models import Sum, Value, IntegerField, FloatField, Q
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, Order, Campaign, Activity
+from .models import User, Order, Campaign, Activity, Comment
 from django.views.generic import ListView, DetailView, View
 from .forms import SearchForm, OrderForm, CommentForm, OrderUpdateForm, CreateUserForm
 from django.contrib.postgres.search import SearchVector
@@ -203,16 +203,9 @@ def NewCompany(request):
 
 
 class OrderComment(LoginRequiredMixin, View):
-    def get(self, request, order_Id):
-        order = Order.objects.get(order_Id=order_Id)
-        form = OrderForm(order_id=order_Id)
-        return render(
-            request, "order/comment_form.html", {"form": form, "order": order}
-        )
 
     def post(self, request, order_Id):
         order = get_object_or_404(Order, order_Id=order_Id)
-        comment = None
         # A comment was posted
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -223,6 +216,27 @@ class OrderComment(LoginRequiredMixin, View):
             comment.owner = request.user
             # Save the comment to the database
             comment.save()
+        return redirect("crm:OrderDetailView", order_Id=order.order_Id)
+    
+    
+class OrderCommentUpdate(LoginRequiredMixin, View):
+    model = Comment
+
+    def post(self, request, order_Id):
+        order = get_object_or_404(Order, order_Id=order_Id)
+        
+        # Get the comment ID and status from the request
+        comment_id = request.POST.get('comment_id')
+        status = request.POST.get('status')  # Ensure this is included in your form
+
+        # Get the specific comment to update
+        comment = get_object_or_404(Comment, id=comment_id)
+
+        # Update the comment's status
+        comment.status = status
+        comment.save()
+
+        # Redirect to the order detail view
         return redirect("crm:OrderDetailView", order_Id=order.order_Id)
 
 # DASHBOARD
