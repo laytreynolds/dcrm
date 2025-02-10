@@ -118,26 +118,29 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
         changes_list = []
         
         if len(history_records) >= 2:
-            # Start with the latest record
             current_record = history_records[0]  # Latest record
             
-            # Loop through previous records
             for previous_record in history_records[1:]:
-                # Get the differences between the current and previous record
                 delta = current_record.diff_against(previous_record)
                 
-                # Extract changes from the delta object
                 for field in delta.changed_fields:
+                    old_value = getattr(previous_record, field)
+                    new_value = getattr(current_record, field)
+
+                    # Check if the field is the status field
+                    if field == 'status':
+                        old_value = Order.Status(old_value).label  # Get full name for old value
+                        new_value = Order.Status(new_value).label  # Get full name for new value
+
                     changes_list.append({
                         'field': field,
-                        'old': getattr(previous_record, field),  # Old value
-                        'new': getattr(current_record, field),   # New value
+                        'old': old_value,
+                        'new': new_value,
                         'date': previous_record.history_date,
                         'user': previous_record.history_user,
                     })
-                
-                # Move the current record back to the previous one for the next iteration
-                current_record = previous_record  # Update current_record for the next comparison
+                    
+                current_record = previous_record  # Update for the next comparison
 
         context["history_records"] = history_records
         context["changes_list"] = changes_list  # List of changes for display
