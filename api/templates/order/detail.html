@@ -93,9 +93,9 @@
           <li class="list-group-item text-white border-0">
             <div class="row">
               <div class="col-lg-6">
-                <strong>Status</strong>
+                <strong>Owner</strong>
               </div>
-              <div class="col-lg-6">{{ OrderDetail.get_status_display }}</div>
+              <div class="col-lg-6">{{ OrderDetail.owner.first_name }} {{ OrderDetail.owner.last_name }}</div>
             </div>
           </li>
           <li class="list-group-item text-white border-0">
