@@ -10,7 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="shortcut icon" type="image/png" href="{% static 'images/logo.png' %}"/>
+  <link rel="shortcut icon" type="image/png" href="{% static 'images/logo.png' %}" />
   <style>
     .card.bg-dark {
       background-color: rgba(0,
@@ -115,6 +115,47 @@
     .container {
       padding-top: 20px;
     }
+
+    .alert-container {
+      margin: 20px 0;
+    }
+
+    .messages {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .messages li {
+      margin-bottom: 10px;
+      padding: 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .alert {
+      font-size: 16px;
+      /* Adjust font size as needed */
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .alert-warning {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .alert-info {
+      background-color: #d1ecf1;
+      color: #0c5460;
+    }
   </style>
 </head>
 
@@ -124,18 +165,18 @@
   {% endif %}
   <div class="main-content">
     <div class="container" id="small">
-      {% block heading %} {% endblock %} {% block content1 %}
       {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-        <li class="{{ message.tags }}">
-          {{ message|safe }}
-          <a href="#" class="close">✖</a>
-        </li>
-        {% endfor %}
-      </ul>
+      <div class="alert-container">
+        <ul class="messages">
+          {% for message in messages %}
+          <li class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
       {% endif %}
-      {% endblock %}
+      {% block heading %} {% endblock %} {% block content1 %} {% endblock %}
     </div>
   </div>
 

@@ -583,7 +583,7 @@ class CreateUserForm(forms.ModelForm):
             Field("password2"),  
             Field("is_active"),  
             Field("is_staff"), 
-            Submit("Create User", "Submit", css_class="btn btn-primary"),
+            Submit("Create User", "Submit", css_class="btn btn-success"),
         )
 
     class Meta:

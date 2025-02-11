@@ -367,5 +367,20 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('crm:Admin')  # Redirect after deletion
 
     def get_queryset(self):
-        # Optional: restrict to certain users
-        users = User.objects.filter(is_superuser=False)  # Example: prevent superuser deletion
+        return User.objects.all()
+        # Example: prevent superuser deletion  # Get all users for deletion
+
+    def post(self, request, *args, **kwargs):
+        user = self.get_object()
+        if user.is_superuser:
+            messages.warning(request, "You cannot delete a superuser.")
+            return redirect(self.success_url)
+        return super().post(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        # Check if there are any users before rendering the delete confirmation
+        if not User.objects.exists():
+            messages.warning(request, "No users available to delete.")
+            return redirect(self.success_url)
+        
+        return super().get(request, *args, **kwargs)

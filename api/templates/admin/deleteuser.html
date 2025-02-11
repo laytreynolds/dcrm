@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block content1 %}
-  <h2>Are you sure you want to delete {{ object.username }}?</h2>
+<h2>Are you sure you want to delete {{ object.username }}?</h2>
+<div>
   <form method="post">
     {% csrf_token %}
-    <button type="submit">Confirm</button>
-    <a href="{% url 'crm:Admin' %}">Cancel</a>
+    <button class="btn btn-primary" type="submit">Confirm</button>
+    <button class="btn btn-secondary"><a class="text-white"href="{% url 'crm:Admin' %}">Cancel</a></button>
   </form>
+</div>
 {% endblock %}
