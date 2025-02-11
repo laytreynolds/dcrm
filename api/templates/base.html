@@ -160,7 +160,7 @@
 </head>
 
 <body class="bg-dark text-white">
-  {% if user.is_authenticated %}
+  {% if request.user.is_authenticated %}
   <nav>{% include 'navbar.html' %}</nav>
   {% endif %}
   <div class="main-content">
