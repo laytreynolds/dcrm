@@ -220,7 +220,7 @@
   </div>
   <div>
     
-    {% if user.is_staff %}
+    {% if request.user.is_staff %}
     <a class="nav-link" aria-current="page" href="{% url 'crm:Admin' %}">
       <i class="fa-solid fa-user-tie"></i> Admin
     </a>
@@ -231,7 +231,7 @@
   <div class="user-section">
     <a class="nav-link collapsible" data-bs-toggle="collapse" href="#collapseUser" role="button" aria-expanded="false"
       aria-controls="collapseUser">
-      <i class="fas fa-user"></i> {{ user.first_name }} {{ user.last_name }}
+      <i class="fas fa-user"></i> {{ request.user.first_name }} {{ request.user.last_name }}
     </a>
     <div class="collapse" id="collapseUser">
       <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit();">
