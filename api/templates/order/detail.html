@@ -31,8 +31,8 @@
   {% block content1 %}
 
   <div class="row padding-top-small">
-    <div class="col-md-8">
-      <div class="card">
+    <div class="col-12 col-md-8 mb-4">
+      <div class="card h-100">
         <div class="card-header text-white text-white">
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-user"></i>
@@ -81,8 +81,8 @@
       </div>
     </div>
 
-    <div class="col-md-4">
-      <div class="card">
+    <div class="col-12 col-md-4 mb-4">
+      <div class="card h-100">
         <div class="card-header text-white">
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-bolt"></i>
@@ -132,8 +132,8 @@
   </div>
 
   <div class="row padding-top">
-    <div class="col-md-4">
-      <div class="card">
+    <div class="col-12 col-md-4 mb-4">
+      <div class="card h-100">
         <div class="card-header text-white">
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-receipt"></i>
@@ -463,6 +463,55 @@
   .accordion-body {
     background-color: #343a40;
     /* Dark background for the body */
+  }
+
+  /* Added responsive styles */
+  @media (max-width: 768px) {
+    .container#small {
+      padding: 0 15px;
+    }
+    
+    h1 {
+      font-size: 1.75rem;  /* Smaller headings on mobile */
+    }
+    
+    h4 {
+      font-size: 1.2rem;
+    }
+    
+    .padding-top {
+      padding-top: 1.5rem;  /* Reduced padding on mobile */
+    }
+    
+    .card {
+      margin-bottom: 1rem;
+    }
+    
+    .list-group-item {
+      padding: 0.75rem;  /* Reduced padding in list items */
+    }
+    
+    /* Make text wrap better on small screens */
+    .col-lg-6 {
+      word-break: break-word;
+    }
+    
+    /* Improve button spacing on mobile */
+    #edit-button {
+      margin: 0.5rem 0;
+      display: block;
+      width: 100%;
+    }
+  }
+
+  /* Improve card header readability */
+  .card-header {
+    background-color: rgba(52, 58, 63, 0.95);
+  }
+  
+  /* Add smooth transitions */
+  .card, .accordion-button {
+    transition: all 0.3s ease;
   }
 </style>
 
