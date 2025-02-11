@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content1 %}
+  <h2>Are you sure you want to delete {{ object.username }}?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+    <a href="{% url 'crm:Admin' %}">Cancel</a>
+  </form>
+{% endblock %}

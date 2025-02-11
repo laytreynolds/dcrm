@@ -47,6 +47,7 @@
             </td>
             <td>
                 <a href="{% url 'crm:EditUser' user.id %}" class="btn btn-secondary"><i id="edit" class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{% url 'crm:DeleteUser' user.pk %}" class="btn btn-danger"><i id="edit" class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
         {% endfor %}

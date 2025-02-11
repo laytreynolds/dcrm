@@ -12,6 +12,8 @@ from django.utils.timezone import now
 from django.db.models.functions import Coalesce
 from django.contrib import messages
 from datetime import datetime
+from django.views.generic import DeleteView
+from django.urls import reverse_lazy
 
 
 # Globals
@@ -358,3 +360,12 @@ class EditUser(LoginRequiredMixin, View):
             return redirect("crm:Admin")  # Redirect after successful update
 
         return render(request, "admin/edituser.html", {"form": form, "user": user})  # Re-render with errors
+    
+class DeleteUser(LoginRequiredMixin, DeleteView):
+    model = User
+    template_name = 'admin/deleteuser.html'  # Template to confirm deletion
+    success_url = reverse_lazy('crm:Admin')  # Redirect after deletion
+
+    def get_queryset(self):
+        # Optional: restrict to certain users
+        users = User.objects.filter(is_superuser=False)  # Example: prevent superuser deletion
