@@ -375,6 +375,8 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
         if user.is_superuser:
             messages.warning(request, "You cannot delete a superuser.")
             return redirect(self.success_url)
+        else:
+            messages.success(request, "User Deleted")
         return super().post(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
