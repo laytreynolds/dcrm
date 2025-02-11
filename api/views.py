@@ -131,6 +131,14 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
                     if field == 'status':
                         old_value = Order.Status(old_value).label  # Get full name for old value
                         new_value = Order.Status(new_value).label  # Get full name for new value
+                    
+                    if field == 'order_company_type':
+                        old_value = Order.CompanyType(old_value).label  # Get full name for old value
+                        new_value = Order.CompanyType(new_value).label  # Get full name for new value
+                    
+                    if field == 'order_Title':
+                        old_value = Order.Title(old_value).label  # Get full name for old value
+                        new_value = Order.Title(new_value).label  # Get full name for new value
 
                     changes_list.append({
                         'field': field,
