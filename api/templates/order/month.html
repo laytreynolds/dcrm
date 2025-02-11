@@ -1,39 +1,128 @@
-{% extends "base.html" %} {% block heading %}
+{% extends "base.html" %}
+{% block heading %}
 <h1>Sales This Month</h1>
 <br>
-{% endblock %} {% block content1 %}
-<table class="table table-hover table-dark table-responsive table-borderless table-centered table-nowrap mb-0">
-  <thead class="table-active">
-    <tr>
-      <th scope="col">Order Number</th>
-      <th scope="col">Owner</th>
-      <th scope="col">Status</th>
-      <th scope="col">Business Name</th>
-      <th scope="col">Contact Name</th>
-      <th scope="col">Mobile</th>
-      <th scope="col">Campaign</th>
-      <th scope="col">Connection Type</th>
-      <th scope="col">Box Value</th>
-      <th scope="col">Created</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for order in OrdersThisMonth %}
-    <tr onclick="window.location.href='{{ order.get_absolute_url }}';">
-      <td>
-        <a href="{{ order.get_absolute_url }}">{{ order.order_Number }}</a>
-      </td>
-      <td>{{ order.owner }}</td>
-      <td>{{ order.get_status_display }}</td>
-      <td>{{ order.order_company_name }}</td>
-      <td>{{ order.order_First_Name }} {{ order.order_Last_Name }}</td>
-      <td>{{ order.order_Mobile }}</td>
-      <td>{{ order.campaign }}</td>
-      <td>{{ order.order_connection_type }}</td>
-      <td>{{ order.order_box_value }}</td>
-      <td>{{ order.order_Created }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% include "pagination.html" with page=page_obj %} {% endblock %}
+{% endblock %}
+
+{% block content1 %}
+<div class="row g-3">
+  {% for order in OrdersThisMonth %}
+  <div class="col-12 col-md-6 col-xl-4">
+    <div class="card h-100" onclick="window.location.href='{{ order.get_absolute_url }}';">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">
+            <a href="{{ order.get_absolute_url }}" class="text-white">
+              #{{ order.order_Number }}
+            </a>
+          </h5>
+          <span class="badge bg-primary">{{ order.get_status_display }}</span>
+        </div>
+        
+        <div class="row g-3">
+          <div class="col-6">
+            <small class="text-muted d-block">Business</small>
+            <span class="fs-6">{{ order.order_company_name }}</span>
+          </div>
+          <div class="col-6">
+            <small class="text-muted d-block">Contact</small>
+            <span class="fs-6">{{ order.order_First_Name }} {{ order.order_Last_Name }}</span>
+          </div>
+          <div class="col-6">
+            <small class="text-muted d-block">Box Value</small>
+            <span class="fs-6">{{ order.order_box_value }}</span>
+          </div>
+          <div class="col-6">
+            <small class="text-muted d-block">Campaign</small>
+            <span class="fs-6">{{ order.campaign }}</span>
+          </div>
+          <div class="col-6">
+            <small class="text-muted d-block">Owner</small>
+            <span class="fs-6">{{ order.owner }}</span>
+          </div>
+          <div class="col-6">
+            <small class="text-muted d-block">Mobile</small>
+            <span class="fs-6">{{ order.order_Mobile }}</span>
+          </div>
+          <div class="col-6">
+            <small class="text-muted d-block">Connection Type</small>
+            <span class="fs-6">{{ order.order_connection_type }}</span>
+          </div>
+          <div class="col-6">
+            <small class="text-muted d-block">Created</small>
+            <span class="fs-6">{{ order.order_Created }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+  .card {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .card-body {
+    padding: 1.25rem;
+    color: white;
+  }
+  
+  .text-muted {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+  
+  .badge {
+    padding: 0.5em 0.75em;
+    font-weight: 500;
+  }
+  
+  .card a {
+    text-decoration: none;
+  }
+  
+  .fs-6 {
+    font-weight: 500;
+    color: white;
+  }
+  
+  /* Responsive grid adjustments */
+  @media (min-width: 768px) {
+    .col-md-6 {
+      padding: 0.75rem;
+    }
+  }
+  
+  /* Add some breathing room between card sections */
+  .row.g-3 {
+    --bs-gutter-y: 1rem;
+  }
+  
+  /* Make sure all cards in a row have the same height */
+  .card {
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+  }
+
+  /* Ensure all text in cards is white */
+  .card span {
+    color: white;
+  }
+</style>
+
+{% include "pagination.html" with page=page_obj %}
+{% endblock %}

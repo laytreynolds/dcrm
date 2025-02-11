@@ -18,7 +18,7 @@ from django.urls import reverse_lazy
 
 # Globals
 
-pagination = 10
+pagination = 9
 
 # HOME
 
