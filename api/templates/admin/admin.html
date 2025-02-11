@@ -40,9 +40,9 @@
             <td>{{ user.last_login }}</td>
             <td>
                 {% if user.is_active %}
-                Active
+                <span class="badge bg-success">Active</span>
                 {% else %}
-                Inactive
+                <span class="badge bg-danger">Inactive</span>
                 {% endif %}
             </td>
             <td>
