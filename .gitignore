@@ -169,3 +169,5 @@ data.json
 dcrm\settings\base.py
 dcrm\settings\prod.py
 dcrm\settings\dev.py
+
+seed.py

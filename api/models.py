@@ -137,7 +137,7 @@ class Order(models.Model):
     order_Number = models.CharField(unique=True, max_length=255, default="", editable=False)
     company = models.ForeignKey(Company, blank=True, null=True, on_delete=models.CASCADE, related_name="orders")
     order_Created = models.DateTimeField(editable=False)
-    order_Updated = models.DateTimeField(auto_now=True)
+    order_Updated = models.DateTimeField(auto_now=True, null=True)
     order_Title = models.CharField(max_length=20, choices=Title.choices, default="", null=True)
     order_First_Name = models.CharField(max_length=100, default="", null=True)
     order_Last_Name = models.CharField(max_length=100, default="", null=True)
