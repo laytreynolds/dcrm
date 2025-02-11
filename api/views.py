@@ -112,7 +112,7 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
         obj = self.get_object()
 
         # Retrieve all history records and order them by date
-        history_records = list(obj.history.all().order_by("-history_date"))  # Fetch all and order by date
+        history_records = list(obj.history.all().order_by("-history_date"))
 
         # Prepare a list to hold changes
         changes_list = []
@@ -140,11 +140,14 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
                         old_value = Order.Title(old_value).label  # Get full name for old value
                         new_value = Order.Title(new_value).label  # Get full name for new value
 
+                    # Use the history date from the current record as the change date
+                    change_date = current_record.history_date if hasattr(current_record, 'history_date') else datetime.now()
+
                     changes_list.append({
                         'field': field,
                         'old': old_value,
                         'new': new_value,
-                        'date': datetime.now(),
+                        'date': change_date,
                         'user': previous_record.history_user,
                     })
                     
