@@ -11,7 +11,7 @@ from django.contrib.auth import get_user
 from django.utils.timezone import now
 from django.db.models.functions import Coalesce
 from django.contrib import messages
-
+import time
 
 
 # Globals
@@ -136,7 +136,7 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
                         'field': field,
                         'old': old_value,
                         'new': new_value,
-                        'date': previous_record.history_date,
+                        'date': time.now(),
                         'user': previous_record.history_user,
                     })
                     
