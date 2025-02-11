@@ -546,6 +546,11 @@ class CreateUserForm(forms.ModelForm):
         (True, 'Staff'),
         (False, 'Non-Staff'),
     ]
+    
+    SUPERUSER_STATUS_CHOICES = [
+        (True, 'Super User'),
+        (False, 'Normal User'),
+    ]
 
     is_active = forms.ChoiceField(
         choices=ACTIVE_STATUS_CHOICES,
@@ -557,6 +562,12 @@ class CreateUserForm(forms.ModelForm):
         choices=STAFF_STATUS_CHOICES,
         widget=RadioSelect,
         label="Staff Status"
+    )
+    
+    is_superuser = forms.ChoiceField(
+        choices=SUPERUSER_STATUS_CHOICES,
+        widget=RadioSelect,
+        label="Super User Status"
     )
 
     def __init__(self, *args, **kwargs):
@@ -583,12 +594,13 @@ class CreateUserForm(forms.ModelForm):
             Field("password2"),  
             Field("is_active"),  
             Field("is_staff"), 
+            Field("is_superuser"), 
             Submit("Create User", "Submit", css_class="btn btn-success"),
         )
 
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "password", "is_active", "is_staff", "email"]
+        fields = ["username", "first_name", "last_name", "password", "is_active", "is_staff", "email", "is_superuser"]
         widgets = {
             "password": forms.PasswordInput,
         }

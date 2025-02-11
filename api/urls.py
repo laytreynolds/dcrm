@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin', views.Admin.as_view(), name='Admin'),
     path("admin/createuser", views.CreateUser.as_view(), name='CreateUser'),
     path("admin/deleteuser/<int:pk>/", views.DeleteUser.as_view(), name='DeleteUser'),
-    path('admin//updateuser/<int:id>', views.EditUser.as_view(), name='EditUser'),
+    path('admin/updateuser/<int:id>', views.EditUser.as_view(), name='EditUser'),
 ]
