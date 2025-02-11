@@ -1,12 +1,9 @@
 from .base import *
 import environ
 import os
-from pathlib import Path
 
 # Initialize environment variables
-env = environ.Env(
-    DEBUG=(bool, False)
-)
+env = environ.Env()
 
 # Determine which .env file to read
 env_file = os.getenv('DJANGO_ENV_FILE', '.env')
@@ -22,9 +19,9 @@ CSRF_COOKIE_SECURE= env("CSRF_COOKIE_SECURE")
 SECURE_HSTS_PRELOAD= env("SECURE_HSTS_PRELOAD")
 WSGI_APPLICATION= env("WSGI_APPLICATION")
 
-DEBUG=env("DEBUG")
-
 SECRET_KEY = env("SECRET_KEY")
+
+DEBUG=False
 
 DATABASES = {
     "default": {
