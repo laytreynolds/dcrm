@@ -120,12 +120,6 @@ Hosted on Heroku with:
 ## Getting Started
 [Installation and setup instructions would go here]
 
-## Contributing
-[Contribution guidelines would go here]
-
-## License
-[License information would go here]
-
 ## Endpoints
 
 ### Authentication
