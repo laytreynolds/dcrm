@@ -118,7 +118,38 @@ Hosted on Heroku with:
 - **WhiteNoise** - Static files serving
 
 ## Getting Started
-[Installation and setup instructions would go here]
+
+### Viewing Live - [crm.laytonreynolds.com](http://crm.laytonreynolds.com/)
+
+### Running Locally
+
+#### Clone
+`git clone git@github.com:laytreynolds/dcrm.git`
+
+#### Activate Virtual Env
+
+`python -m venv ./venv`<br /><br />
+**Linux** / **MAC** - source ./venv/bin/activate<br /><br />
+**Windows** - ./venv/Scripts/Activate.ps1<br />
+
+#### Install Requirements
+`pip install -r requirements.txt`
+
+#### Create Environment Variables
+- **Filename** - `.env.dev`
+- **Variables**<br />
+  - `SECRET_KEY="asdadgtuyi78654ew@#$&*ikjnbvcxsa23$%^&*IKjnbvcxzq12!123456"`<br />
+  - `DB_NAME=`<br />
+  - `DB_USER=`<br />
+  - `DB_PASSWORD=`<br />
+  - `DB_HOST=`<br />
+  - `PORT=5432`<br />
+  - `DEBUG=False`<br />
+
+### Create Self Signed Cert
+`openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"`
+#### Running Server
+`python ./manage.py runserver_plus`
 
 ## Endpoints
 
