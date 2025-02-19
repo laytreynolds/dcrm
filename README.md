@@ -128,9 +128,9 @@ Hosted on Heroku with:
 
 #### Activate Virtual Env
 
-`python -m venv ./venv`<br /><br />
-**Linux** / **MAC** - source ./venv/bin/activate<br /><br />
-**Windows** - ./venv/Scripts/Activate.ps1<br />
+`python -m venv ./venv`<br />
+ - **Linux** / **MAC** - source ./venv/bin/activate<br />
+- **Windows** - ./venv/Scripts/Activate.ps1<br />
 
 #### Install Requirements
 `pip install -r requirements.txt`
@@ -146,7 +146,7 @@ Hosted on Heroku with:
   - `PORT=5432`<br />
   - `DEBUG=False`<br />
 
-### Create Self Signed Cert
+#### Create Self Signed Cert
 `openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"`
 #### Running Server
 `python ./manage.py runserver_plus`
