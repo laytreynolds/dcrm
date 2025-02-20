@@ -138,11 +138,11 @@ Hosted on Heroku with:
 #### Create Environment Variables
 - **Filename** - `.env.dev`
 - **Variables**<br />
-  - `SECRET_KEY="asdadgtuyi78654ew@#$&*ikjnbvcxsa23$%^&*IKjnbvcxzq12!123456"`<br />
-  - `DB_NAME=`<br />
-  - `DB_USER=`<br />
-  - `DB_PASSWORD=`<br />
-  - `DB_HOST=`<br />
+  - `SECRET_KEY=""`<br />
+  - `DB_NAME=""`<br />
+  - `DB_USER=""`<br />
+  - `DB_PASSWORD=""`<br />
+  - `DB_HOST=""`<br />
   - `PORT=5432`<br />
   - `DEBUG=False`<br />
 
