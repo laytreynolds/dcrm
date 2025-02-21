@@ -123,19 +123,19 @@ Hosted on Heroku with:
 
 ### Running Locally
 
-#### Clone
+#### 1. Clone
 `git clone git@github.com:laytreynolds/dcrm.git`
 
-#### Activate Virtual Env
+#### 2. Activate Virtual Env
 
 `python -m venv ./venv`<br />
  - **Linux** / **MAC** - source ./venv/bin/activate<br />
 - **Windows** - ./venv/Scripts/Activate.ps1<br />
 
-#### Install Requirements
+#### 3. Install Requirements
 `pip install -r requirements.txt`
 
-#### Create Environment Variables
+#### 4. Create Environment Variables
 - **Filename** - `.env.dev`
 - **Variables**<br />
   - `SECRET_KEY=""`<br />
@@ -146,9 +146,10 @@ Hosted on Heroku with:
   - `PORT=5432`<br />
   - `DEBUG=False`<br />
 
-#### Create Self Signed Cert
+#### 5. Create Self Signed Cert
 `openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"`
-#### Running Server
+
+#### 6. Running Server
 `python ./manage.py runserver_plus`
 
 ## Endpoints
