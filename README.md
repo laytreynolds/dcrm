@@ -171,6 +171,8 @@ Hosted on Heroku with:
 - `/orders/new/` - Create a new order
 - `/orders/<order_id>/update/` - Update an existing order
 - `/orders/connected/month/` - View connected orders for current month
+- `/orders/my-orders/` - View orders owned by the current user
+- `export/month/` - Export connected orders for current month to CSV
 
 ### Comments
 - `/orders/<order_id>/comment/` - Add a comment to an order
@@ -228,3 +230,5 @@ The system includes the following main models:
 - User performance tracking
 - Campaign tracking
 - Responsive design
+- Personal order tracking
+- User data export functionality
