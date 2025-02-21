@@ -23,4 +23,5 @@ urlpatterns = [
     path("admin/deleteuser/<int:pk>/", views.DeleteUser.as_view(), name='DeleteUser'),
     path('admin/updateuser/<int:id>', views.EditUser.as_view(), name='EditUser'),
     path('my/orders', views.MyOrders.as_view(), name='MyOrders'),
+    path('export/month', views.ExportMonthCSV.as_view(), name='ExportMonthCSV'),
 ]

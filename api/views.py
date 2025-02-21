@@ -14,6 +14,9 @@ from django.contrib import messages
 from datetime import datetime
 from django.views.generic import DeleteView
 from django.urls import reverse_lazy
+import csv
+from django.http import HttpResponse
+from django.utils import timezone
 
 
 # Globals
@@ -396,4 +399,46 @@ class MyOrders(LoginRequiredMixin, ListView):
     
     def get_queryset(self):
         return Order.objects.filter(owner=self.request.user)
+
+class ExportMonthCSV(LoginRequiredMixin, View):
+
+    def get(self, request):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="connections-month_{datetime.now().strftime("%Y%m")}.csv"'
+        
+        writer = csv.writer(response)
+        writer.writerow([
+            'Order Number',
+            'Business',
+            'Contact',
+            'Box Value',
+            'Campaign',
+            'Owner',
+            'Mobile',
+            'Connection Type',
+            'Created',
+            'Status'
+        ])
+        
+        # Get the same queryset as connected_month view
+        orders = Order.objects.filter(
+            order_Created__month=timezone.now().month,
+            order_Created__year=timezone.now().year
+        ).order_by('-order_Created')
+        
+        for order in orders:
+            writer.writerow([
+                order.order_Number,
+                order.order_company_name,
+                f"{order.order_First_Name} {order.order_Last_Name}",
+                order.order_box_value,
+                order.campaign,
+                order.owner,
+                order.order_Mobile,
+                order.order_connection_type,
+                order.order_Created,
+                order.get_status_display()
+            ])
+        
+        return response
 
