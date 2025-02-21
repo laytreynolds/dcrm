@@ -55,7 +55,7 @@
                   <tbody>
                     {% for user in monthly_users_leaderboard %}
                     <tr>
-                      <td style="background-color: rgb(52, 58, 63) !important;">{{ user.username }}</td>
+                      <td style="background-color: rgb(52, 58, 63) !important;">{{ user.first_name }} {{ user.last_name }}</td>
                       <td class="text-end" style="background-color: rgb(52, 58, 63) !important;">£{{ user.total_box_value|floatformat:2 }}</td>
                     </tr>
                     {% endfor %}
