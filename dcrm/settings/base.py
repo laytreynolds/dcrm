@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "simple_history",
     "chat",
     "django_extensions",
+    "django.contrib.humanize",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

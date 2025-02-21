@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load humanize %}
+
 {% block heading %}
 <h1>CRM Dashboard</h1>
 {% endblock %}
@@ -15,19 +17,19 @@
           <div class="row text-center">
             <div class="col-md-3">
               <h5 class="text-white-50">Today's Revenue</h5>
-              <h3 class="text-white">£{{ revenue_today|default:"0"|floatformat:2 }}</h3>
+              <h3 class="text-white">£{{ revenue_today|default:"0"|floatformat:2|intcomma }}</h3>
             </div>
             <div class="col-md-3">
               <h5 class="text-white-50">Weekly Revenue</h5>
-              <h3 class="text-white">£{{ revenue_week|default:"0"|floatformat:2 }}</h3>
+              <h3 class="text-white">£{{ revenue_week|default:"0"|floatformat:2|intcomma }}</h3>
             </div>
             <div class="col-md-3">
               <h5 class="text-white-50">Monthly Revenue</h5>
-              <h3 class="text-white">£{{ revenue_month|default:"0"|floatformat:2 }}</h3>
+              <h3 class="text-white">£{{ revenue_month|default:"0"|floatformat:2|intcomma }}</h3>
             </div>
             <div class="col-md-3">
               <h5 class="text-white-50">Connected Revenue</h5>
-              <h3 class="text-white">£{{ connected_revenue_month|default:"0"|floatformat:2 }}</h3>
+              <h3 class="text-white">£{{ connected_revenue_month|default:"0"|floatformat:2|intcomma }}</h3>
             </div>
           </div>
         </div>
@@ -56,7 +58,7 @@
                     {% for user in monthly_users_leaderboard %}
                     <tr>
                       <td style="background-color: rgb(52, 58, 63) !important;">{{ user.first_name }} {{ user.last_name }}</td>
-                      <td class="text-end" style="background-color: rgb(52, 58, 63) !important;">£{{ user.total_box_value|floatformat:2 }}</td>
+                      <td class="text-end" style="background-color: rgb(52, 58, 63) !important;">£{{ user.total_box_value|floatformat:2|intcomma }}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -87,7 +89,7 @@
                     {% for camp in campaign %}
                     <tr>
                       <td style="background-color: rgb(52, 58, 63) !important;">{{ camp.name }}</td>
-                      <td class="text-end" style="background-color: rgb(52, 58, 63) !important;">£{{ camp.total_campaign_value|floatformat:2 }}</td>
+                      <td class="text-end" style="background-color: rgb(52, 58, 63) !important;">£{{ camp.total_campaign_value|floatformat:2|intcomma }}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
