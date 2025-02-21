@@ -100,8 +100,8 @@
 
   .search-container input[type="search"] {
     width: 100%;
-      /* Adjust width to account for padding and icon */
-      padding-left: 35px;
+    /* Adjust width to account for padding and icon */
+    padding-left: 35px;
     /* Add padding to make space for the icon */
     box-sizing: border-box;
     /* Ensure padding is included in the width */
@@ -171,40 +171,49 @@
   @media (max-width: 768px) {
     .sidebar {
       width: 100%;
-      height: 100vh; /* Full viewport height */
-      position: fixed; /* Fixed position for overlay */
+      height: 100vh;
+      /* Full viewport height */
+      position: fixed;
+      /* Fixed position for overlay */
       top: 0;
       left: 0;
       z-index: 1000;
-      transform: translateX(-100%); /* Hide off-screen by default */
-      transition: transform 0.3s ease; /* Smooth transition */
+      transform: translateX(-100%);
+      /* Hide off-screen by default */
+      transition: transform 0.3s ease;
+      /* Smooth transition */
       background-color: #343a40;
       padding-top: 60px;
     }
 
     /* Show sidebar when active */
     .sidebar.active {
-      transform: translateX(0); /* Slide in from left */
+      transform: translateX(0);
+      /* Slide in from left */
     }
 
     .mobile-toggle {
-      display: flex !important; /* Force display on mobile */
+      display: flex !important;
+      /* Force display on mobile */
     }
 
     /* Style for the close button */
     .mobile-toggle.active {
       position: fixed;
       right: 15px;
-      background-color: transparent; /* Make background transparent when menu is open */
+      background-color: transparent;
+      /* Make background transparent when menu is open */
     }
 
     .mobile-toggle.active i {
-      transform: rotate(90deg); /* Rotate icon when menu is open */
+      transform: rotate(90deg);
+      /* Rotate icon when menu is open */
     }
 
     .sidebar-content {
       height: 100%;
-      overflow-y: auto; /* Allow scrolling if content is too long */
+      overflow-y: auto;
+      /* Allow scrolling if content is too long */
       padding: 20px;
     }
 
@@ -228,9 +237,18 @@
     }
 
     /* Stagger animation for menu items */
-    .sidebar.active .nav-link:nth-child(1) { transition-delay: 0.1s; }
-    .sidebar.active .nav-link:nth-child(2) { transition-delay: 0.2s; }
-    .sidebar.active .nav-link:nth-child(3) { transition-delay: 0.3s; }
+    .sidebar.active .nav-link:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .sidebar.active .nav-link:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .sidebar.active .nav-link:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
     /* Add more if needed */
 
     /* Prevent body scrolling when menu is open */
@@ -245,6 +263,7 @@
       opacity: 0;
       transform: translateY(-10px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -253,20 +272,24 @@
 
   /* Update mobile toggle styles to ensure visibility */
   .mobile-toggle {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: fixed;
     top: 15px;
     right: 15px;
     color: white;
     font-size: 24px;
     cursor: pointer;
-    z-index: 2000; /* Increased z-index to ensure visibility */
+    z-index: 2000;
+    /* Increased z-index to ensure visibility */
     background-color: #343a40;
     padding: 10px;
     border-radius: 4px;
     border: none;
-    width: 44px; /* Explicit width */
-    height: 44px; /* Explicit height */
+    width: 44px;
+    /* Explicit width */
+    height: 44px;
+    /* Explicit height */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -306,10 +329,15 @@
       </a>
       <!-- <a class="nav-link" href="{% url 'crm:NewCompany' %}"><i class="fas fa-building"></i> Company</a> -->
     </div>
+    <div>
+      <a class="nav-link" aria-current="page" href="{% url 'crm:MyOrders' %}">
+        <i class="fas fa-shopping-cart"></i> My Sales
+      </a>
+    </div>
 
     <!-- Collapsible Reports Section -->
-    <a class="nav-link collapsible" data-bs-toggle="collapse" href="#collapseReports" role="button" aria-expanded="false"
-      aria-controls="collapseReports">
+    <a class="nav-link collapsible" data-bs-toggle="collapse" href="#collapseReports" role="button"
+      aria-expanded="false" aria-controls="collapseReports">
       <i class="fas fa-chart-line"></i> Reports
     </a>
     <div class="collapse" id="collapseReports">
@@ -330,7 +358,7 @@
       </a>
     </div>
     <div>
-      
+
       {% if request.user.is_staff %}
       <a class="nav-link" aria-current="page" href="{% url 'crm:Admin' %}">
         <i class="fa-solid fa-user-tie"></i> Admin
@@ -357,48 +385,48 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileToggle = document.querySelector('.mobile-toggle');
-  const sidebar = document.querySelector('.sidebar');
-  const body = document.body;
+  document.addEventListener('DOMContentLoaded', function () {
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const body = document.body;
 
-  if (mobileToggle && sidebar) {
-    mobileToggle.addEventListener('click', function() {
-      sidebar.classList.toggle('active');
-      mobileToggle.classList.toggle('active');
-      
-      // Toggle body scroll
-      body.classList.toggle('menu-open');
-      
-      // Toggle aria-expanded for accessibility
-      const isExpanded = sidebar.classList.contains('active');
-      mobileToggle.setAttribute('aria-expanded', isExpanded);
-      
-      // Change icon based on state
-      const icon = mobileToggle.querySelector('i');
-      if (isExpanded) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-times');
-      } else {
-        icon.classList.add('fa-bars');
-        icon.classList.remove('fa-times');
-      }
-    });
+    if (mobileToggle && sidebar) {
+      mobileToggle.addEventListener('click', function () {
+        sidebar.classList.toggle('active');
+        mobileToggle.classList.toggle('active');
 
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-      if (sidebar.classList.contains('active') && 
-          !sidebar.contains(event.target) && 
-          !mobileToggle.contains(event.target)) {
-        sidebar.classList.remove('active');
-        mobileToggle.classList.remove('active');
-        body.classList.remove('menu-open');
-        mobileToggle.setAttribute('aria-expanded', 'false');
+        // Toggle body scroll
+        body.classList.toggle('menu-open');
+
+        // Toggle aria-expanded for accessibility
+        const isExpanded = sidebar.classList.contains('active');
+        mobileToggle.setAttribute('aria-expanded', isExpanded);
+
+        // Change icon based on state
         const icon = mobileToggle.querySelector('i');
-        icon.classList.add('fa-bars');
-        icon.classList.remove('fa-times');
-      }
-    });
-  }
-});
+        if (isExpanded) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-times');
+        } else {
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function (event) {
+        if (sidebar.classList.contains('active') &&
+          !sidebar.contains(event.target) &&
+          !mobileToggle.contains(event.target)) {
+          sidebar.classList.remove('active');
+          mobileToggle.classList.remove('active');
+          body.classList.remove('menu-open');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+          const icon = mobileToggle.querySelector('i');
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
+      });
+    }
+  });
 </script>

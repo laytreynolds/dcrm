@@ -386,3 +386,14 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
             return redirect(self.success_url)
         
         return super().get(request, *args, **kwargs)
+
+
+class MyOrders(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = 'order/myorders.html'
+    context_object_name = 'MyOrders'
+    paginate_by = pagination
+    
+    def get_queryset(self):
+        return Order.objects.filter(owner=self.request.user)
+
