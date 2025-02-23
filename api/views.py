@@ -107,7 +107,7 @@ class OrdersThisMonth(LoginRequiredMixin, OrderFilterMixin, ListView):
 class OrdersThisweek(LoginRequiredMixin, OrderFilterMixin, ListView):
     model = Order
     template_name = 'order/week.html'
-    context_object_name = 'Orders'
+    context_object_name = 'OrdersThisWeek'
     paginate_by = 9
 
     def get_queryset(self):
@@ -120,10 +120,7 @@ class OrdersThisweek(LoginRequiredMixin, OrderFilterMixin, ListView):
         
         # Add some debug logging or print statements
         filtered_queryset = queryset.filter(order_Created__gte=start_of_week)
-        print(f"Start of week: {start_of_week}")
-        print(f"Total orders: {queryset.count()}")
-        print(f"Filtered orders: {filtered_queryset.count()}")
-        
+                
         return filtered_queryset
 
 
