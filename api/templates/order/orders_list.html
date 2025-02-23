@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content1 %}
+{% include "filter.html" %}
+
+
 <div class="row g-3">
   {% for order in Orders %}
   <div class="col-12 col-md-6 col-xl-4">
@@ -18,7 +21,7 @@
           </h5>
           <span class="badge bg-primary">{{ order.get_status_display }}</span>
         </div>
-        
+
         <div class="row g-3">
           <div class="col-6">
             <small class="text-muted d-block">Business</small>
@@ -65,18 +68,18 @@
     transition: all 0.2s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     border-color: rgba(255, 255, 255, 0.2);
   }
-  
+
   .card-body {
     padding: 1.25rem;
     color: white;
   }
-  
+
   .text-muted {
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -84,33 +87,33 @@
     opacity: 0.8;
     color: rgba(255, 255, 255, 0.7) !important;
   }
-  
+
   .badge {
     padding: 0.5em 0.75em;
     font-weight: 500;
   }
-  
+
   .card a {
     text-decoration: none;
   }
-  
+
   .fs-6 {
     font-weight: 500;
     color: white;
   }
-  
+
   /* Responsive grid adjustments */
   @media (min-width: 768px) {
     .col-md-6 {
       padding: 0.75rem;
     }
   }
-  
+
   /* Add some breathing room between card sections */
   .row.g-3 {
     --bs-gutter-y: 1rem;
   }
-  
+
   /* Make sure all cards in a row have the same height */
   .card {
     height: 100%;
@@ -121,6 +124,30 @@
   /* Ensure all text in cards is white */
   .card span {
     color: white;
+  }
+
+  /* Add styles for the filter form */
+  .form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+  }
+
+  .form-label {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Style for date input calendar icon */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.7;
   }
 </style>
 

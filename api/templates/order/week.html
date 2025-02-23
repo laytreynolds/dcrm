@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content1 %}
+{% include "filter.html" %}
+
 <div class="row g-3">
   {% for order in OrdersThisWeek %}
   <div class="col-12 col-md-6 col-xl-4">

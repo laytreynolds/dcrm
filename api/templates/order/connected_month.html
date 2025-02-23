@@ -7,6 +7,8 @@
 </div>
 <br>
 {% endblock %} {% block content1 %}
+{% include "filter.html" %}
+
 <div class="row g-3">
   {% for order in ConnectionsThisMonth %}
   <div class="col-12 col-md-6 col-xl-4">
