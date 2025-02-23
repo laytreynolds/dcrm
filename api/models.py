@@ -4,8 +4,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.timezone import now
 from simple_history.models import HistoricalRecords
-import datetime
-
+from datetime import datetime
 
 # Generate randomm unique CRM-xxxxxx Number
 
@@ -89,6 +88,8 @@ class Order(models.Model):
             self.status = "NW"
         if not self.order_Created:
             self.order_Created = datetime.now()
+        if self.status == "CN":
+            self.order_connected_date = datetime.now()
         super(Order, self).save(*args, **kwargs)
 
 
@@ -158,7 +159,7 @@ class Order(models.Model):
     order_network = models.CharField(max_length=100, default="", null=True, blank=True)
     order_box_value = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     order_deal_source = models.CharField(max_length=255, default="", null=True, blank=True)
-    order_connected_date = models.DateField(default="1970-01-01", null=True, blank=True)
+    order_connected_date = models.DateField(null=True, blank=True)
     order_loss_reason = models.CharField(max_length=255, default="", null=True, blank=True)
     order_date_of_birth = models.DateField(default="1970-01-01", null=True, blank=True)
     order_account_address = models.TextField(default="", null=True, blank=True)

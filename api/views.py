@@ -78,8 +78,8 @@ class OrdersListView(LoginRequiredMixin, OrderFilterMixin, ListView):
     paginate_by = 9
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return self.apply_filters(queryset)
+        # This will first get all orders, then apply filters if any
+        return super().get_queryset()
 
 
 class OrdersTodayListView(LoginRequiredMixin, ListView):
@@ -96,41 +96,43 @@ class OrdersThisMonth(LoginRequiredMixin, OrderFilterMixin, ListView):
     paginate_by = 9
 
     def get_queryset(self):
+        # First get this month's orders
         today = timezone.now()
         first_day = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         queryset = Order.objects.filter(order_Created__gte=first_day)
-        return self.apply_filters(queryset)
+        # Then apply any additional filters
+        return super().get_queryset().filter(order_Created__gte=first_day)
 
 
-class OrdersThisweek(LoginRequiredMixin, ListView):
+class OrdersThisweek(LoginRequiredMixin, OrderFilterMixin, ListView):
     model = Order
     template_name = 'order/week.html'
     context_object_name = 'Orders'
     paginate_by = 9
 
     def get_queryset(self):
+        # First get the base queryset from parent
+        queryset = super().get_queryset()
+        # Get the start of the current week (Monday)
         today = timezone.now()
         start_of_week = today - timedelta(days=today.weekday())
         start_of_week = start_of_week.replace(hour=0, minute=0, second=0, microsecond=0)
-        queryset = Order.objects.filter(order_Created__gte=start_of_week)
-        return self.apply_filters(queryset)
+        
+        # Add some debug logging or print statements
+        filtered_queryset = queryset.filter(order_Created__gte=start_of_week)
+        print(f"Start of week: {start_of_week}")
+        print(f"Total orders: {queryset.count()}")
+        print(f"Filtered orders: {filtered_queryset.count()}")
+        
+        return filtered_queryset
 
 
 
-class ConnectionsThisMonth(LoginRequiredMixin, ListView):
-    model = Order
-    template_name = 'order/orders_list.html'
-    context_object_name = 'Orders'
-    paginate_by = 9
-
-    def get_queryset(self):
-        today = timezone.now()
-        first_day = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-        queryset = Order.objects.filter(
-            order_Created__gte=first_day,
-            order_connection_type__in=['New Connection', 'Port In']
-        )
-        return self.apply_filters(queryset)
+class ConnectionsThisMonth(LoginRequiredMixin, OrderFilterMixin, ListView):
+    queryset = Order.connected.filter(order_connected_date__month=now().month)
+    context_object_name = "ConnectionsThisMonth"
+    paginate_by = pagination
+    template_name = "order/connected_month.html"
 
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
@@ -426,8 +428,9 @@ class MyOrders(LoginRequiredMixin, OrderFilterMixin, ListView):
     paginate_by = 9
 
     def get_queryset(self):
+        # First get user's orders
         queryset = super().get_queryset().filter(owner=self.request.user)
-        return self.apply_filters(queryset)
+        return queryset
 
 class ExportMonthCSV(LoginRequiredMixin, View):
 
