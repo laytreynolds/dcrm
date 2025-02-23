@@ -502,7 +502,9 @@ class MyOrders(LoginRequiredMixin, ListView):
         
         # Get date filter parameters
         start_date = self.request.GET.get('start_date')
-        end_date = self.request.GET.get('end_date')
+        end_date = self.request.GET.get('end_date') 
+        status = self.request.GET.get('status')
+
 
         # Apply date filters if provided
         if start_date:
@@ -512,6 +514,9 @@ class MyOrders(LoginRequiredMixin, ListView):
         if end_date:
             end_date = datetime.strptime(end_date, '%Y-%m-%d')
             queryset = queryset.filter(order_Created__date__lte=end_date)
+
+        if status:
+            queryset = queryset.filter(status=status)
 
         # Order by newest first
         return queryset.order_by('-order_Created')
