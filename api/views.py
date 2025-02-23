@@ -450,10 +450,7 @@ class ExportMonthCSV(LoginRequiredMixin, View):
         ])
         
         # Get the same queryset as connected_month view
-        orders = Order.objects.filter(
-            order_Created__month=timezone.now().month,
-            order_Created__year=timezone.now().year
-        ).order_by('-order_Created')
+        orders = Order.connected.filter(order_connected_date__month=now().month)
         
         for order in orders:
             writer.writerow([
