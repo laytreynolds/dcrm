@@ -19,6 +19,15 @@ CSRF_COOKIE_SECURE= env("CSRF_COOKIE_SECURE")
 SECURE_HSTS_PRELOAD= env("SECURE_HSTS_PRELOAD")
 WSGI_APPLICATION= env("WSGI_APPLICATION")
 
+# Whitenoise settings
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')  # Add after SecurityMiddleware
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Static files
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 SECRET_KEY = env("SECRET_KEY")
 
 DEBUG=False
