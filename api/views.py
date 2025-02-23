@@ -17,6 +17,7 @@ from django.urls import reverse_lazy
 import csv
 from django.http import HttpResponse
 from django.utils import timezone
+from .mixins import OrderFilterMixin
 
 
 # Globals
@@ -70,7 +71,7 @@ class OrderSearch(LoginRequiredMixin, ListView):
         )
 
 
-class OrdersListView(LoginRequiredMixin, ListView):
+class OrdersListView(LoginRequiredMixin, OrderFilterMixin, ListView):
     model = Order
     template_name = 'order/orders_list.html'
     context_object_name = 'Orders'
@@ -78,26 +79,7 @@ class OrdersListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
-        # Get date filter parameters
-        start_date = self.request.GET.get('start_date')
-        end_date = self.request.GET.get('end_date')
-        status = self.request.GET.get('status')
-
-
-        # Apply date filters if provided
-        if start_date:
-            start_date = datetime.strptime(start_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__gte=start_date)
-        
-        if end_date:
-            end_date = datetime.strptime(end_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__lte=end_date)
-
-        if status:
-            queryset = queryset.filter(status=status)
-
-        return queryset.order_by('-order_Created')
+        return self.apply_filters(queryset)
 
 
 class OrdersTodayListView(LoginRequiredMixin, ListView):
@@ -107,7 +89,7 @@ class OrdersTodayListView(LoginRequiredMixin, ListView):
     template_name = "order/today.html"
 
 
-class OrdersThisMonth(LoginRequiredMixin, ListView):
+class OrdersThisMonth(LoginRequiredMixin, OrderFilterMixin, ListView):
     model = Order
     template_name = 'order/month.html'
     context_object_name = 'OrdersThisMonth'
@@ -117,26 +99,7 @@ class OrdersThisMonth(LoginRequiredMixin, ListView):
         today = timezone.now()
         first_day = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         queryset = Order.objects.filter(order_Created__gte=first_day)
-
-        # Get date filter parameters
-        start_date = self.request.GET.get('start_date')
-        end_date = self.request.GET.get('end_date')
-        status = self.request.GET.get('status') 
-
-
-        # Apply date filters if provided
-        if start_date:
-            start_date = datetime.strptime(start_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__gte=start_date)
-        
-        if end_date:
-            end_date = datetime.strptime(end_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__lte=end_date)
-            
-        if status:
-            queryset = queryset.filter(status=status)
-
-        return queryset.order_by('-order_Created')
+        return self.apply_filters(queryset)
 
 
 class OrdersThisweek(LoginRequiredMixin, ListView):
@@ -150,25 +113,8 @@ class OrdersThisweek(LoginRequiredMixin, ListView):
         start_of_week = today - timedelta(days=today.weekday())
         start_of_week = start_of_week.replace(hour=0, minute=0, second=0, microsecond=0)
         queryset = Order.objects.filter(order_Created__gte=start_of_week)
+        return self.apply_filters(queryset)
 
-        # Get date filter parameters
-        start_date = self.request.GET.get('start_date')
-        end_date = self.request.GET.get('end_date')
-        status = self.request.GET.get('status')
-
-        # Apply date filters if provided
-        if start_date:
-            start_date = datetime.strptime(start_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__gte=start_date)
-        
-        if end_date:
-            end_date = datetime.strptime(end_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__lte=end_date)
-
-        if status:
-            queryset = queryset.filter(status=status)
-
-        return queryset.order_by('-order_Created')
 
 
 class ConnectionsThisMonth(LoginRequiredMixin, ListView):
@@ -184,25 +130,7 @@ class ConnectionsThisMonth(LoginRequiredMixin, ListView):
             order_Created__gte=first_day,
             order_connection_type__in=['New Connection', 'Port In']
         )
-
-        # Get date filter parameters
-        start_date = self.request.GET.get('start_date')
-        end_date = self.request.GET.get('end_date')
-        status = self.request.GET.get('status')
-
-        # Apply date filters if provided
-        if start_date:
-            start_date = datetime.strptime(start_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__gte=start_date)
-        
-        if end_date:
-            end_date = datetime.strptime(end_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__lte=end_date)
-
-        if status:
-            queryset = queryset.filter(status=status)
-
-        return queryset.order_by('-order_Created')
+        return self.apply_filters(queryset)
 
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
@@ -491,7 +419,7 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
         return super().get(request, *args, **kwargs)
 
 
-class MyOrders(LoginRequiredMixin, ListView):
+class MyOrders(LoginRequiredMixin, OrderFilterMixin, ListView):
     model = Order
     template_name = 'order/myorders.html'
     context_object_name = 'MyOrders'
@@ -499,27 +427,7 @@ class MyOrders(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(owner=self.request.user)
-        
-        # Get date filter parameters
-        start_date = self.request.GET.get('start_date')
-        end_date = self.request.GET.get('end_date') 
-        status = self.request.GET.get('status')
-
-
-        # Apply date filters if provided
-        if start_date:
-            start_date = datetime.strptime(start_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__gte=start_date)
-        
-        if end_date:
-            end_date = datetime.strptime(end_date, '%Y-%m-%d')
-            queryset = queryset.filter(order_Created__date__lte=end_date)
-
-        if status:
-            queryset = queryset.filter(status=status)
-
-        # Order by newest first
-        return queryset.order_by('-order_Created')
+        return self.apply_filters(queryset)
 
 class ExportMonthCSV(LoginRequiredMixin, View):
 
