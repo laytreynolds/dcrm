@@ -19,46 +19,7 @@
           href="{% url 'crm:OrderUpdate' OrderDetail.pk %}" class="btn btn-outline-primary" id="edit-button">
           Edit
         </a>
-
-        <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content bg-dark text-white">
-              <div class="modal-header border-0">
-                <h5 class="modal-title" id="addTaskModalLabel">Add New Task</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                  aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                {% include "order/task.html" %}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="addNoteModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content bg-dark text-white">
-              <div class="modal-header border-0">
-                <h5 class="modal-title" id="addNoteModalLabel">Add New Note</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                  aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                {% include "order/comment_form.html" %}
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTaskModal">
-          <i class="fa-solid fa-plus"></i> Add Task
-        </button>
-        <button type="button" class="btn btn-secondary ms-2" data-bs-toggle="modal" data-bs-target="#addNoteModal">
-          <i class="fa-solid fa-note-sticky"></i> Add Note
-        </button>
-
+      </h4>
     </div>
     <div class="col d-flex justify-content-end align-items-end">
 
@@ -335,206 +296,223 @@
       </div>
     </div>
   </div>
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item bg-dark">
+      <h2 class="accordion-header">
+        <button class="accordion-button text-white" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-note-sticky"></i>
+            <strong>View Notes ({{ comments.count }})</strong>
+          </div>
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse text-white" data-bs-parent="#accordionExample">
+        <ul class="list-group list-group-flush">
+          {% for comment in comments %}
+          <li class="list-group-item text-white border-0">
+            <p class="info">
+              {{ comment.id }} Note from {{ comment.owner.first_name }} {{ comment.owner.last_name }} on {{ comment.created|date:"F j, H:i" }}
+              <!-- Status Change Button -->
+              <!-- <button id="status-button" class="btn btn-secondary" data-toggle="modal" data-target="#statusModal">{{ comment.status }}</button> -->
 
-  <div class="card my-4">
-    <div class="card-header bg-dark text-white">
-      <ul class="nav nav-tabs card-header-tabs" id="orderTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="tasks-tab" data-bs-toggle="tab" data-bs-target="#tasks" type="button"
-            role="tab" aria-controls="tasks" aria-selected="true">
-            <i class="fa-solid fa-tasks"></i> Tasks
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes" type="button" role="tab"
-            aria-controls="notes" aria-selected="false">
-            <i class="fa-solid fa-note-sticky"></i> Notes
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button"
-            role="tab" aria-controls="history" aria-selected="false">
-            <i class="fa-solid fa-pen"></i> History
-          </button>
-        </li>
-      </ul>
-    </div>
-    <div class="card-body bg-secondary text-white">
-      <div class="tab-content" id="orderTabsContent">
-        <!-- Tasks Tab -->
-        <div class="tab-pane fade show active" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
-          {% if tasks %}
-          <ul class="list-group list-group-flush">
-            {% for task in tasks %}
-            <li class="list-group-item bg-secondary text-white d-flex justify-content-between align-items-center">
-              <div>
-                <strong>{{ task.title }}</strong>
-                <span class="badge bg-info ms-2">{{ task.get_status_display }}</span>
-                <br>
-                <small>Due: {{ task.due_date|date:"Y-m-d H:i" }}</small>
-                {% if task.description %}
-                <div class="mt-1">{{ task.description }}</div>
-                {% endif %}
+              <!-- Modal -->
+            <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="statusModalLabel">Change Comment Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="status-form">
+                      <div class="form-group">
+                        <label for="status">Select Status</label>
+                        <select class="form-control" id="status" name="status">
+                          <option value="open">Open</option>
+                          <option value="closed">Closed</option>
+                          <option value="inprogress">In Progress</option>
+                        </select>
+                      </div>
+                      <input type="hidden" id="comment-id" name="comment_id">
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-status">Save changes</button>
+                  </div>
+                </div>
               </div>
-              <span class="badge bg-{{ task.priority|lower }}">
-                {{ task.get_priority_display }}
-              </span>
-            </li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p class="mb-0">No tasks for this order.</p>
-          {% endif %}
+            </div>
+            </p>
+            {{ comment.body|linebreaks }}
+          </li>
+          {% empty %}
+          <li class="list-group-item text-white border-0">No notes to show.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item bg-dark">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-white" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-pen"></i>
+            <strong>Add a Note</strong>
+          </div>
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body bg-dark">
+          {% include "order/comment_form.html" %}
         </div>
-        <!-- Notes Tab -->
-        <div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
-          {% if comments %}
-          <ul class="list-group list-group-flush">
-            {% for comment in comments %}
-            <li class="list-group-item bg-secondary text-white border-0">
-              <p class="info">
-                Note from {{ comment.owner.first_name }} {{ comment.owner.last_name }} on {{ comment.created|date:"F j H:i" }}
-              </p>
-              {{ comment.body|linebreaks }}
-            </li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p class="mb-0">No notes to show.</p>
-          {% endif %}
-        </div>
-        <!-- History Tab -->
-        <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-          {% if changes_list %}
-          <ul class="list-group list-group-flush">
-            {% for change in changes_list %}
-            <li class="list-group-item bg-secondary text-white">
-              <strong>{{ change.field }}:</strong> {{ change.old }} → {{ change.new }} <br>
-              <small>Changed on {{ change.date|date:"F j, H:i" }} by {{ change.user }}</small>
-            </li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p class="mb-0">No changes found.</p>
-          {% endif %}
-        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item bg-dark">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-white" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-pen"></i>
+            <strong>View History</strong>
+          </div>
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse text-white" data-bs-parent="#accordionExample">
+        <ul class="list-group list-group-flush">
+          {% for change in changes_list %}
+          <li class="list-group-item text-white">
+            <strong>{{ change.field }}:</strong> {{ change.old }} → {{ change.new }} <br>
+            <small>Changed on {{ change.date }} by {{ change.user }}</small>
+          </li>
+          {% empty %}
+          <li class="list-group-item text-white">
+            No changes found.</li>
+          {% endfor %}
+        </ul>
+        </ul>
       </div>
     </div>
   </div>
 
-  <style>
-    label,
-    option,
-    .modal-title,
-    #status,
-    select {
-      color: black;
-    }
 
-    i {
-      padding-right: 10px;
-    }
+</div>
 
+<style>
+  label,
+  option,
+  .modal-title,
+  #status,
+  select {
+    color: black;
+  }
+
+  i {
+    padding-right: 10px;
+  }
+
+  .padding-top {
+    padding-top: 3rem;
+  }
+
+  .padding-top-small {
+    padding-top: 1rem;
+  }
+
+  .padding-bottom {
+    padding-bottom: 3rem;
+  }
+
+  #edit-button {
+    margin-left: 1rem;
+  }
+
+  #submit-button {
+    margin-bottom: 1rem;
+  }
+
+  .margin-left {
+    margin-left: 1rem;
+  }
+
+  ul,
+  li {
+    background-color: rgb(52, 58, 63) !important;
+    color: white;
+  }
+
+  .accordion-button {
+    background-color: rgba(52, 58, 63, 0.8);
+    /* Slightly transparent dark background */
+    border: none;
+    /* Remove border */
+  }
+
+  .accordion-button:hover {
+    background-color: rgba(52, 58, 63, 1);
+    color: white;
+    /* Darken on hover */
+  }
+
+  .accordion-body {
+    background-color: #343a40;
+    /* Dark background for the body */
+  }
+
+  /* Added responsive styles */
+  @media (max-width: 768px) {
+    .container#small {
+      padding: 0 15px;
+    }
+    
+    h1 {
+      font-size: 1.75rem;  /* Smaller headings on mobile */
+    }
+    
+    h4 {
+      font-size: 1.2rem;
+    }
+    
     .padding-top {
-      padding-top: 3rem;
+      padding-top: 1.5rem;  /* Reduced padding on mobile */
     }
-
-    .padding-top-small {
-      padding-top: 1rem;
-    }
-
-    .padding-bottom {
-      padding-bottom: 3rem;
-    }
-
-    #edit-button {
-      margin-left: 1rem;
-    }
-
-    #submit-button {
+    
+    .card {
       margin-bottom: 1rem;
     }
-
-    .margin-left {
-      margin-left: 1rem;
+    
+    .list-group-item {
+      padding: 0.75rem;  /* Reduced padding in list items */
     }
-
-    ul,
-    li {
-      background-color: rgb(52, 58, 63) !important;
-      color: white;
+    
+    /* Make text wrap better on small screens */
+    .col-lg-6 {
+      word-break: break-word;
     }
-
-    .accordion-button {
-      background-color: rgba(52, 58, 63, 0.8);
-      /* Slightly transparent dark background */
-      border: none;
-      /* Remove border */
+    
+    /* Improve button spacing on mobile */
+    #edit-button {
+      margin: 0.5rem 0;
+      display: block;
+      width: 100%;
     }
+  }
 
-    .accordion-button:hover {
-      background-color: rgba(52, 58, 63, 1);
-      color: white;
-      /* Darken on hover */
-    }
+  /* Improve card header readability */
+  .card-header {
+    background-color: rgba(52, 58, 63, 0.95);
+  }
+  
+  /* Add smooth transitions */
+  .card, .accordion-button {
+    transition: all 0.3s ease;
+  }
+</style>
 
-    .accordion-body {
-      background-color: #343a40;
-      /* Dark background for the body */
-    }
-
-    /* Added responsive styles */
-    @media (max-width: 768px) {
-      .container#small {
-        padding: 0 15px;
-      }
-
-      h1 {
-        font-size: 1.75rem;
-        /* Smaller headings on mobile */
-      }
-
-      h4 {
-        font-size: 1.2rem;
-      }
-
-      .padding-top {
-        padding-top: 1.5rem;
-        /* Reduced padding on mobile */
-      }
-
-      .card {
-        margin-bottom: 1rem;
-      }
-
-      .list-group-item {
-        padding: 0.75rem;
-        /* Reduced padding in list items */
-      }
-
-      /* Make text wrap better on small screens */
-      .col-lg-6 {
-        word-break: break-word;
-      }
-
-      /* Improve button spacing on mobile */
-      #edit-button {
-        margin: 0.5rem 0;
-        display: block;
-        width: 100%;
-      }
-    }
-
-    /* Improve card header readability */
-    .card-header {
-      background-color: rgba(52, 58, 63, 0.95);
-    }
-
-    /* Add smooth transitions */
-    .card,
-    .accordion-button {
-      transition: all 0.3s ease;
-    }
-  </style>
-
-  {% endblock %}
+{% endblock %}

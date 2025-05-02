@@ -26,12 +26,14 @@ class Campaign(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
+
 # Activity
     
 class Activity(models.Model):
     text = models.TextField(default=None, null=True, blank=True)
     changed_date = models.DateField(auto_now_add=True)
-    changed_by = models.ForeignKey(User, related_name="activities", on_delete=models.PROTECT)
+    changed_by = models.ForeignKey(User, related_name="user", on_delete=models.PROTECT)
     
 
 # COMPANY
@@ -88,11 +90,6 @@ class Order(models.Model):
             self.order_Created = datetime.now()
         if self.status == "CN":
             self.order_connected_date = datetime.now()
-        if self.pk:  # If the object already exists
-            orig = Order.objects.get(pk=self.pk)
-            if orig.order_connected_date is not None:
-                # Prevent updating the field if it's already set
-                self.order_connected_date = orig.order_connected_date
         super(Order, self).save(*args, **kwargs)
 
 
@@ -223,45 +220,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.owner} on {self.order}"
-    
-
-class Task(models.Model):
-    
-    class Priority(models.TextChoices):
-        LOW = 'L', 'Low'
-        MEDIUM = 'M', 'Medium'
-        HIGH = 'H', 'High'
-        URGENT = 'U', 'Urgent'
-        
-    class Status(models.TextChoices):
-        TODO = 'TD', 'To Do'
-        IN_PROGRESS = 'IP', 'In Progress'
-        COMPLETED = 'C', 'Completed'
-        CANCELLED = 'CN', 'Cancelled'
-        
-    owner = models.ForeignKey(User, related_name="tasks", on_delete=models.PROTECT)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="tasks")
-    description = models.TextField(blank=True)
-    priority = models.CharField(max_length=1, choices=Priority.choices, default=Priority.MEDIUM)
-    status = models.CharField(max_length=2, choices=Status.choices, default=Status.TODO)
-    title = models.CharField(max_length=200)
-    due_date = models.DateTimeField()
-    created_date = models.DateTimeField(auto_now_add=True)
-    assigned_to = models.ForeignKey(User, related_name="assigned_tasks", on_delete=models.PROTECT)
-    completed_date = models.DateTimeField(null=True, blank=True)
-    reminder_date = models.DateTimeField(null=True, blank=True)
-    class Meta:
-        ordering = ['-due_date']
-        indexes = [
-            models.Index(fields=['due_date']),
-            models.Index(fields=['status']),
-            models.Index(fields=['priority']),
-            models.Index(fields=['owner']),
-
-        ]
-
-    def __str__(self):
-        return f"{self.title} - {self.get_status_display()}"
-
 
 
