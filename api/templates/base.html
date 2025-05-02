@@ -12,108 +12,31 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="shortcut icon" type="image/png" href="{% static 'images/logo.png' %}" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    /* === Reset and Base === */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; width: 100%; position: relative; }
+    body { display: flex; min-height: 100vh; margin: 0; }
+    h3 { color: #fff !important; }
 
-    html, body {
-      overflow-x: hidden;
-      width: 100%;
-      position: relative;
-    }
-
-    body {
-      display: flex;
-      min-height: 100vh;
-      margin: 0;
-    }
-
+    /* === Layout === */
     .main-content {
       flex: 1;
       width: 100%;
       padding: 15px;
       overflow-x: hidden;
     }
-
-    .container {
+    .container, .container-fluid {
       width: 100%;
       padding-right: 15px;
       padding-left: 15px;
       margin-right: auto;
       margin-left: auto;
       max-width: 100%;
+      padding-top: 20px;
     }
+    .container-fluid { padding: 0; }
 
-    .card.bg-dark {
-      background-color: rgba(0,
-          0,
-          0,
-          0.2) !important;
-      /* Adjust the alpha value as needed */
-      backdrop-filter: blur(10px);
-      /* Adds a blur effect */
-      -webkit-backdrop-filter: blur(10px);
-      /* Adds a blur effect for Safari */
-    }
-
-    h3 {
-      color: rgb(255, 255, 255) !important;
-    }
-
-    option {
-      color: black;
-    }
-
-    .card {
-      background-color: rgb(52, 58, 63);
-    }
-
-    .table th,
-    .table td {
-      padding: 15px 15px;
-      /* Increase padding for more spacing */
-      vertical-align: middle;
-      /* Vertically align the text in table header columns */
-    }
-
-    .form-control,
-    .form-select {
-      background-color: rgba(255,
-          255,
-          255,
-          0.2);
-      /* Makes the input background semi-transparent */
-      border: 0px;
-      color: #ffffff;
-      /* Makes the text color white */
-    }
-
-    .form-control::placeholder,
-    .form-select::placeholder {
-      color: rgba(255,
-          255,
-          255,
-          0.7);
-      /* Makes the placeholder text semi-transparent white */
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-      background-color: rgba(255,
-          255,
-          255,
-          0.3);
-      /* Slightly lighter background on focus */
-      color: #ffffff;
-      /* Keeps the text color white */
-      outline: none;
-      /* Removes the default outline */
-      box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
-      /* Custom focus shadow */
-    }
-
+    /* === Sidebar === */
     .sidebar {
       height: 100%;
       width: 15%;
@@ -124,138 +47,109 @@
       overflow-x: hidden;
     }
 
-    /* Add responsive media queries */
-    @media (min-width: 768px) {
-      .main-content {
-        width: 50%;
-        margin-left: 250px;
-      }
+    /* === Cards and Tables === */
+    .card {
+      background-color: #343a40;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
-
-    @media (max-width: 768px) {
-      .container, .container-fluid {
-        padding-left: 10px;
-        padding-right: 10px;
-        width: 100%;
-        max-width: 100%;
-      }
-
-      .main-content {
-        padding: 10px;
-        margin-left: 0;
-      }
-
-      .table-responsive {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-      }
-
-      /* Ensure tables don't cause overflow */
-      .table {
-        width: 100%;
-        max-width: 100%;
-      }
-
-      /* Adjust form elements */
-      .form-control, 
-      .form-select {
-        width: 100%;
-        max-width: 100%;
-      }
-
-      /* Ensure cards don't overflow */
-      .card {
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-      }
-
-      .table th,
-      .table td {
-        padding: 8px;
-        font-size: 14px;
-      }
-      
-      .alert {
-        font-size: 14px;
-      }
+    .card.bg-dark {
+      background-color: rgba(0,0,0,0.2) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-
-    /* Make form elements more mobile-friendly */
-    .form-control,
-    .form-select {
-      max-width: 100%;
-      font-size: 16px; /* Prevents iOS zoom on focus */
+    .card-header, .card-header.bg-dark {
+      background-color: rgba(52,58,63,0.95);
+      border-bottom: 1px solid #495057;
     }
+    .card-header-tabs { margin-bottom: -1px; }
 
-    .container-fluid {
-      padding: 0;
-    }
-
-    .container {
-      padding-top: 20px;
-    }
-
-    .alert-container {
-      margin: 20px 0;
-    }
-
-    .messages {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    .messages li {
-      margin-bottom: 10px;
+    .table th, .table td {
       padding: 15px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
+      vertical-align: middle;
     }
 
-    .alert {
+    /* === Forms === */
+    .form-control, .form-select {
+      background-color: rgba(255,255,255,0.2);
+      border: 0;
+      color: #fff;
+      max-width: 100%;
       font-size: 16px;
-      /* Adjust font size as needed */
+    }
+    .form-control::placeholder, .form-select::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+    .form-control:focus, .form-select:focus {
+      background-color: rgba(255,255,255,0.3);
+      color: #fff;
+      outline: none;
+      box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.25);
+    }
+    option { color: #000; }
+
+    /* === Alerts and Messages === */
+    .alert-container { margin: 20px 0; }
+    .messages { list-style-type: none; padding: 0; }
+    .messages li { margin-bottom: 10px; padding: 15px; border-radius: 5px; transition: background-color 0.3s; }
+    .alert { font-size: 16px; }
+    .alert-success { background-color: #d4edda; color: #155724; }
+    .alert-warning { background-color: #fff3cd; color: #856404; }
+    .alert-danger { background-color: #f8d7da; color: #721c24; }
+    .alert-info { background-color: #d1ecf1; color: #0c5460; }
+
+    /* === Bootstrap Tabs (Dark Theme) === */
+    .nav-tabs { border-bottom: 1px solid #343a40; }
+    .nav-tabs .nav-link {
+      color: #adb5bd;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-bottom 0.2s;
+    }
+    .nav-tabs .nav-link.active,
+    .nav-tabs .nav-link:focus,
+    .nav-tabs .nav-link:hover {
+      color: #fff;
+      background: #343a40;
+      border-bottom: 3px solid #0d6efd;
+    }
+    .tab-content {
+      background: #343a40;
+      border-radius: 0 0 0.5rem 0.5rem;
+      padding: 1rem 0.5rem;
     }
 
-    .alert-success {
-      background-color: #d4edda;
-      color: #155724;
+    /* === List Groups (Dark) === */
+    .list-group-item.bg-secondary {
+      background-color: #495057 !important;
+      color: #fff;
+      border: none;
     }
+    .list-group-item.bg-secondary strong { color: #fff; }
+    .list-group-item.bg-secondary .badge { font-size: 0.9em; }
 
-    .alert-warning {
-      background-color: #fff3cd;
-      color: #856404;
+    /* === Responsive Design === */
+    @media (min-width: 768px) {
+      .main-content { width: 50%; margin-left: 250px; }
     }
-
-    .alert-danger {
-      background-color: #f8d7da;
-      color: #721c24;
-    }
-
-    .alert-info {
-      background-color: #d1ecf1;
-      color: #0c5460;
-    }
-
     @media (max-width: 768px) {
-      /* Improve form elements on mobile */
-      input, select, textarea {
-        font-size: 16px !important; /* Prevents iOS zoom on focus */
-      }
-
-      /* Improve table responsiveness */
-      .table-responsive {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      /* Add some breathing room */
-      .container, .container-fluid {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
+      .container, .container-fluid { padding-left: 10px; padding-right: 10px; }
+      .main-content { padding: 10px; margin-left: 0; }
+      .table-responsive { margin: 0; padding: 0; width: 100%; }
+      .table { width: 100%; max-width: 100%; }
+      label { color: #fff !important; }
+      .form-control, .form-select { width: 100%; max-width: 100%; }
+      .card { width: 100%; margin-left: 0; margin-right: 0; }
+      .table th, .table td { padding: 8px; font-size: 14px; }
+      .alert { font-size: 14px; }
+      input, select, textarea { font-size: 16px !important; }
+      .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .container, .container-fluid { padding-left: 15px; padding-right: 15px; }
     }
+
+    /* === Miscellaneous === */
+    .container { padding-top: 20px; }
+    .card, .accordion-button { transition: all 0.3s ease; }
   </style>
 </head>
 
