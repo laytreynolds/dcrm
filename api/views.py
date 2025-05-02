@@ -1,8 +1,9 @@
+import string
 from django.db.models import Sum, Value, IntegerField, FloatField, Q
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, Order, Campaign, Activity, Comment
+from .models import User, Order, Campaign, Comment, Task
 from django.views.generic import ListView, DetailView, View
-from .forms import SearchForm, OrderForm, CommentForm, OrderUpdateForm, CreateUserForm
+from .forms import SearchForm, OrderForm, CommentForm, OrderUpdateForm, CreateUserForm, AddTaskForm
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -31,6 +32,8 @@ pagination = 9
 def Home(request):
     return render(request, "home.html")
 
+def NewCompany(request):
+    return render(request, "company/new.html")
 
 # ACTIVITY
 
@@ -142,6 +145,7 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         obj = self.get_object()
+        
 
         # Retrieve all history records and order them by date
         history_records = list(obj.history.all().order_by("-history_date"))
@@ -171,6 +175,12 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
                     if field == 'order_Title':
                         old_value = Order.Title(old_value).label  # Get full name for old value
                         new_value = Order.Title(new_value).label  # Get full name for new value
+                    
+                    
+                    field = field.replace("order", "", -1)
+                    field = field.replace("_", " ", -1)
+                    field = field.title()
+                    
 
                     # Use the history date from the current record as the change date
                     change_date = current_record.history_date if hasattr(current_record, 'history_date') else datetime.now()
@@ -188,7 +198,10 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
         context["history_records"] = history_records
         context["changes_list"] = changes_list  # List of changes for display
         context["form"] = CommentForm()
+        context["task_form"] = AddTaskForm()
         context["comments"] = obj.comments.all()
+        context["tasks"] = obj.tasks.all().order_by('-due_date')
+
         
         return context
 
@@ -234,17 +247,27 @@ class OrderUpdate(LoginRequiredMixin, View):
             messages.error(request, 'Error updating order')
         return render(request, "order/update.html", {"form": form, "order": order})
 
-
-# COMPANY
-
-
-def NewCompany(request):
-    return render(request, "company/new.html")
-
-
+class OrderAddTask(LoginRequiredMixin, View):
+    model = Task
+    
+    def post(self, request, order_Id):
+        order = get_object_or_404(Order, order_Id=order_Id)
+        form = AddTaskForm(request.POST)
+        current_user = get_user(request)
+        
+        if not form.is_valid():
+            messages.error(request, 'Error Creating order')
+            return redirect("crm:OrderDetailView", order_Id=order.order_Id)
+        
+        task = form.save(commit=False)
+        task.owner = current_user
+        task.create_date = datetime.now()
+        task.order = order
+        task.save()
+        messages.success(request, "Task created successfully")
+        return redirect("crm:OrderDetailView", order_Id=order.order_Id)
+        
 # Comment
-
-
 class OrderComment(LoginRequiredMixin, View):
 
     def post(self, request, order_Id):
