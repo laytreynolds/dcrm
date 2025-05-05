@@ -15,10 +15,10 @@ DEBUG=True
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        "NAME": "d1aapbmgg8tt6a",
-        "USER": "ucjidogioe523j",
-        "PASSWORD": "pb1e84bd4d8062f9c27cb9eeb372a2a305aa8400bc9379d4648754b1716de4d8f",
-        "HOST": "cfs632mn9c82a7.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com",
+        "NAME": "dcrm",
+        "USER": "postgres",
+        "PASSWORD": "Xok87187",
+        "HOST": "localhost",
         "PORT": "5432",
     }
 }
