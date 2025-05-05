@@ -1,5 +1,5 @@
 from django import forms
-from .models import Order, Comment
+from .models import Order, Comment, Task
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, HTML, Field
 from django.forms.widgets import RadioSelect
@@ -614,4 +614,102 @@ class CreateUserForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match.")
 
         return cleaned_data
+    
+class AddTaskForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = "post"
+        self.helper.layout = Layout(
+            Fieldset(
+                "Task Details",
+                Div(
+                    Div(
+                        PrependedText(
+                            "title",
+                            mark_safe('<i class="fa-solid fa-tasks text-white"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
+                    Div(
+                        PrependedText(
+                            "priority",
+                            mark_safe('<i class="fa-solid fa-flag text-white"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
+                    css_class="row",
+                ),
+                Div(
+                    Div(
+                        PrependedText(
+                            "status",
+                            mark_safe('<i class="fa-solid fa-circle-check"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
+                    Div(
+                        PrependedText(
+                            "due_date",
+                            mark_safe('<i class="fa-solid fa-calendar"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
+                    css_class="row",
+                ),
+                Div(
+                    Div(
+                        PrependedText(
+                            "reminder_date",
+                            mark_safe('<i class="fa-solid fa-bell text-white"></i>'),
+                        ),
+                        css_class="col-md-6 text-white",
+                    ),
+                    Div(
+                        PrependedText(
+                            "assigned_to",
+                            mark_safe('<i class="fa-solid fa-user"></i>'),
+                        ),
+                        css_class="col-md-6",
+                    ),
+                    css_class="row",
+                ),
+                Div(
+                    Field("description", css_class="form-control"),
+                    css_class="col-12",
+                ),
+                HTML("<br>"),
+                Div(
+                    Submit("submit", "Create Task", css_class="btn btn-success"),
+                    css_class="row",
+                ),
+            ),
+        )
+
+    class Meta:
+        model = Task
+        fields = [
+            'title',
+            'description',
+            'priority',
+            'status',
+            'due_date',
+            'assigned_to',
+            'reminder_date',
+        ]
+        widgets = {
+            'due_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'reminder_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'description': forms.Textarea(attrs={'rows': 4}),
+        }
+        labels = {
+            'title': 'Task Title',
+            'description': 'Description',
+            'priority': 'Priority',
+            'status': 'Status',
+            'due_date': 'Due Date',
+            'assigned_to': 'Assign To',
+            'reminder_date': 'Reminder Date',
+        }
+    
     
